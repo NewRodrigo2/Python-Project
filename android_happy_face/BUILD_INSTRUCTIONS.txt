@@ -1,0 +1,70 @@
+========================================
+  BUILD HAPPY FACE APK FOR ANDROID
+========================================
+
+REQUIREMENTS: WSL2 with Ubuntu (or any Linux machine)
+
+----------------------------------------
+STEP 1 — Open WSL2 / Ubuntu terminal
+----------------------------------------
+In Windows, press Win+S and search "Ubuntu" or run:
+  wsl
+
+----------------------------------------
+STEP 2 — Install system dependencies
+----------------------------------------
+sudo apt update && sudo apt upgrade -y
+sudo apt install -y python3-pip python3-venv git zip unzip \
+    openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev \
+    libncurses5-dev libncursesw5-dev libtinfo5 cmake \
+    libffi-dev libssl-dev
+
+----------------------------------------
+STEP 3 — Install Buildozer
+----------------------------------------
+pip3 install --user buildozer
+
+Add buildozer to PATH if needed:
+  echo 'export PATH=$PATH:~/.local/bin' >> ~/.bashrc
+  source ~/.bashrc
+
+----------------------------------------
+STEP 4 — Navigate to the project folder
+----------------------------------------
+Your Windows files are accessible in WSL at /mnt/c/...
+
+cd "/mnt/c/Users/danie/Documents/Python Project/android_happy_face"
+
+----------------------------------------
+STEP 5 — Build the APK
+----------------------------------------
+buildozer android debug
+
+  * First build downloads ~1 GB of tools (Android SDK/NDK).
+    This can take 10–30 minutes depending on your connection.
+  * Subsequent builds are much faster.
+
+----------------------------------------
+STEP 6 — Install on your Android device
+----------------------------------------
+Option A — USB:
+  Enable "Developer Options" and "USB Debugging" on your phone.
+  Connect via USB, then run:
+    buildozer android deploy run
+
+Option B — Copy the APK manually:
+  The APK is saved at:
+    .buildozer/android/platform/build-armeabi-v7a/dists/happyface/bin/happyface-1.0-debug.apk
+  Copy it to your phone and open it.
+  (You may need to allow "Install from unknown sources" in Android settings.)
+
+========================================
+  TROUBLESHOOTING
+========================================
+- If buildozer is not found: restart terminal or run `source ~/.bashrc`
+- If Java errors appear: make sure openjdk-17-jdk is installed
+- For permission errors on /mnt/c/...: copy the project to your
+  Linux home folder first:
+    cp -r "/mnt/c/Users/danie/Documents/Python Project/android_happy_face" ~/happy_face
+    cd ~/happy_face
+    buildozer android debug

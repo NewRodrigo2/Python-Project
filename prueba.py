@@ -1,83 +1,217 @@
-# =====================================================================
-# APP: MI CARRITO EN RENTA (Fase 1)
-# =====================================================================
 import os
+import json
 
-def limpiar_pantalla():
-    # 'nt' significa Windows, 'posix' es para Mac o Linux
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
-def pts():
-    print(" .")
-    print(" .")
-    print(" .")
-    print(" .")
-    print(" .")
+# Constantes para los colores en la terminal (Códigos ANSI)
+COLOR_TITULO = "\033[94m"  # Azul
+COLOR_EXITO = "\033[92m"   # Verde
+COLOR_ERROR = "\033[91m"   # Rojo
+COLOR_ADMIN = "\033[95m"   # Morado (Para el menú de administrador)
+COLOR_RESET = "\033[0m"    # Volver al color normal
 
+# RUTA SOLICITADA: Se usa os.path.join para evitar problemas con las barras invertidas en Windows
+CARPETA_DATOS = r"D:\programacion\python"
+ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
 
-# Inventario inicial: Lista de diccionarios para gestionar los autos
-inventario = [
+# Contraseña para la opción oculta
+CLAVE_ADMIN = "admin123"
+
+# Inventario inicial por defecto (solo se usa si el archivo JSON no existe)
+INVENTARIO_DEFECTO = [
     {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True},
     {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True},
     {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False}
 ]
 
+inventario = [] #  Arreglo vacio
+
+def cargar_inventario():
+    """Lee el archivo JSON. Si la carpeta o el archivo no existen, los crea."""
+    global inventario  # define que se use la varible creada fuera de esta funcion
+    try:
+        # Crea la carpeta D:\programacion\python si no existe en el disco duro
+        if not os.path.exists(CARPETA_DATOS):
+            os.makedirs(CARPETA_DATOS)
+            
+        if os.path.exists(ARCHIVO_DATOS):
+            with open(ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
+                inventario = json.load(archivo)
+        else:
+            inventario = INVENTARIO_DEFECTO
+            guardar_inventario()
+    except Exception as e:
+        # Si hay un error de permisos o disco, usa el defecto de forma temporal
+        inventario = INVENTARIO_DEFECTO
+
+def guardar_inventario():
+    """Guarda el estado actual del inventario en el archivo JSON."""
+    try:
+        with open(ARCHIVO_DATOS, "w", encoding="utf-8") as archivo:
+            json.dump(inventario, archivo, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"\n{COLOR_ERROR}Error al guardar el archivo: {e}{COLOR_RESET}")
+
+def limpiar_pantalla():
+    if os.name == 'nt':
+        os.system('cls')
+    else:
+        os.system('clear')
+        
+def row_space():
+    print(".")
+    print(".")
+    wait = input(f"\n {COLOR_TITULO}ENTER PARA CONTINUAR ..{COLOR_RESET} ")
+
 def mostrar_inventario():
-    print("\n--- INVENTARIO DE AUTOS ---")
+    print(f"\n{COLOR_TITULO}--- INVENTARIO DE AUTOS ---{COLOR_RESET}")
     for auto in inventario:
-        estado = "Disponible" if auto["disponible"] else "Rentado"
+        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
         print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
 
 def rentar_auto():
     mostrar_inventario()
     try:
-        id_renta = int(input("\nIngrese el ID del auto que desea rentar: "))
+        id_renta = int(input("\nIngrese el ID del auto que desea RENTAR: "))
         for auto in inventario:
             if auto["id"] == id_renta:
                 if auto["disponible"]:
-                    auto["disponible"] = False  # cambia a falso
-                    print(f"\n¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.")
+                    auto["disponible"] = False
+                    guardar_inventario()
+                    limpiar_pantalla()
+                    print(f"\n{COLOR_EXITO}¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
+                    row_space()
                     return
                 else:
-                    print("\nLo sentimos, este auto ya está rentado.")
+                    limpiar_pantalla()
+                    print(f"\n{COLOR_ERROR}Lo sentimos, este auto ya está rentado.{COLOR_RESET}")
+                    row_space()
                     return
-        print("\nEl ID introducido no existe.")
+                
+        limpiar_pantalla()
+        print(f"\n{COLOR_ERROR}El ID introducido no existe.{COLOR_RESET}")
+        row_space()
     except ValueError:
-        print("\nPor favor, introduzca un número válido.")
-        # sleep (60)
+        print(f"\n{COLOR_ERROR}Por favor, introduzca un número válido.{COLOR_RESET}")
+        row_space()
+        
+def regresar_auto():
+    mostrar_inventario()
+    try:
+        id_regresa = int(input("\nIngrese el ID del auto que desea REGRESAR: "))
+        for auto in inventario:
+            if auto["id"] == id_regresa:
+                if not auto["disponible"]: 
+                    auto["disponible"] = True
+                    guardar_inventario()
+                    limpiar_pantalla()
+                    print(f"\n{COLOR_EXITO}¡Éxito! Auto regresado exitosamente: {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
+                    row_space() 
+                    return
+                else:
+                    limpiar_pantalla()
+                    print(f"\n{COLOR_ERROR}Este auto ya se encuentra en el inventario (no está rentado).{COLOR_RESET}")
+                    row_space()
+                    return
+                    
+        limpiar_pantalla()
+        print(f"\n{COLOR_ERROR}El ID introducido no existe.{COLOR_RESET}")
+        row_space()
+                    
+    except ValueError:
+        print(f"\n{COLOR_ERROR}Por favor, introduzca un número válido.{COLOR_RESET}")
+        row_space()
 
-# Bucles y Condiciones: Menú de interacción con el usuario
-def menu_principal():
+# ===========================================================================================================
+# SECCIÓN OCULTA: ADMINISTRACIÓN
+# ===========================================================================================================
+def menu_administrador():
+    """Submenú protegido para agregar vehículos nuevos."""
     while True:
         limpiar_pantalla()
-        print("\n=================================")
+        print(f"{COLOR_ADMIN}=================================")
+        print("    PANEL DE ADMINISTRACIÓN      ")
+        print(f"================================={COLOR_RESET}")
+        print("1. Agregar nuevo auto al inventario")
+        print("2. Volver al menú principal")
+        
+        opcion = input("\nSeleccione una opción (1-2): ")
+        
+        if opcion == "1":
+            limpiar_pantalla()
+            print(f"{COLOR_ADMIN}--- REGISTRAR NUEVO VEHÍCULO ---{COLOR_RESET}\n")
+            try:
+                marca = input("Marca del auto: ").strip()
+                modelo = input("Modelo del auto: ").strip()
+                precio = float(input("Precio de renta por día ($): "))
+                
+                if marca == "" or modelo == "":
+                    print(f"\n{COLOR_ERROR}La marca y el modelo no pueden estar vacíos.{COLOR_RESET}")
+                    row_space()
+                    continue
+                
+                # Autogenerar el ID buscando el número más alto actual + 1
+                nuevo_id = max([auto["id"] for auto in inventario]) + 1 if inventario else 1
+                
+                nuevo_auto = {
+                    "id": nuevo_id,
+                    "marca": marca,
+                    "modelo": modelo,
+                    "precio_dia": precio,
+                    "disponible": True
+                }
+                
+                inventario.append(nuevo_auto)
+                guardar_inventario()
+                
+                print(f"\n{COLOR_EXITO}¡Vehículo registrado con éxito! Asignado ID: [{nuevo_id}]{COLOR_RESET}")
+                row_space()
+                
+            except ValueError:
+                print(f"\n{COLOR_ERROR}Error: El precio debe ser un número válido.{COLOR_RESET}")
+                row_space()
+                
+        elif opcion == "2":
+            break
+        else:
+            print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")
+            row_space()
+
+# ===========================================================================================================
+
+def menu_principal():
+    cargar_inventario()
+    while True:
+        limpiar_pantalla()
+        print(f"{COLOR_TITULO}\n=================================")
         print("   BIENVENIDO A MI CARRITO EN RENTA   ")
-        print("=================================")
+        print(f"================================={COLOR_RESET}")
         print("1. Ver autos disponibles")
         print("2. Rentar un auto")
         print("3. Entregar un auto")
         print("4. Salir")
         
-        opcion = input("Seleccione una opción (1-3): ")
+        opcion = input("\nSeleccione una opción (1-4): ")
         
         if opcion == "1":
             limpiar_pantalla()
             mostrar_inventario()
+            row_space()
         elif opcion == "2":
+            limpiar_pantalla()
             rentar_auto()
-        elif opcion =="3":
-            print("pronto veras la opcion de entregar / EN PROCESO")
+        elif opcion == "3":
+            limpiar_pantalla()
+            regresar_auto()
         elif opcion == "4":
             limpiar_pantalla()
-            print("\n¡Gracias por usar Mi Carrito en Renta! Hasta pronto.")
-            pts()
+            print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
             break
+        # TRUCO: Si el usuario escribe la contraseña secreta, entra al menú administrador
+        elif opcion == CLAVE_ADMIN:
+            menu_administrador()
         else:
-            print("\nOpción no válida. Intente de nuevo.")
-         
+            limpiar_pantalla()
+            print(f"\n{COLOR_ERROR}Opción no válida. Intente de nuevo.{COLOR_RESET}")
+            row_space()
 
-# Iniciar la aplicación
 if __name__ == "__main__":
     menu_principal()

@@ -17,9 +17,9 @@ CLAVE_ADMIN = "admin123"
 
 # Inventario inicial por defecto (solo se usa si el archivo JSON no existe)
 INVENTARIO_DEFECTO = [
-    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True},
-    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True},
-    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False}
+    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "km": 0, "dias": 0 "venta": 0},
+    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "km": 0, "dias": 0 "venta": 0},
+    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False, "km": 0, "dias": 0 "venta": 0}
 ]
 
 inventario = [] #  Arreglo vacio

@@ -17,9 +17,9 @@ CLAVE_ADMIN = "admin123"
 
 # Inventario inicial por defecto (solo se usa si el archivo JSON no existe)
 INVENTARIO_DEFECTO = [
-    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "km": 0, "dias": 0 "venta": 0},
-    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "km": 0, "dias": 0 "venta": 0},
-    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False, "km": 0, "dias": 0 "venta": 0}
+    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True},
+    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True},
+    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False}
 ]
 
 inventario = [] #  Arreglo vacio
@@ -62,15 +62,44 @@ def row_space():
     wait = input(f"\n {COLOR_TITULO}ENTER PARA CONTINUAR ..{COLOR_RESET} ")
 
 def mostrar_inventario():
-    print(f"\n{COLOR_TITULO}--- INVENTARIO DE AUTOS ---{COLOR_RESET}")
+    print(f"\n{COLOR_TITULO}=================================================")
+    print("------- INVENTARIO DE AUTOS -------")
+    print(f"\n ================================================={COLOR_RESET} ")
     for auto in inventario:
         estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
-        print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
+        print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {auto['dias']}")
+
+def mostrar_inv_disp():
+    print(f"\n{COLOR_TITULO}=================================================")
+    print("------- INVENTARIO DE AUTOS DISPONIBLES -------")
+    print(f"\n ================================================={COLOR_RESET} ")
+    sum_disp = 0
+    for auto in inventario:
+        if auto["disponible"]:
+            estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
+            print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
+            sum_disp = sum_disp +1
+    print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")
+
+
+def mostrar_inv_no_disp():
+    print(f"\n{COLOR_TITULO}=================================================")
+    print("------- INVENTARIO DE AUTOS NO DISPONIBLES -------")
+    print(f"\n ================================================={COLOR_RESET} ")
+    sum_disp = 0
+    for auto in inventario:
+        if not auto["disponible"]:
+            estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
+            print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
+            sum_disp = sum_disp + 1
+    print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")    
+
 
 def rentar_auto():
-    mostrar_inventario()
+    mostrar_inv_disp()
     try:
         id_renta = int(input("\nIngrese el ID del auto que desea RENTAR: "))
+        dias_p_renta = int(input("\nDias que desea rentar:"))
         for auto in inventario:
             if auto["id"] == id_renta:
                 if auto["disponible"]:
@@ -78,6 +107,7 @@ def rentar_auto():
                     guardar_inventario()
                     limpiar_pantalla()
                     print(f"\n{COLOR_EXITO}¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
+                    print(f"\n{COLOR_EXITO}Presupuesto estimado en dias / costo por dia: ${dias_p_renta * auto['precio_dia']}{COLOR_RESET}")
                     row_space()
                     return
                 else:
@@ -85,16 +115,14 @@ def rentar_auto():
                     print(f"\n{COLOR_ERROR}Lo sentimos, este auto ya está rentado.{COLOR_RESET}")
                     row_space()
                     return
-                
         limpiar_pantalla()
         print(f"\n{COLOR_ERROR}El ID introducido no existe.{COLOR_RESET}")
         row_space()
     except ValueError:
         print(f"\n{COLOR_ERROR}Por favor, introduzca un número válido.{COLOR_RESET}")
-        row_space()
         
 def regresar_auto():
-    mostrar_inventario()
+    mostrar_inv_no_disp()
     try:
         id_regresa = int(input("\nIngrese el ID del auto que desea REGRESAR: "))
         for auto in inventario:
@@ -108,7 +136,7 @@ def regresar_auto():
                     return
                 else:
                     limpiar_pantalla()
-                    print(f"\n{COLOR_ERROR}Este auto ya se encuentra en el inventario (no está rentado).{COLOR_RESET}")
+                    print(f"\n{COLOR_ERROR}Este auto  (no está rentado).{COLOR_RESET}")
                     row_space()
                     return
                     
@@ -137,11 +165,16 @@ def menu_administrador():
         
         if opcion == "1":
             limpiar_pantalla()
-            print(f"{COLOR_ADMIN}--- REGISTRAR NUEVO VEHÍCULO ---{COLOR_RESET}\n")
+            print(f"{COLOR_ADMIN}========================================")
+            print("----- REGISTRAR NUEVO VEHÍCULO ----")
+            print(f"========================================{COLOR_RESET}")
             try:
                 marca = input("Marca del auto: ").strip()
                 modelo = input("Modelo del auto: ").strip()
                 precio = float(input("Precio de renta por día ($): "))
+                dias = 0
+                km = 0
+                venta = 0
                 
                 if marca == "" or modelo == "":
                     print(f"\n{COLOR_ERROR}La marca y el modelo no pueden estar vacíos.{COLOR_RESET}")
@@ -156,7 +189,10 @@ def menu_administrador():
                     "marca": marca,
                     "modelo": modelo,
                     "precio_dia": precio,
-                    "disponible": True
+                    "disponible": True,
+                    "dias": dias,
+                    "km": km,
+                    "venta": venta
                 }
                 
                 inventario.append(nuevo_auto)
@@ -181,9 +217,9 @@ def menu_principal():
     cargar_inventario()
     while True:
         limpiar_pantalla()
-        print(f"{COLOR_TITULO}\n=================================")
+        print(f"{COLOR_TITULO}\n=====================================")
         print("   BIENVENIDO A MI CARRITO EN RENTA   ")
-        print(f"================================={COLOR_RESET}")
+        print(f"====================================={COLOR_RESET}")
         print("1. Ver autos disponibles")
         print("2. Rentar un auto")
         print("3. Entregar un auto")

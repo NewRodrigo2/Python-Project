@@ -1,3 +1,5 @@
+# estoy probando como controlar los branch, ya que perdi una vez todo mi trabajo
+# 24/06/26 12:17
 import os
 import json
 
@@ -17,9 +19,9 @@ CLAVE_ADMIN = "admin123"
 
 # Inventario inicial por defecto (solo se usa si el archivo JSON no existe)
 INVENTARIO_DEFECTO = [
-    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True},
-    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True},
-    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False}
+    {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "dias": 0, "km": 0, "venta": 0},
+    {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "dias": 0, "km": 0, "venta": 0},
+    {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False, "dias": 0, "km": 0, "venta": 0}
 ]
 
 inventario = [] #  Arreglo vacio
@@ -78,7 +80,7 @@ def mostrar_inv_disp():
         if auto["disponible"]:
             estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
             print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
-            sum_disp = sum_disp +1
+            sum_disp = sum_disp + 1
     print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")
 
 
@@ -100,10 +102,15 @@ def rentar_auto():
     try:
         id_renta = int(input("\nIngrese el ID del auto que desea RENTAR: "))
         dias_p_renta = int(input("\nDias que desea rentar:"))
+       
         for auto in inventario:
             if auto["id"] == id_renta:
                 if auto["disponible"]:
                     auto["disponible"] = False
+                    auto["dias"] = dias_p_renta
+                    auto["venta"] = (dias_p_renta*auto["precio_dia"])
+                    auto["km"] = 0
+                    # auto["venta"] = 0
                     guardar_inventario()
                     limpiar_pantalla()
                     print(f"\n{COLOR_EXITO}¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
@@ -125,19 +132,25 @@ def regresar_auto():
     mostrar_inv_no_disp()
     try:
         id_regresa = int(input("\nIngrese el ID del auto que desea REGRESAR: "))
+        km_recorridos = float(input("Ingrese los kilómetros recorridos en este viaje: "))
         for auto in inventario:
             if auto["id"] == id_regresa:
                 if not auto["disponible"]: 
-                    auto["disponible"] = True
-                    guardar_inventario()
-                    limpiar_pantalla()
+                    limpiar_pantalla()                  
+                    print(f"total a pagar es de: $ {auto['dias'] * auto['precio_dia'] + auto['km']}")
                     print(f"\n{COLOR_EXITO}¡Éxito! Auto regresado exitosamente: {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
-                    row_space() 
+                    row_space()        #  enter para continuar
+                    auto["disponible"] = True
+                    auto["km"] = km_recorridos
+                    auto["venta"] = auto['dias'] * auto['precio_dia'] + km_recorridos
+                    auto["dias"] = 0
+                    auto["km"] = 0
+                    guardar_inventario()
                     return
                 else:
                     limpiar_pantalla()
                     print(f"\n{COLOR_ERROR}Este auto  (no está rentado).{COLOR_RESET}")
-                    row_space()
+                    # row_space()
                     return
                     
         limpiar_pantalla()
@@ -148,9 +161,9 @@ def regresar_auto():
         print(f"\n{COLOR_ERROR}Por favor, introduzca un número válido.{COLOR_RESET}")
         row_space()
 
-# ===========================================================================================================
+# =============================================================================================
 # SECCIÓN OCULTA: ADMINISTRACIÓN
-# ===========================================================================================================
+# =============================================================================================
 def menu_administrador():
     """Submenú protegido para agregar vehículos nuevos."""
     while True:
@@ -159,7 +172,7 @@ def menu_administrador():
         print("    PANEL DE ADMINISTRACIÓN      ")
         print(f"================================={COLOR_RESET}")
         print("1. Agregar nuevo auto al inventario")
-        print("2. Volver al menú principal")
+        print("9. Volver al menú principal")
         
         opcion = input("\nSeleccione una opción (1-2): ")
         
@@ -205,7 +218,7 @@ def menu_administrador():
                 print(f"\n{COLOR_ERROR}Error: El precio debe ser un número válido.{COLOR_RESET}")
                 row_space()
                 
-        elif opcion == "2":
+        elif opcion == "9":
             break
         else:
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")

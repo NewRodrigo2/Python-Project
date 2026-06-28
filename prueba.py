@@ -1,8 +1,8 @@
-# ESTE ARCHIVO FUE MODIFICADO EL 24/06/26 con modificaciones en 
-# 1.- creando nuevo diccionario 
-# CREADO EN LA USB   ---> BUSCAR LA MENERA DE PASARLO A LA COMPUTADORA VIA GIT O Github
-# por eso la ruta del .json se debe de modificar
-# haciendo un cambio ya que git dice que no existe el script
+# ESTE ARCHIVO FUE MODIFICADO EL 27/06/26 
+# C:\Users\danie\Documents\Python Project> git switch secund_pba_branch.py
+#  modificaciones en 
+# 1.- Se actualizo def cargar_inventario / ya funciona la ruta 
+# 2.- En proceso de modificar guarda_control(). 
 import os
 import json
 from datetime import datetime
@@ -155,16 +155,26 @@ def mostrar_inv_disp():
 
 
 def mostrar_inv_no_disp():
-    print(f"\n{COLOR_TITULO}=================================================")
-    print("------- INVENTARIO DE AUTOS NO DISPONIBLES -------")
-    print(f"================================================={COLOR_RESET} ")
+    print(f"\n{COLOR_TITULO}=====================================================================")
+    print("                 INVENTARIO DE AUTOS NO DISPONIBLES")
+    print(f"====================================================================={COLOR_RESET}")
+    
+    # Encabezado de la tabla alineado
+    # ID ocupa 4 espacios, Marca 12 espacios, Modelo 12 espacios
+    print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
+    print("-" * 69)
+    
     sum_disp = 0
     for auto in inventario:
         if not auto["disponible"]:
-            estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
-            print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
-            sum_disp = sum_disp + 1
-    print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")    
+            # Usamos marcadores de posición fijos (<12 significa alineado a la izquierda con 12 espacios)
+            # Nota: El estado se imprime al final para que los códigos ANSI de color no rompan la alineación
+            print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}Rentado{COLOR_RESET}")
+            sum_disp += 1
+            
+    print("-" * 69)
+    print(f"{COLOR_ADMIN} Total de autos rentados: {sum_disp}{COLOR_RESET}\n")
+ 
 
 def rentar_auto():
     mostrar_inv_disp()
@@ -199,43 +209,86 @@ def rentar_auto():
         row_space()
         
 def regresar_auto():
+    global inventario
+    global control
+    
+    limpiar_pantalla()
+    print(f"{COLOR_TITULO}=== REGRESAR AUTO RENTADO (NUEVA TRANSACCIÓN) ==={COLOR_RESET}\n")
+    
+    # 1. Filtrar solo autos rentados
+    rentados = [auto for auto in inventario if not auto["disponible"]]
+    if not rentados:
+        print(f"{COLOR_ERROR}No hay autos rentados en este momento.{COLOR_RESET}")
+        input("\nPresione Enter para continuar...")
+        return
+
+    # Mostrar la lista usando tu enfoque estilizado
     mostrar_inv_no_disp()
+    
     try:
-        id_regresa = int(input("\nIngrese el ID del auto que desea REGRESAR: "))
-        km_recorridos = float(input("Ingrese los kilómetros recorridos en este viaje: "))
-        for auto in inventario:
-            if auto["id"] == id_regresa:
-                if not auto["disponible"]: 
-
-                    auto["disponible"] = True
-                    auto["km"] = km_recorridos
-                    auto["venta"] = auto['dias'] * auto['precio_dia'] + km_recorridos
-
-                    limpiar_pantalla()
-                    print (f"\nkilometros recorridos" , km_recorridos)
-                    print(f"\ntotal a pagar es de: $ {auto['venta']}  por  {auto['dias']} dias de uso")
-                    auto["dias"] = 0
-                    auto["km"] = 0
-                    print(f"\n{COLOR_EXITO}¡Éxito! Auto regresado exitosamente: {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
-                    # lineas de control para conocer los valores de las variables 
-                    print ("c_id")
-                    print ("c_venta")
-                    row_space()                      #  enter para continuar
-                    guardar_inventario()
-                    return
-                else:
-                    limpiar_pantalla()
-                    print(f"\n{COLOR_ERROR}Este auto  (no está rentado).{COLOR_RESET}")
-                    row_space()
-                    return
-                    
-        limpiar_pantalla()
-        print(f"\n{COLOR_ERROR}El ID introducido no existe.{COLOR_RESET}")
-        row_space()
-                    
+        id_regresar = int(input("Ingrese el ID del auto a regresar: "))
     except ValueError:
-        print(f"\n{COLOR_ERROR}Por favor, introduzca un número válido.{COLOR_RESET}")
-        row_space()
+        print(f"{COLOR_ERROR}ID inválido. Debe ser un número.{COLOR_RESET}")
+        input("\nPresione Enter para continuar...")
+        return
+
+    # 2. Buscar el auto en el inventario general
+    auto_encontrado = None
+    for auto in inventario:
+        if auto["id"] == id_regresar and not auto["disponible"]:
+            auto_encontrado = auto
+            break
+
+    if auto_encontrado:
+        try:
+            dias = int(input(f"¿Cuántos días se rentó el {auto_encontrado['marca']}? "))
+            km_nuevos = int(input("¿Cuántos kilómetros recorrió? "))
+            if dias <= 0 or km_nuevos < 0:
+                print(f"{COLOR_ERROR}Valores inválidos. No se admiten números negativos o días en 0.{COLOR_RESET}")
+                input("\nPresione Enter para continuar...")
+                return
+        except ValueError:
+            print(f"{COLOR_ERROR}Entrada inválida. Ingrese números enteros.{COLOR_RESET}")
+            input("\nPresione Enter para continuar...")
+            return
+
+        # 3. Calcular costos
+        costo_total = auto_encontrado["precio_dia"] * dias
+        fecha_actual = datetime.now().strftime("%d/%m/%Y")
+
+        # 4. Actualizar estado en INVENTARIO (Estado actual)
+        auto_encontrado["disponible"] = True
+        auto_encontrado["dias"] += dias
+        auto_encontrado["km"] += km_nuevos
+        auto_encontrado["venta"] += costo_total
+
+        # 5. CREAR UN REGISTRO NUEVO E INDEPENDIENTE EN CONTROL (Historial Permanente)
+        num_transaccion = len(control) + 1  # Auto-incrementa el número de ticket
+        
+        nueva_renta = {
+            "transaccion_id": num_transaccion,
+            "c_id": auto_encontrado["id"],
+            "c_marca": auto_encontrado["marca"],
+            "c_modelo": auto_encontrado["modelo"],
+            "km_recorridos": km_nuevos,
+            "c_venta_total": costo_total,
+            "c_fecha_renta": fecha_actual,
+            "c_dias": dias
+        }
+        control.append(nueva_renta) # Agrega la nueva fila al final de la lista
+
+        # 6. Guardar en los dos archivos JSON
+        guardar_inventario()
+        guarda_control()
+
+        print(f"\n{COLOR_EXITO}¡Auto regresado con éxito!{COLOR_RESET}")
+        print(f"Ticket N°: {num_transaccion} | Total cobrado: {COLOR_EXITO}${costo_total}{COLOR_RESET}")
+        
+    else:
+        print(f"{COLOR_ERROR}El ID ingresado no corresponde a un vehículo rentado.{COLOR_RESET}")
+        
+    input("\nPresione Enter para continuar...")
+
 
 # ===========================================================================================================
 # SECCIÓN OCULTA: ADMINISTRACIÓN

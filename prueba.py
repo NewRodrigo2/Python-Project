@@ -129,27 +129,34 @@ def mostrar_inventario():
     print(f"\n{COLOR_TITULO}=================================================")
     print("------- INVENTARIO DE AUTOS -------")
     print(f"================================================={COLOR_RESET} ")
+    print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
+    print("-" * 69)
+
     for auto in inventario:
         estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
-        print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {COLOR_ADMIN}{auto['dias']} dias{COLOR_RESET}")
+        # print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {COLOR_ADMIN}{auto['dias']} dias{COLOR_RESET}")
+        print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}{estado}{COLOR_RESET}")
 
 def mostrar_informe():                                                                  # >>>>>>>> def para mostrar el informe 
     print(f"\n{COLOR_TITULO}=================================================")
     print("------- INFORME DE AUTOS  -------")
     print(f"================================================={COLOR_RESET} ")
     for auto_c in control:
-        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto_c["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
+        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto_c["disponible"] else f"{COLOR_ERROR}{estado}{COLOR_RESET}"
         print(f"[{auto_c['id']}] {auto_c['venta_total']} {auto_c['fecha_renta']} {auto_c['dias']}{COLOR_RESET}")        
 
 def mostrar_inv_disp():
     print(f"\n{COLOR_TITULO}=================================================")
     print("------- INVENTARIO DE AUTOS DISPONIBLES -------")
     print(f"================================================={COLOR_RESET} ")
-    sum_disp = 0
+    print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
+    print("-" * 69)
+    sum_disp = 0              # inicializa variable
     for auto in inventario:
         if auto["disponible"]:
             estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
-            print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
+            print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}estado{COLOR_RESET}")
+            # print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado})")
             sum_disp = sum_disp + 1
     print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")
 

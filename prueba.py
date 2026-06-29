@@ -53,6 +53,11 @@ AUTO_CONTROL = [
 control = []          # >>>>>>>>>>>>>>>>>>>>>>>> 
 inventario = []      #  Arreglo vacio
 
+def dibu_enca(titu, ancho, simbolo, color_text="\033[94m"):
+    print(f"{color_text}{simbolo * ancho}\033[0m ")
+    print(f"{color_text}{titu:^{ancho}}\033[0m")
+    print(f"{color_text}{simbolo * ancho}\033[0m ")
+
 def cargar_inventario():
     """Lee los archivos JSON de inventario y control. Si no existen, los crea."""
     global inventario  
@@ -126,9 +131,7 @@ def row_space():
     wait = input(f"\n {COLOR_TITULO}ENTER PARA CONTINUAR ..{COLOR_RESET} ")
 
 def mostrar_inventario():
-    print(f"\n{COLOR_TITULO}=================================================")
-    print("------- INVENTARIO DE AUTOS -------")
-    print(f"================================================={COLOR_RESET} ")
+    dibu_enca("INVENTARIO DE AUTOS", 70, "=")                                          #  dibujando enca
     print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
     print("-" * 69)
 
@@ -146,9 +149,9 @@ def mostrar_informe():                                                          
         print(f"[{auto_c['id']}] {auto_c['venta_total']} {auto_c['fecha_renta']} {auto_c['dias']}{COLOR_RESET}")        
 
 def mostrar_inv_disp():
-    print(f"\n{COLOR_TITULO}=================================================")
+    print(f"\n{COLOR_TITULO}{'=' * 69}")
     print("------- INVENTARIO DE AUTOS DISPONIBLES -------")
-    print(f"================================================={COLOR_RESET} ")
+    print(f"{'=' * 69}{COLOR_RESET} ")
     print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
     print("-" * 69)
     sum_disp = 0              # inicializa variable
@@ -162,14 +165,14 @@ def mostrar_inv_disp():
 
 
 def mostrar_inv_no_disp():
-    print(f"\n{COLOR_TITULO}=====================================================================")
+    print(f"{COLOR_TITULO}{'=' * 69}")
     print("                 INVENTARIO DE AUTOS NO DISPONIBLES")
-    print(f"====================================================================={COLOR_RESET}")
+    print(f"{'=' * 69}{COLOR_RESET}")
     
     # Encabezado de la tabla alineado
     # ID ocupa 4 espacios, Marca 12 espacios, Modelo 12 espacios
     print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
-    print("-" * 69)
+    print(f"{COLOR_ADMIN}{'=' * 69}{COLOR_RESET}")
     
     sum_disp = 0
     for auto in inventario:
@@ -187,8 +190,7 @@ def rentar_auto():
     mostrar_inv_disp()
     try:
         id_renta = int(input("\nIngrese el ID del auto que desea RENTAR: "))
-        dias_p_renta = int(input("\nDias que desea rentar:"))
-       
+        dias_p_renta = int(0)
         for auto in inventario:
             if auto["id"] == id_renta:
                 if auto["disponible"]:
@@ -196,11 +198,10 @@ def rentar_auto():
                     auto["dias"] = dias_p_renta
                     auto["venta"] = (dias_p_renta*auto["precio_dia"])
                     auto["km"] = 0
-                    # auto["venta"] = 0
                     guardar_inventario()
-                    limpiar_pantalla()
+                    dias_p_renta = int(input("\nDias que desea rentar:"))
                     print(f"\n{COLOR_EXITO}¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
-                    print(f"\n{COLOR_EXITO}Presupuesto estimado en dias / costo por dia: ${dias_p_renta * auto['precio_dia']}{COLOR_RESET}")
+                    print(f"\n{COLOR_EXITO}Presupuesto estimado: ${dias_p_renta * auto['precio_dia']}{COLOR_RESET}")
                     row_space()
                     return
                 else:
@@ -220,7 +221,7 @@ def regresar_auto():
     global control
     
     limpiar_pantalla()
-    print(f"{COLOR_TITULO}=== REGRESAR AUTO RENTADO (NUEVA TRANSACCIÓN) ==={COLOR_RESET}\n")
+    # print(f"{COLOR_TITULO}=== REGRESAR AUTO RENTADO (NUEVA TRANSACCIÓN) ==={COLOR_RESET}\n")
     
     # 1. Filtrar solo autos rentados
     rentados = [auto for auto in inventario if not auto["disponible"]]
@@ -233,10 +234,10 @@ def regresar_auto():
     mostrar_inv_no_disp()
     
     try:
-        id_regresar = int(input("Ingrese el ID del auto a regresar: "))
+        id_regresar = int(input(" \n      Ingrese el ID del auto a regresar:"))
     except ValueError:
         print(f"{COLOR_ERROR}ID inválido. Debe ser un número.{COLOR_RESET}")
-        input("\nPresione Enter para continuar...")
+        input("\n      Presione Enter para continuar...")
         return
 
     # 2. Buscar el auto en el inventario general
@@ -248,8 +249,8 @@ def regresar_auto():
 
     if auto_encontrado:
         try:
-            dias = int(input(f"¿Cuántos días se rentó el {auto_encontrado['marca']}? "))
-            km_nuevos = int(input("¿Cuántos kilómetros recorrió? "))
+            dias = int(input(f"\n¿Cuántos días UTILIZO el {auto_encontrado['marca']}?"))
+            km_nuevos = int(input("\n¿Cuántos kilómetros recorrió?"))
             if dias <= 0 or km_nuevos < 0:
                 print(f"{COLOR_ERROR}Valores inválidos. No se admiten números negativos o días en 0.{COLOR_RESET}")
                 input("\nPresione Enter para continuar...")
@@ -370,10 +371,11 @@ def menu_principal():
     cargar_inventario()
     while True:
         limpiar_pantalla()
-        print(f"{COLOR_TITULO}\n=====================================")
-        print("   BIENVENIDO A MI CARRITO EN RENTA   ")
-        print(f"====================================={COLOR_RESET}")
-        print("1. Ver autos disponibles")
+        dibu_enca("BIENVENIDO A MI CARRITO EN RENTA", 70, "=")
+        # print(f"{COLOR_TITULO}\n=====================================")
+        # print("   BIENVENIDO A MI CARRITO EN RENTA   ")
+        # print(f"====================================={COLOR_RESET}")
+        print(f"\n1. Ver autos disponibles")
         print("2. Rentar un auto")
         print("3. Entregar un auto")
         print("4. Salir")

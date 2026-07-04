@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "precio_dia": 45,
+        "disponible": true,
+        "dias": 89,
+        "km": 567,
+        "venta": 4005
+    },
+    {
+        "id": 2,
+        "marca": "Nissan",
+        "modelo": "Versa",
+        "precio_dia": 50,
+        "disponible": false,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    },
+    {
+        "id": 3,
+        "marca": "Chevrolet",
+        "modelo": "Aveo",
+        "precio_dia": 40,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 10.0
+    },
+    {
+        "id": 4,
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "precio_dia": 34.0,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    }
+]

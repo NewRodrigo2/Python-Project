@@ -16,7 +16,8 @@ COLOR_RESET = "\033[0m"    # Volver al color normal
 
 #................................................................................
 # RUTA SOLICITADA: Se usa os.path.join para evitar problemas con las barras invertidas en Windows
-CARPETA_DATOS = r"D:\programacion\python"
+# CARPETA_DATOS = r"D:\programacion\python"
+CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
 # CARPETA_DATOS = os.path.abspath(r"E:\Python\Python Project\datos")
 ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
 ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 

@@ -1,8 +1,5 @@
-# ESTE ARCHIVO FUE MODIFICADO EL 27/06/26 
+# MODIFICADO EL 27/06/26 
 # C:\Users\danie\Documents\Python Project> git switch secund_pba_branch.py
-#  modificaciones en 
-# 1.- Se actualizo def cargar_inventario / ya funciona la ruta 
-# 2.- En proceso de modificar guarda_control(). 
 import os
 import json
 from datetime import datetime
@@ -13,7 +10,10 @@ COLOR_EXITO = "\033[92m"   # Verde
 COLOR_ERROR = "\033[91m"   # Rojo
 COLOR_ADMIN = "\033[95m"   # Morado (Para el menú de administrador)
 COLOR_RESET = "\033[0m"    # Volver al color normal
-
+AMARILLO = "\033[33m"
+CIAN = "\033[36m"
+CIAN_BRILLANTE = "\033[96m"
+BG_CIAN = "\033[46m"
 #................................................................................
 # RUTA SOLICITADA: Se usa os.path.join para evitar problemas con las barras invertidas en Windows
 # CARPETA_DATOS = r"D:\programacion\python"
@@ -31,10 +31,8 @@ ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>
 #CARPETA_DATOS = os.path.join(CARPETA_PROYECTO, "datos")
 #ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
 
-
 CLAVE_ADMIN = "admin123" # Contraseña para la opción oculta
 
-# Inventario inicial por defecto (solo se usa si el archivo JSON no existe)
 INVENTARIO_DEFECTO = [
     {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "dias": 0, "km": 0, "venta": 0},
     {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "dias": 0, "km": 0, "venta": 0},
@@ -53,12 +51,14 @@ AUTO_CONTROL = [
 ]
 control = []          # >>>>>>>>>>>>>>>>>>>>>>>> 
 inventario = []      #  Arreglo vacio
-
+sp = ('=' * 10)
 def dibu_enca(titu, ancho, simbolo, color_text="\033[94m"):
+    espacios = '    '
+    print (espacios)
     print(f"{color_text}{simbolo * ancho}\033[0m ")
     print(f"{color_text}{titu:^{ancho}}\033[0m")
     print(f"{color_text}{simbolo * ancho}\033[0m ")
-
+    
 def cargar_inventario():
     """Lee los archivos JSON de inventario y control. Si no existen, los crea."""
     global inventario  
@@ -72,9 +72,9 @@ def cargar_inventario():
             row_space()
 
         # Diagnóstico temporal de archivos existentes
-        print(f"\nVerificando carpeta: {CARPETA_DATOS}")
-        print("Archivos encontrados:", os.listdir(CARPETA_DATOS))
-        row_space()
+        # print(f"\nVerificando carpeta: {CARPETA_DATOS}")
+        # print("Archivos encontrados:", os.listdir(CARPETA_DATOS))
+        # row_space()
 
         # 2. Manejo de ARCHIVO_DATOS (Inventario)
         if os.path.exists(ARCHIVO_DATOS):
@@ -90,6 +90,8 @@ def cargar_inventario():
         if os.path.exists(ARCHIVO_CONTROL):
             with open(ARCHIVO_CONTROL, "r", encoding="utf-8") as archivo_control:
                 control = json.load(archivo_control)
+            if len(control) > 0 and "c_marca" not in control[0]:
+                control.pop(0)
             print("✓ Archivo control.json cargado con éxito.")
         else:
             control = AUTO_CONTROL  # Inicializa con tu estructura base de control
@@ -103,7 +105,6 @@ def cargar_inventario():
         control = AUTO_CONTROL
         print(f"\n{COLOR_ERROR}Error crítico al cargar archivos ({e}). Usando datos temporales.{COLOR_RESET}")
         row_space()
-
 
 def guardar_inventario():
     """Guarda el estado actual del inventario en el archivo JSON."""
@@ -129,25 +130,38 @@ def limpiar_pantalla():
 def row_space():
     print(".")
     print(".")
-    wait = input(f"\n {COLOR_TITULO}ENTER PARA CONTINUAR ..{COLOR_RESET} ")
+    label = "ENTER PARA CONTINUAR ..."
+    wait = input(f"\n {AMARILLO}{label:^{50}}{COLOR_RESET} ")
 
 def mostrar_inventario():
-    dibu_enca("INVENTARIO DE AUTOS", 70, "=")                                          #  dibujando enca
+    dibu_enca("INVENTARIO DE AUTOS", 70, "═")                                          #  dibujando enca
     print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
     print("-" * 69)
 
     for auto in inventario:
-        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
-        # print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {COLOR_ADMIN}{auto['dias']} dias{COLOR_RESET}")
-        print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}{estado}{COLOR_RESET}")
+       estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
+       # print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {COLOR_ADMIN}{auto['dias']} dias{COLOR_RESET}")
+       print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}{estado}{COLOR_RESET}")
 
-def mostrar_informe():                                                                  # >>>>>>>> def para mostrar el informe 
-    print(f"\n{COLOR_TITULO}=================================================")
-    print("------- INFORME DE AUTOS  -------")
-    print(f"================================================={COLOR_RESET} ")
-    for auto_c in control:
-        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto_c["disponible"] else f"{COLOR_ERROR}{estado}{COLOR_RESET}"
-        print(f"[{auto_c['id']}] {auto_c['venta_total']} {auto_c['fecha_renta']} {auto_c['dias']}{COLOR_RESET}")        
+def mostrar_informe():
+    limpiar_pantalla()
+    cont_lineas = 0
+    space = '    '                                                     # >>>>>>>> def para mostrar el informe 
+    dibu_enca("INFORME  DE AUTOS RENTADOS", 90, "═")                                       #  dibujando enca
+    print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
+          f"{'Fecha de renta':<14} | {'Dias':<4}"
+    )
+    print("-" * 90)
+    for auto in control:
+        print(
+        f"{space}{auto['transaccion_id']:^7}|{auto['c_id']:<3} | {auto['c_marca']:<12} | {auto['c_modelo']:<12} | "
+        f"{auto['km_recorridos']:^12} | {auto['c_venta_total']:<6} | {auto['c_fecha_renta']:^14} | "
+        f"{auto['c_dias']:<4}"
+    )
+        cont_lineas += 1
+        if cont_lineas == 20:
+            row_space()
+            cont_lineas == 0
 
 def mostrar_inv_disp():
     print(f"\n{COLOR_TITULO}{'=' * 69}")
@@ -164,15 +178,15 @@ def mostrar_inv_disp():
             sum_disp = sum_disp + 1
     print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")
 
-
 def mostrar_inv_no_disp():
+    label = 'NVENTARIO DE AUTOS NO DISPONIBLES'
     print(f"{COLOR_TITULO}{'=' * 69}")
-    print("                 INVENTARIO DE AUTOS NO DISPONIBLES")
+    print(f"{label:^{69}}")
     print(f"{'=' * 69}{COLOR_RESET}")
     
     # Encabezado de la tabla alineado
     # ID ocupa 4 espacios, Marca 12 espacios, Modelo 12 espacios
-    print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
+    print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Presupuesto inicial")
     print(f"{COLOR_ADMIN}{'=' * 69}{COLOR_RESET}")
     
     sum_disp = 0
@@ -180,18 +194,21 @@ def mostrar_inv_no_disp():
         if not auto["disponible"]:
             # Usamos marcadores de posición fijos (<12 significa alineado a la izquierda con 12 espacios)
             # Nota: El estado se imprime al final para que los códigos ANSI de color no rompan la alineación
-            print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}Rentado{COLOR_RESET}")
+            print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_EXITO}{auto['venta']:<11} |{COLOR_RESET}")
             sum_disp += 1
             
     print("-" * 69)
     print(f"{COLOR_ADMIN} Total de autos rentados: {sum_disp}{COLOR_RESET}\n")
  
-
 def rentar_auto():
     mostrar_inv_disp()
+    pres_ini = 0
+        
     try:
-        id_renta = int(input("\nIngrese el ID del auto que desea RENTAR: "))
+        print(f"{"=" * 50}")
+        id_renta = int(input("\nIngrese el ID del auto que desea RENTAR:.. "))
         dias_p_renta = int(0)
+        dias_p_renta = int(input(f"\nDias que desea rentar:..  "))
         for auto in inventario:
             if auto["id"] == id_renta:
                 if auto["disponible"]:
@@ -200,9 +217,9 @@ def rentar_auto():
                     auto["venta"] = (dias_p_renta*auto["precio_dia"])
                     auto["km"] = 0
                     guardar_inventario()
-                    dias_p_renta = int(input("\nDias que desea rentar:"))
+                    pres_ini = dias_p_renta * auto['precio_dia']
                     print(f"\n{COLOR_EXITO}¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}.{COLOR_RESET}")
-                    print(f"\n{COLOR_EXITO}Presupuesto estimado: ${dias_p_renta * auto['precio_dia']}{COLOR_RESET}")
+                    print(f"\n{COLOR_EXITO}Presupuesto estimado: ${pres_ini:,.2f}{COLOR_RESET}")
                     row_space()
                     return
                 else:
@@ -220,22 +237,22 @@ def rentar_auto():
 def regresar_auto():
     global inventario
     global control
+    label = "¿Cuántos kilómetros recorrió?  .. "
+    label2 = "Ingrese el ID del auto a regresar: ..  "
     
     limpiar_pantalla()
     # print(f"{COLOR_TITULO}=== REGRESAR AUTO RENTADO (NUEVA TRANSACCIÓN) ==={COLOR_RESET}\n")
     
-    # 1. Filtrar solo autos rentados
     rentados = [auto for auto in inventario if not auto["disponible"]]
     if not rentados:
         print(f"{COLOR_ERROR}No hay autos rentados en este momento.{COLOR_RESET}")
         input("\nPresione Enter para continuar...")
         return
 
-    # Mostrar la lista usando tu enfoque estilizado
-    mostrar_inv_no_disp()
+    mostrar_inv_no_disp()                             # Mostrar la lista usando tu enfoque estilizado
     
     try:
-        id_regresar = int(input(" \n      Ingrese el ID del auto a regresar:"))
+        id_regresar = int(input(f" \n {COLOR_EXITO}{label2:^{30}}{COLOR_RESET}"))
     except ValueError:
         print(f"{COLOR_ERROR}ID inválido. Debe ser un número.{COLOR_RESET}")
         input("\n      Presione Enter para continuar...")
@@ -250,24 +267,39 @@ def regresar_auto():
 
     if auto_encontrado:
         try:
-            dias = int(input(f"\n¿Cuántos días UTILIZO el {auto_encontrado['marca']}?"))
-            km_nuevos = int(input("\n¿Cuántos kilómetros recorrió?"))
+            dias = int(input(f"\n¿Cuántos días UTILIZO el {auto_encontrado['marca']} {auto_encontrado['modelo']}?  "))
+            km_nuevos = int(input(f"\n  {CIAN_BRILLANTE}{label:^{30}}{COLOR_RESET}"))
             if dias <= 0 or km_nuevos < 0:
                 print(f"{COLOR_ERROR}Valores inválidos. No se admiten números negativos o días en 0.{COLOR_RESET}")
                 input("\nPresione Enter para continuar...")
                 return
+            
+ 
         except ValueError:
+            d_dias = 0
             print(f"{COLOR_ERROR}Entrada inválida. Ingrese números enteros.{COLOR_RESET}")
             input("\nPresione Enter para continuar...")
             return
 
         # 3. Calcular costos
-        costo_total = auto_encontrado["precio_dia"] * dias
+        if auto_encontrado["dias"] < dias:
+                d_dias = dias
+        else:
+                d_dias = auto_encontrado["dias"]
+
+        print (f"los dias iniciales son .. {auto_encontrado["dias"]}")
+        print (f"los dias finales   son .. {dias}")
+        print (f"por lo tanto el combro debe ser sobre .. {d_dias}" )
+        print ("Mas un dolar por kilometro ...", km_nuevos)                
+        costo_total = auto_encontrado["precio_dia"] * d_dias + km_nuevos
+        print ("Presupuesto actualizado es: ...", costo_total)
+        row_space()
+
         fecha_actual = datetime.now().strftime("%d/%m/%Y")
 
         # 4. Actualizar estado en INVENTARIO (Estado actual)
         auto_encontrado["disponible"] = True
-        auto_encontrado["dias"] += dias
+        auto_encontrado["dias"] = d_dias
         auto_encontrado["km"] += km_nuevos
         auto_encontrado["venta"] += costo_total
 
@@ -291,31 +323,14 @@ def regresar_auto():
         guarda_control()
 
         print(f"\n{COLOR_EXITO}¡Auto regresado con éxito!{COLOR_RESET}")
-        print(f"Ticket N°: {num_transaccion} | Total cobrado: {COLOR_EXITO}${costo_total}{COLOR_RESET}")
+        print(f"Ticket N°: {num_transaccion} | Total cobrado: {COLOR_EXITO}${costo_total:,.2f}{COLOR_RESET}")
         
     else:
         print(f"{COLOR_ERROR}El ID ingresado no corresponde a un vehículo rentado.{COLOR_RESET}")
         
     input("\nPresione Enter para continuar...")
 
-
-# ===========================================================================================================
-# SECCIÓN OCULTA: ADMINISTRACIÓN
-# ===========================================================================================================
-def menu_administrador():
-    """Submenú protegido para agregar vehículos nuevos."""
-    while True:
-        limpiar_pantalla()
-        print(f"{COLOR_ADMIN}=================================")
-        print("    PANEL DE ADMINISTRACIÓN      ")
-        print(f"================================={COLOR_RESET}")
-        print("1. Agregar nuevo auto al inventario")
-        print("2. Ver informe de autos ")
-        print("9. Volver al menú principal")
-        
-        opcion = input("\nSeleccione una opción (1-2): ")
-        
-        if opcion == "1":
+def agrega_auto():
             limpiar_pantalla()
             print(f"{COLOR_ADMIN}========================================")
             print("----- REGISTRAR NUEVO VEHÍCULO ----")
@@ -331,7 +346,7 @@ def menu_administrador():
                 if marca == "" or modelo == "":
                     print(f"\n{COLOR_ERROR}La marca y el modelo no pueden estar vacíos.{COLOR_RESET}")
                     row_space()
-                    continue
+                    # continue
                 
                 # Autogenerar el ID buscando el número más alto actual + 1
                 nuevo_id = max([auto["id"] for auto in inventario]) + 1 if inventario else 1
@@ -357,31 +372,82 @@ def menu_administrador():
                 print(f"\n{COLOR_ERROR}Error: El precio debe ser un número válido.{COLOR_RESET}")
                 row_space()
 
-        elif opcion == "2":
-            print ("Informe de autos rentados")
+def eliminar_renta_admin():
+    global control
+    limpiar_pantalla()
+    print(f"{COLOR_ERROR}=== ELIMINAR REGISTRO DE CONTROL (ACCIÓN CRÍTICA) ==={COLOR_RESET}\n")
+    
+    if not control:
+        print(f"{COLOR_ERROR}No hay registros para eliminar.{COLOR_RESET}")
+        input("\nPresione Enter para continuar...")
+        return
 
-                
-        elif opcion == "9":    # ----------------  9 
+    try:
+        id_ticket = int(input("Ingrese el N° de Ticket que desea BORRAR permanentemente: "))
+    except ValueError:
+        print(f"{COLOR_ERROR}Entrada inválida.{COLOR_RESET}")
+        input("\nPresione Enter para continuar...")
+        return
+
+    ticket_encontrado = None
+    for renta in control:
+        if renta["transaccion_id"] == id_ticket:
+            ticket_encontrado = renta
+            break
+
+    if ticket_encontrado:
+        print(f"\n{COLOR_ERROR}¿Está seguro de eliminar la renta del {ticket_encontrado['c_marca']} por ${ticket_encontrado['c_venta_total']}?{COLOR_RESET}")
+        confirmar = input("Escriba 'SI' para confirmar el borrado: ").strip().upper()
+        
+        if confirmar == "SI" or confirmar == "SÍ":
+            # Eliminar de la lista de Python
+            control.remove(ticket_encontrado)
+            # Guardar la lista limpia en el archivo .json
+            guarda_control()
+            print(f"\n{COLOR_EXITO}✓ Registro eliminado correctamente del archivo JSON.{COLOR_RESET}")
+        else:
+            print("\nOperación cancelada por el usuario.")
+    else:
+        print(f"{COLOR_ERROR}El ticket N° {id_ticket} no existe.{COLOR_RESET}")
+        
+    input("\nPresione Enter para continuar...")
+
+def menu_administrador():
+    """Submenú protegido para agregar vehículos nuevos."""
+    label1 = ("1. Agregar nuevo auto al inventario\n")
+    label2 = ("2. Ver informe de autos            \n")
+    label4 = ("3. Eliminar un tikect del control  \n")
+    label3 = ("9. Volver al menú principal        \n")
+    while True:
+        limpiar_pantalla()
+        dibu_enca("PANEL DE ADMINISTRACIÓN", 80, "=")
+        print(f"{AMARILLO}{label1:^{80}}")
+        print(f"{AMARILLO}{label2:^{80}}")
+        print(f"{AMARILLO}{label3:^{80}}{COLOR_RESET}")
+        opcion = input(f"\n{COLOR_EXITO}Seleccione una opción (1-2):{COLOR_RESET}")
+        
+        if opcion == "1":
+            agrega_auto()
+        elif opcion == "2":
+            mostrar_informe()
+        elif opcion == "9"  or opcion == "":    # ----------------  9 
             break
         else:
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")
             row_space()
 
-# ===========================================================================================================
 def menu_principal():
     cargar_inventario()
+    veces = 15
     while True:
         limpiar_pantalla()
         dibu_enca("BIENVENIDO A MI CARRITO EN RENTA", 70, "=")
-        # print(f"{COLOR_TITULO}\n=====================================")
-        # print("   BIENVENIDO A MI CARRITO EN RENTA   ")
-        # print(f"====================================={COLOR_RESET}")
-        print(f"\n1. Ver autos disponibles")
-        print("2. Rentar un auto")
-        print("3. Entregar un auto")
-        print("4. Salir")
+        print(f"{' '* veces}1. Ver autos disponibles\n")
+        print(f"{' '* veces}2. Rentar un auto\n")
+        print(f"{' '* veces}3. Entregar un auto\n")
+        print(f"{' '* veces}4. Salir")
         
-        opcion = input("\nSeleccione una opción (1-4): ")
+        opcion = input(f"\n {AMARILLO}Seleccione una opción (1-4): {COLOR_RESET}")
         
         if opcion == "1":
             limpiar_pantalla()
@@ -397,7 +463,6 @@ def menu_principal():
             limpiar_pantalla()
             print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
             break
-        # TRUCO: Si el usuario escribe la contraseña secreta, entra al menú administrador
         elif opcion == CLAVE_ADMIN:
             menu_administrador()
         else:

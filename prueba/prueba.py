@@ -128,8 +128,6 @@ def limpiar_pantalla():
         os.system('clear')
         
 def row_space():
-    print(".")
-    print(".")
     label = "ENTER PARA CONTINUAR ..."
     wait = input(f"\n {AMARILLO}{label:^{50}}{COLOR_RESET} ")
 
@@ -145,23 +143,40 @@ def mostrar_inventario():
 
 def mostrar_informe():
     limpiar_pantalla()
+    # Control de codigo, plan: conocer el tamano del archivo .......................
+    tamano = int(len(control) / 10)
+    tamano += 1
     cont_lineas = 0
-    space = '    '                                                     # >>>>>>>> def para mostrar el informe 
-    dibu_enca("INFORME  DE AUTOS RENTADOS", 90, "═")                                       #  dibujando enca
-    print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
-          f"{'Fecha de renta':<14} | {'Dias':<4}"
-    )
-    print("-" * 90)
+    a = 1
+    space = '    ' 
+    def sub_enca():
+        print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
+            f"{'Fecha de renta':<14} | {'Dias':<4}"
+        )
+        print("-" * 95)
+
     for auto in control:
+        if cont_lineas == 0:
+            limpiar_pantalla()
+            dibu_enca("INFORME  DE AUTOS RENTADOS", 95, "═")                       #  dibujando enca
+            sub_enca()
+
         print(
         f"{space}{auto['transaccion_id']:^7}|{auto['c_id']:<3} | {auto['c_marca']:<12} | {auto['c_modelo']:<12} | "
         f"{auto['km_recorridos']:^12} | {auto['c_venta_total']:<6} | {auto['c_fecha_renta']:^14} | "
-        f"{auto['c_dias']:<4}"
-    )
+        f"{auto['c_dias']:<4}")                                       
+                
         cont_lineas += 1
-        if cont_lineas == 20:
+        if cont_lineas == 10:
+            # sub_enca()
+            print (f"{COLOR_EXITO}Pagina {a} de {tamano} {COLOR_RESET}")
             row_space()
-            cont_lineas == 0
+            # limpiar_pantalla()
+            cont_lineas = 0
+            a += 1
+
+    row_space()
+    limpiar_pantalla()
 
 def mostrar_inv_disp():
     print(f"\n{COLOR_TITULO}{'=' * 69}")
@@ -412,24 +427,50 @@ def eliminar_renta_admin():
         
     input("\nPresione Enter para continuar...")
 
+def informe_rentas():
+    space = '   '
+    t1 = 0
+    dibu_enca("INFRME GLOBAL DE AUTOS RENTADOS", 90, "=",)
+    print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
+        f"{'Fecha de renta':<14} | {'Dias':<4}"
+    )
+    print("-" * 95)
+    row_space()
+    for auto in control:
+        if auto[id] == "1":
+            t1 +=1
+        if auto[id] == "2":
+            t1 +=1
+
 def menu_administrador():
     """Submenú protegido para agregar vehículos nuevos."""
-    label1 = ("1. Agregar nuevo auto al inventario\n")
-    label2 = ("2. Ver informe de autos            \n")
-    label4 = ("3. Eliminar un tikect del control  \n")
-    label3 = ("9. Volver al menú principal        \n")
+    label1 = ("1. Agregar nuevo auto al inventario \n")
+    label2 = ("2. Ver listado de rentas realizadas \n")
+    label3 = ("3. Eliminar un tikect del control   \n")
+    label4 = ("4. Informe de  Rentas               \n")
+    label5 = ("5. Utilerias                        \n")
+    label9 = ("9. Volver al menú principal         \n")
     while True:
         limpiar_pantalla()
         dibu_enca("PANEL DE ADMINISTRACIÓN", 80, "=")
         print(f"{AMARILLO}{label1:^{80}}")
         print(f"{AMARILLO}{label2:^{80}}")
-        print(f"{AMARILLO}{label3:^{80}}{COLOR_RESET}")
-        opcion = input(f"\n{COLOR_EXITO}Seleccione una opción (1-2):{COLOR_RESET}")
-        
+        print(f"{AMARILLO}{label3:^{80}}")
+        print(f"{AMARILLO}{label4:^{80}}")
+        print(f"{AMARILLO}{label5:^{80}}")
+        print(f"{AMARILLO}{label9:^{80}}{COLOR_RESET}")
+        opcion = input(f"\n{COLOR_EXITO}                    Seleccione una opción (1-2):    {COLOR_RESET}")
+          
         if opcion == "1":
             agrega_auto()
         elif opcion == "2":
             mostrar_informe()
+        elif opcion == "3":
+             eliminar_renta_admin()
+        elif opcion == "4":
+             None
+        elif opcion == "5":
+             None
         elif opcion == "9"  or opcion == "":    # ----------------  9 
             break
         else:

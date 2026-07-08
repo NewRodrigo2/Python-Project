@@ -4,10 +4,10 @@
         "marca": "Toyota",
         "modelo": "Yaris",
         "precio_dia": 45,
-        "disponible": true,
-        "dias": 1,
-        "km": 100,
-        "venta": 595
+        "disponible": false,
+        "dias": 6,
+        "km": 0,
+        "venta": 270
     },
     {
         "id": 2,

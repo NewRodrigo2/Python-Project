@@ -1,22 +1,5 @@
 [
     {
-        "c_id": 1,
-        "km_recorridos": 0,
-        "c_venta_total": 0,
-        "c_fecha_renta": "01/01/2026",
-        "c_dias": 0
-    },
-    {
-        "transaccion_id": 2,
-        "c_id": 1,
-        "c_marca": "Toyota",
-        "c_modelo": "Yaris",
-        "km_recorridos": 567,
-        "c_venta_total": 4005,
-        "c_fecha_renta": "04/07/2026",
-        "c_dias": 89
-    },
-    {
         "transaccion_id": 3,
         "c_id": 2,
         "c_marca": "Nissan",
@@ -24,7 +7,9 @@
         "km_recorridos": 678,
         "c_venta_total": 2250,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 45
+        "c_dias": 45,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 4,
@@ -34,7 +19,9 @@
         "km_recorridos": 678,
         "c_venta_total": 2520,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 56
+        "c_dias": 56,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 5,
@@ -44,7 +31,9 @@
         "km_recorridos": 789,
         "c_venta_total": 2278.0,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 67
+        "c_dias": 67,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 6,
@@ -54,7 +43,9 @@
         "km_recorridos": 234,
         "c_venta_total": 1530,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 34
+        "c_dias": 34,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 7,
@@ -64,7 +55,9 @@
         "km_recorridos": 456,
         "c_venta_total": 1530,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 34
+        "c_dias": 34,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 8,
@@ -74,7 +67,9 @@
         "km_recorridos": 344,
         "c_venta_total": 2250,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 45
+        "c_dias": 45,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 9,
@@ -84,7 +79,9 @@
         "km_recorridos": 456,
         "c_venta_total": 2240,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 56
+        "c_dias": 56,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 10,
@@ -94,7 +91,9 @@
         "km_recorridos": 567,
         "c_venta_total": 2278.0,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 67
+        "c_dias": 67,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 11,
@@ -104,7 +103,9 @@
         "km_recorridos": 90,
         "c_venta_total": 3900,
         "c_fecha_renta": "04/07/2026",
-        "c_dias": 78
+        "c_dias": 78,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 12,
@@ -114,7 +115,9 @@
         "km_recorridos": 897,
         "c_venta_total": 4500,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 90
+        "c_dias": 90,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 13,
@@ -124,7 +127,9 @@
         "km_recorridos": 89,
         "c_venta_total": 2520,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 56
+        "c_dias": 56,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 14,
@@ -134,7 +139,9 @@
         "km_recorridos": 789,
         "c_venta_total": 2025,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 45
+        "c_dias": 45,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 15,
@@ -144,7 +151,9 @@
         "km_recorridos": 788,
         "c_venta_total": 2652.0,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 78
+        "c_dias": 78,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 16,
@@ -154,7 +163,9 @@
         "km_recorridos": 1,
         "c_venta_total": 45,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 17,
@@ -164,7 +175,9 @@
         "km_recorridos": 2,
         "c_venta_total": 90,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 2
+        "c_dias": 2,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 18,
@@ -174,7 +187,9 @@
         "km_recorridos": 10,
         "c_venta_total": 405,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 9
+        "c_dias": 9,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 19,
@@ -184,7 +199,9 @@
         "km_recorridos": 100,
         "c_venta_total": 900,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 20
+        "c_dias": 20,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 20,
@@ -194,7 +211,9 @@
         "km_recorridos": 100,
         "c_venta_total": 2250,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 45
+        "c_dias": 45,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 21,
@@ -204,7 +223,9 @@
         "km_recorridos": 100,
         "c_venta_total": 1800,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 45
+        "c_dias": 45,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 22,
@@ -214,7 +235,9 @@
         "km_recorridos": 100,
         "c_venta_total": 900,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 20
+        "c_dias": 20,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 23,
@@ -224,7 +247,9 @@
         "km_recorridos": 100,
         "c_venta_total": 1000,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 20
+        "c_dias": 20,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 24,
@@ -234,7 +259,9 @@
         "km_recorridos": 100,
         "c_venta_total": 200,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 5
+        "c_dias": 5,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 25,
@@ -244,7 +271,9 @@
         "km_recorridos": 100,
         "c_venta_total": 170.0,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 5
+        "c_dias": 5,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 26,
@@ -254,7 +283,9 @@
         "km_recorridos": 100,
         "c_venta_total": 445.0,
         "c_fecha_renta": "05/07/2026",
-        "c_dias": 5
+        "c_dias": 5,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 27,
@@ -264,7 +295,9 @@
         "km_recorridos": 100,
         "c_venta_total": 67.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 28,
@@ -274,7 +307,9 @@
         "km_recorridos": 100,
         "c_venta_total": 45,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 29,
@@ -284,7 +319,9 @@
         "km_recorridos": 100,
         "c_venta_total": 50,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 30,
@@ -294,7 +331,9 @@
         "km_recorridos": 10,
         "c_venta_total": 40,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 31,
@@ -304,7 +343,9 @@
         "km_recorridos": 34,
         "c_venta_total": 34.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 32,
@@ -314,7 +355,9 @@
         "km_recorridos": 12,
         "c_venta_total": 89.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 33,
@@ -324,7 +367,9 @@
         "km_recorridos": 10,
         "c_venta_total": 67.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 34,
@@ -334,7 +379,9 @@
         "km_recorridos": 100,
         "c_venta_total": 145,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 35,
@@ -344,7 +391,9 @@
         "km_recorridos": 100,
         "c_venta_total": 150,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 36,
@@ -354,7 +403,9 @@
         "km_recorridos": 100,
         "c_venta_total": 140,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 1
+        "c_dias": 1,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 37,
@@ -364,7 +415,9 @@
         "km_recorridos": 100,
         "c_venta_total": 140,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 10
+        "c_dias": 10,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 38,
@@ -374,7 +427,9 @@
         "km_recorridos": 100,
         "c_venta_total": 440.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 20
+        "c_dias": 20,
+        "mi_nueva_clave": null,
+        "status": null
     },
     {
         "transaccion_id": 39,
@@ -384,6 +439,8 @@
         "km_recorridos": 23,
         "c_venta_total": 1803.0,
         "c_fecha_renta": "06/07/2026",
-        "c_dias": 20
+        "c_dias": 20,
+        "mi_nueva_clave": null,
+        "status": null
     }
 ]

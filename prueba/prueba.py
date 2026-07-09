@@ -71,11 +71,6 @@ def cargar_inventario():
             print(f"Creando carpeta de datos: {CARPETA_DATOS}")
             row_space()
 
-        # Diagnóstico temporal de archivos existentes
-        # print(f"\nVerificando carpeta: {CARPETA_DATOS}")
-        # print("Archivos encontrados:", os.listdir(CARPETA_DATOS))
-        # row_space()
-
         # 2. Manejo de ARCHIVO_DATOS (Inventario)
         if os.path.exists(ARCHIVO_DATOS):
             with open(ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
@@ -428,19 +423,44 @@ def eliminar_renta_admin():
     input("\nPresione Enter para continuar...")
 
 def informe_rentas():
-    space = '   '
-    t1 = 0
-    dibu_enca("INFRME GLOBAL DE AUTOS RENTADOS", 90, "=",)
-    print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
-        f"{'Fecha de renta':<14} | {'Dias':<4}"
-    )
-    print("-" * 95)
-    row_space()
-    for auto in control:
-        if auto[id] == "1":
-            t1 +=1
-        if auto[id] == "2":
-            t1 +=1
+    # space = '   '
+    # t1 = 0
+    # dibu_enca("INFRME GLOBAL DE AUTOS RENTADOS", 90, "=",)
+    # print(f"{space}{'Tikect':<7}|{'ID ':<3} | {'Marca':<12} | {'Modelo':<12} | {'Km recorridos':<12} | {'Venta':<6} |"
+    #     f"{'Fecha de renta':<14} | {'Dias':<4}"
+    # )
+from collections import defaultdict
+
+# 1. Agrupamos los datos (como en el paso anterior)
+autos_por_id = defaultdict(list)
+for registro in datos:
+    id_actual = registro.get("c_id")
+    if id_actual is not None:  # Evita errores si algún registro no tiene id
+        autos_por_id[id_actual].append(registro)
+
+# 2. Abrimos el archivo de texto para escribir ('w' significa write)
+with open("autos_ordenados.txt", "w", encoding="utf-8") as archivo:
+    
+    # 3. Usamos sorted() para recorrer los IDs en orden: 1, 2, 3...
+    for c_id in sorted(autos_por_id.keys()):
+        archivo.write(f"========================================\n")
+        archivo.write(f" REGISTROS PARA C_ID: {c_id}\n")
+        archivo.write(f"========================================\n")
+        
+        # 4. Escribimos cada auto que pertenece a este ID
+        for auto in autos_por_id[c_id]:
+            linea = (
+                f"Marca: {auto.get('c_marca')} | "
+                f"Modelo: {auto.get('c_modelo')} | "
+                f"KM: {auto.get('km_recorridos')} | "
+                f"Venta: ${auto.get('c_venta_total')}\n"
+            )
+            archivo.write(linea)
+            
+        archivo.write("\n")  # Espacio en blanco entre grupos de IDs
+
+print("¡Archivo 'autos_ordenados.txt' creado con éxito!")
+  
 
 def menu_administrador():
     """Submenú protegido para agregar vehículos nuevos."""

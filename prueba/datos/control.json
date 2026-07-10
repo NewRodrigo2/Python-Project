@@ -442,5 +442,15 @@
         "c_dias": 20,
         "mi_nueva_clave": null,
         "status": null
+    },
+    {
+        "transaccion_id": 38,
+        "c_id": 6,
+        "c_marca": "Nissan",
+        "c_modelo": "Versa",
+        "km_recorridos": 1200,
+        "c_venta_total": 1870.0,
+        "c_fecha_renta": "08/07/2026",
+        "c_dias": 10
     }
 ]

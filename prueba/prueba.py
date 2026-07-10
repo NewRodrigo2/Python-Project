@@ -1,4 +1,4 @@
-# MODIFICADO EL 27/06/26 
+# MODIFICADO EL 10/07/26  11:19
 # C:\Users\danie\Documents\Python Project> git switch secund_pba_branch.py
 import os
 import json

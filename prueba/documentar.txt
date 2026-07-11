@@ -1,7 +1,9 @@
 '''copiar los txt de notas, prguntar a la IA como hacer una comparacion entre 
 los archivos, 
 
-revisar menu navegable.txt y reproducirlo en menu_administrador
+revisar:
+ menu navegable.txt y reproducirlo en menu_administrador()
+ ortografia de ticket
 
 
 revisar el shortcut.txt 

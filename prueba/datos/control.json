@@ -452,5 +452,15 @@
         "c_venta_total": 1870.0,
         "c_fecha_renta": "08/07/2026",
         "c_dias": 10
+    },
+    {
+        "transaccion_id": 39,
+        "c_id": 2,
+        "c_marca": "Nissan",
+        "c_modelo": "Versa",
+        "km_recorridos": 567,
+        "c_venta_total": 2267,
+        "c_fecha_renta": "11/07/2026",
+        "c_dias": 23
     }
 ]

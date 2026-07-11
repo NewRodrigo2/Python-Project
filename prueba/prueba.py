@@ -2,7 +2,10 @@
 # C:\Users\danie\Documents\Python Project> git switch secund_pba_branch.py
 import os
 import json
+import msvcrt  # Librería nativa de Windows para capturar teclas al instante
+
 from datetime import datetime
+from herramientas import row_space, limpiar_pantalla, dibu_enca
 
 # Constantes para los colores en la terminal (Códigos ANSI)
 COLOR_TITULO = "\033[94m"  # Azul
@@ -53,12 +56,7 @@ AUTO_CONTROL = [
 control = []          # >>>>>>>>>>>>>>>>>>>>>>>> 
 inventario = []      #  Arreglo vacio
 sp = ('=' * 10)
-def dibu_enca(titu, ancho, simbolo, color_text="\033[94m"):
-    espacios = '    '
-    print (espacios)
-    print(f"{color_text}{simbolo * ancho}\033[0m ")
-    print(f"{color_text}{titu:^{ancho}}\033[0m")
-    print(f"{color_text}{simbolo * ancho}\033[0m ")
+
     
 def cargar_inventario():
     """Lee los archivos JSON de inventario y control. Si no existen, los crea."""
@@ -116,16 +114,6 @@ def guarda_control():                          # >>>>>>>>>>>>>>>>>>>> guardando 
            json.dump(control, archivo_control, indent=4, ensure_ascii=False)     
     except Exception as b:     
         print(f"\n{COLOR_ERROR}Error al guardar el archivo de control: {b}{COLOR_RESET}")
-
-def limpiar_pantalla():
-    if os.name == 'nt':
-        os.system('cls')
-    else:
-        os.system('clear')
-        
-def row_space():
-    label = "ENTER PARA CONTINUAR ..."
-    wait = input(f"\n {AMARILLO}{label:^{50}}{COLOR_RESET} ")
 
 def mostrar_inventario():
     dibu_enca("INVENTARIO DE AUTOS", 70, "═")                                          #  dibujando enca
@@ -467,8 +455,7 @@ def informe_rentas():
             archivo.write("\n")  # Espacio en blanco entre grupos de IDs
 
     input ("¡Archivo 'autos_ordenados.txt' creado con éxito!    .... enter para continuar")
-    
-
+ 
 def menu_administrador():
     """Submenú protegido para agregar vehículos nuevos."""
     label1 = ("1. Agregar nuevo auto al inventario \n")
@@ -504,39 +491,78 @@ def menu_administrador():
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")
             row_space()
 
+
 def menu_principal():
     cargar_inventario()
     veces = 15
+    
+    # 1. Definimos las opciones en una lista
+    opciones = [
+        "1. Ver autos disponibles",
+        "2. Rentar un auto",
+        "3. Entregar un auto",
+        "4. Salir"
+    ]
+    seleccionada = 0  # El índice de la opción que inicia resaltada (la primera)
+
     while True:
         limpiar_pantalla()
         dibu_enca("BIENVENIDO A MI CARRITO EN RENTA", 70, "=")
-        print(f"{' '* veces}1. Ver autos disponibles\n")
-        print(f"{' '* veces}2. Rentar un auto\n")
-        print(f"{' '* veces}3. Entregar un auto\n")
-        print(f"{' '* veces}4. Salir")
+        print("\n")
         
-        opcion = input(f"\n {AMARILLO}Seleccione una opción (1-4): {COLOR_RESET}")
-        
-        if opcion == "1":
-            limpiar_pantalla()
-            mostrar_inventario()
-            row_space()
-        elif opcion == "2":
-            limpiar_pantalla()
-            rentar_auto()
-        elif opcion == "3":
-            limpiar_pantalla()
-            regresar_auto()
-        elif opcion == "4" or opcion == "":
-            limpiar_pantalla()
-            print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
-            break
-        elif opcion == CLAVE_ADMIN:
+        # 2. Dibujamos el menú dinámicamente
+        for i, opcion_texto in enumerate(opciones):
+            if i == seleccionada:
+                # Si es la opción actual, le ponemos una flecha física y color (puedes usar tu código de COLOR_EXITO)
+                print(f"{' ' * veces} -> \033[1;36m{opcion_texto}\033[0m") 
+            else:
+                # Si no está seleccionada, se imprime normal con los espacios
+                print(f"{' ' * (veces + 4)}{opcion_texto}")
+            print("\n") # Mantenemos tus espacios entre renglones
+
+        print(f"\n {' ' * veces}Usa las flechas [↑/↓] y presiona [Enter]")
+
+        # 3. CAPTURA DE TECLAS EN MILISEGUNDOS
+        # msvcrt.getch() lee la tecla que presionó el usuario al instante
+        tecla = msvcrt.getch()
+
+        # En Windows, las flechas del teclado envían dos impulsos: un 0 o 224, y luego el código real
+        if tecla in (b'\x00', b'\xe0'): 
+            tecla_flecha = msvcrt.getch() # Leemos el segundo impulso para saber qué flecha fue
+            
+            if tecla_flecha == b'H':  # Código físico de la Flecha Arriba
+                # Restamos 1, pero si estamos en la opción 0, saltamos a la última para que sea un menú infinito
+                seleccionada = len(opciones) - 1 if seleccionada == 0 else seleccionada - 1
+            
+            elif tecla_flecha == b'P':  # Código físico de la Flecha Abajo
+                # Sumamos 1, pero si pasamos la última, regresamos a la primera opción
+                seleccionada = 0 if seleccionada == len(opciones) - 1 else seleccionada + 1
+
+        # 4. EVALUACIÓN DE LA SELECCIÓN AL PRESIONAR ENTER
+        elif tecla == b'\r':  # b'\r' es el código del Enter (Carriage Return)
+            
+            if seleccionada == 0:  # Opción 1
+                limpiar_pantalla()
+                mostrar_inventario()
+                row_space()
+            elif seleccionada == 1:  # Opción 2
+                limpiar_pantalla()
+                rentar_auto()
+            elif seleccionada == 2:  # Opción 3
+                limpiar_pantalla()
+                regresar_auto()
+            elif seleccionada == 3:  # Opción 4 (Salir)
+                limpiar_pantalla()
+                print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
+                break
+
+        # 5. EL TRUCO PARA EL MENÚ DE ADMINISTRADOR OCULTO
+        # Si el usuario presiona una tecla normal, podemos validar si es el inicio de tu CLAVE_ADMIN
+        # (Para no complicarlo, si escribe en el teclado directamente, capturamos texto normal)
+        elif tecla.decode('utf-8', errors='ignore') == "a": # Ejemplo si tu clave inicia con 'a'
+            # Aquí podrías detonar tu menu_administrador()
             menu_administrador()
-        else:
-            limpiar_pantalla()
-            print(f"\n{COLOR_ERROR}Opción no válida. Intente de nuevo.{COLOR_RESET}")
-            row_space()
+
 
 if __name__ == "__main__":
     menu_principal()

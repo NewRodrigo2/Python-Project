@@ -1,8 +1,14 @@
+'''
+13/07/26 13:45
+
+def open personal.json
+'''
 import customtkinter as ctk
 import renta as rta
 
+
 # 1. Configuración estética de CustomTkinter
-ctk.set_appearance_mode("Dark")  # Forzamos un modo oscuro muy elegante
+ctk.set_appearance_mode("Dark")  
 ctk.set_default_color_theme("blue") 
 
 class LoginApp(ctk.CTk):

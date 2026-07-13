@@ -32,8 +32,11 @@ personal = {
     "hrs_cont": 40,
     "hrs_trab": 99,
     "sueldo": 9,
-    "ausencias": 9
+    "ausencias": 9,
+    "pasword": "qwer"
 }
+
+
 
 def guardar_inventario():
     """Guarda el estado actual del inventario en el archivo JSON."""

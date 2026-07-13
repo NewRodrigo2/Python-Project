@@ -462,5 +462,25 @@
         "c_venta_total": 2267,
         "c_fecha_renta": "11/07/2026",
         "c_dias": 23
+    },
+    {
+        "transaccion_id": 40,
+        "c_id": 6,
+        "c_marca": "Nissan",
+        "c_modelo": "Versa",
+        "km_recorridos": 890,
+        "c_venta_total": 5379.0,
+        "c_fecha_renta": "11/07/2026",
+        "c_dias": 67
+    },
+    {
+        "transaccion_id": 41,
+        "c_id": 5,
+        "c_marca": "Toyota",
+        "c_modelo": "Yaris",
+        "km_recorridos": 567,
+        "c_venta_total": 4572.0,
+        "c_fecha_renta": "12/07/2026",
+        "c_dias": 45
     }
 ]

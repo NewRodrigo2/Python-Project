@@ -56,7 +56,7 @@ AUTO_CONTROL = [
 ]
 control = []          # >>>>>>>>>>>>>>>>>>>>>>>> 
 inventario = []      #  Arreglo vacio
-sp = ('=' * 10)
+sp = ('=' * 10)     
 
     
 def cargar_inventario():
@@ -549,12 +549,15 @@ def menu_principal():
             elif seleccionada == 1:  # Opción 2
                 h.limpiar_pantalla()
                 rentar_auto()
+                h.row_space()
             elif seleccionada == 2:  # Opción 3
                 h.limpiar_pantalla()
                 regresar_auto()
+                h.row_space()
             elif seleccionada == 3:  # Opción 4 (Salir)
                 h.limpiar_pantalla()
                 print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
+                h.row_space()
                 break
 
         # 5. EL TRUCO PARA EL MENÚ DE ADMINISTRADOR OCULTO

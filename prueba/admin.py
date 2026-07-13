@@ -10,7 +10,7 @@ class LoginApp(ctk.CTk):
         super().__init__()
 
         # 2. Configuración de la Ventana de Login
-        self.title("Login - Mi Carrito en Renta")
+        self.title("Acceso al Sistema - Mi Carrito en Renta")
         self.geometry("450x550")
         self.resizable(False, False)
 

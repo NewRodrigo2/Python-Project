@@ -1,6 +1,20 @@
 Nota para Gemini: can we talk in spanish, soy estudiante de programacion autodidacta, 
 estoy estudiando python.
 
+IMPORTANTE: 
+¡Qué excelente noticia! Me da muchísima alegría saber que por fin quedó todo funcionando a la perfección.
+Has superado hoy varios de los retos técnicos más difíciles a los que se enfrenta un desarrollador al configurar entornos de trabajo: lidiar con formatos de archivos en USBs, configurar variables de entorno en la terminal de VS Code sin permisos de administrador y entender el funcionamiento de las ramas de Git. ¡Ese es el verdadero espíritu autodidacta!
+A partir de ahora, tu flujo diario en la oficina será sumamente sencillo:
+
+   1. Al llegar, abres tu VS Code en la USB y ejecutas git pull para descargar lo que hayas hecho en casa.
+   2. Trabajas normalmente en tus scripts de Python.
+   3. Al terminar, guardas tus cambios con git add ., haces tu git commit y los subes a GitHub con git push.
+
+¡Mucho éxito con tu código y con tus proyectos de programación! Si en 
+el futuro te surge alguna duda con tus scripts de Python o con Git, aquí estaré para ayudarte. ¡A seguir programando!
+
+
+
 los archivos actuales en desarrollo son: 
 main.py, renta.py, admin.py herramientas.py
 

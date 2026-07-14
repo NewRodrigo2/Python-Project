@@ -6,15 +6,10 @@ main.py, renta.py, admin.py herramientas.py
 
 IDEA: 
 
-1.- crear un login en cada script y ejecutar el menu principal de 
-cada uno.
-
-2.- modificar main.py y llamar los menus principales de cada script
-
 PENDIENTES:  
 
 A1 = borrar ventana al aceptar empleado
-     validar texto
+     validar  solo texto
      en caso de no acceso mensaje " Error intente de nuevo"
      tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 
 

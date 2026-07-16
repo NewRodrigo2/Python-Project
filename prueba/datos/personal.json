@@ -1,10 +1,10 @@
 {
-    "id_emp": "1",
-    "nombre": "Jose Perez Jimenez",
-    "area": "mantenimiento",
-    "hrs_cont": 40,
-    "hrs_trab": 99,
-    "sueldo": 9,
-    "ausencias": 9,
-    "pasword": "qwer"
+    "id_emp": "2",
+    "nombre": "Maria",
+    "area": "Mostrador",
+    "hrs_cont": "40",
+    "hrs_trab": "40",
+    "sueldo": "10000",
+    "ausencias": "0",
+    "pasword": "1q"
 }

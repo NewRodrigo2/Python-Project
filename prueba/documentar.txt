@@ -1,0 +1,34 @@
+soy estudiante de programacion autodidacta, 
+estoy estudiando python, comportate como mi profesor de programacion
+
+los archivos actuales en desarrollo son: 
+main.py, renta.py, admin.py herramientas.py
+
+IDEA: 
+1.- pasar carpeta python Proyect a c: de SRS
+
+
+PENDIENTES:  
+
+A1 = borrar ventana al aceptar empleado
+
+     tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 
+
+     B1 = en caso de ser administrativo preguntar por financiaros o Recursos Humanos
+
+A1 = crear copias en Drive
+...........................................................................
+B1 = revisar correo rod.rom.ma3@gmail.com  para saber si tiene Drive
+B2 = crear memoria con vscod y python
+.............................................................................
+C1 = crear script taller.py
+
+FLUJO ACTUAL:
+
+main.py inicia con el login,  llama a menu_principal de renta.py 
+
+
+PREGUNATAS PARA LA IA:
+
+PREGUNATA: utilizar poo en renta.py 
+

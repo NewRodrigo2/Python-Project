@@ -25,9 +25,16 @@ CIAN = "\033[36m"
 CIAN_BRILLANTE = "\033[96m"
 BG_CIAN = "\033[46m"
 
-CARPETA_DATOS = r"F:\Python\Python Project\prueba\datos"
+ruta = input('Selecciona la computadora actual  c = casa  o = oficina')
+if ruta == 'o':
+    CARPETA_DATOS = r"F:\Python\Python Project\prueba\datos"
+elif ruta == 'c':
+    CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
+else:
+    input ('OPCION NO VALIDA... C: POR DEFECTO')
+    CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
 
-#CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
+
 ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "personal.json")
 # ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
 # ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")

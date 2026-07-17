@@ -68,6 +68,7 @@ def eliminar_renta_admin():
         print(f"{COLOR_ERROR}El ticket N° {id_ticket} no existe.{COLOR_RESET}")
         
     input("\nPresione Enter para continuar...")
+
 def informe_rentas():
     h.cargar_inventario()    
     from collections import defaultdict
@@ -112,6 +113,7 @@ def informe_rentas():
             archivo.write("\n")  # Espacio en blanco entre grupos de IDs
 
     input ("¡Archivo 'autos_ordenados.txt' creado con éxito!    .... enter para continuar")
+
 def mostrar_informe():
     h.limpiar_pantalla()
     # Control de codigo, plan: conocer el tamano del archivo .......................
@@ -148,6 +150,7 @@ def mostrar_informe():
 
     h.row_space()
     h.limpiar_pantalla() 
+
 def agrega_auto():
             h.limpiar_pantalla()
             print(f"{COLOR_ADMIN}========================================")
@@ -207,7 +210,7 @@ def menu_administrador():
         print(f"{AMARILLO}{label4:^{80}}")
         print(f"{AMARILLO}{label5:^{80}}")
         print(f"{AMARILLO}{label9:^{80}}{COLOR_RESET}")
-        opcion = input(f"\n{COLOR_EXITO}                    Seleccione una opción (1-2):    {COLOR_RESET}")
+        opcion = input(f"\n{COLOR_EXITO}             Seleccione una opción  o enter para salir   {COLOR_RESET}")
           
         if opcion == "1":
             agrega_auto()

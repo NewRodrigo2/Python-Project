@@ -25,16 +25,19 @@ CIAN = "\033[36m"
 CIAN_BRILLANTE = "\033[96m"
 BG_CIAN = "\033[46m"
 
+ruta_actual = os.getcwd()
+unidad, resto = os.path.splitdrive(ruta_actual)
+
+print(f"Unidad actual: {unidad}")
+a = input ('Enter para continuar')
+
 ruta = input('Selecciona la computadora actual  c = casa  o = oficina')
-if ruta == 'o':
+if unidad == 'F:':
     CARPETA_DATOS = r"F:\Python\Python Project\prueba\datos"
-elif ruta == 'c':
+elif unidad == 'C:':
     CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
 else:
-    input ('OPCION NO VALIDA... C: POR DEFECTO')
-    CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
-
-
+   
 ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "personal.json")
 # ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
 # ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")

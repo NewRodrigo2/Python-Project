@@ -28,5 +28,15 @@
         "sueldo": 1000.0,
         "ausencias": 0,
         "pasword": "hdh"
+    },
+    {
+        "id_emp": "4",
+        "nombre": "Rodrigo",
+        "area": "Mostrador",
+        "hrs_cont": 40,
+        "hrs_trab": 0,
+        "sueldo": 1000.0,
+        "ausencias": 0,
+        "pasword": "1q"
     }
 ]

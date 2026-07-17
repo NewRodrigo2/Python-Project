@@ -94,7 +94,7 @@ def agregar_personal():
         # Nota: Es recomendable guardar los números como enteros/flotantes en JSON, no como texto
         hcot = int(input('Horas contratadas: '))
         htra = int(input('Horas Trabajadas: '))
-        sdo = float(input('Sueldo: '))
+        sdo = float(input(f'Sueldo: '))
         aus = int(input('Ausencias: '))
         pas = input('Password: ')
         
@@ -123,19 +123,25 @@ def agregar_personal():
 
 
 def menu_util():
+    label1 = ("1.- crear archivo nuevo \n")
+    label2 = ("2.- agregar personal nuevo \n")
+    label3 = ("3. En proceso \n")
+    label4 = ("4. En proceso \n")
+    label5 = ("5. En proceso \n")
+    label9 = ("9. Salir del programa \n")
+    label10 = ("Seleccione una opcion .... \n")
     while True: 
         h.limpiar_pantalla()
         h.dibu_enca("CONTROL DE  PERSONAL ", 80,"#")
-        print ('1.- crear archivo nuevo')
-        print ('2.- agregar personal nuevo')
-        print ('3.- salir ..')
-
+        print(f"{AMARILLO}{label1:^{80}}")
+        print(f"{AMARILLO}{label2:^{80}}")
+        print(f"{AMARILLO}{label9:^{80}}{COLOR_RESET}")
         op2 = input ('Seleccione una opcion  ')
         if op2 == '1':
             guardar_inventario_personal(personal)
         if op2 == '2':
             agregar_personal()
-        elif op2 == '3':
+        elif op2 == '9':
             break
 
 if __name__ == "__main__":

@@ -78,9 +78,11 @@ def menu_util():
         opcion = input(f"\n{COLOR_EXITO}{label10:^{80}}{COLOR_RESET}")
           
         if opcion == "1":
-            guardar_inventario_personal(personal)
+            # guardar_inventario_personal(personal)
+            None
         elif opcion == "2"  or opcion == "":     
-            agregar_personal()
+            # agregar_personal()
+            None
         elif opcion == "9"  or opcion == "":
             break
         else:

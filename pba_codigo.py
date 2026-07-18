@@ -5,8 +5,6 @@ from pathlib import Path  # <-- ¡Esta es la línea que te falta!
 ruta_actual = Path.cwd()
 print(f"Ruta completa: {ruta_actual}")
 
-
-
 # Opción clásica con os
 ruta_actual = os.getcwd()
 print(f"Ruta completa: {ruta_actual}")

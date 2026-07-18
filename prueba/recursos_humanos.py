@@ -1,18 +1,13 @@
-# MODIFICADO EL 17/07/26
-#  
-#  Modificando la estructura de la ruta para seleccionar entre C: o F:
-
+''' 
+Modificar estructura de la ruta
+'''
 import os
 import json
 import msvcrt  # Librería nativa de Windows para capturar teclas al instante
 from datetime import datetime
 from pathlib import Path
-
-''' de mis script'''
 import herramientas  as h
 
-
-# Constantes para los colores en la terminal (Códigos ANSI)
 COLOR_TITULO = "\033[94m"  # Azul
 COLOR_EXITO = "\033[92m"   # Verde
 COLOR_ERROR = "\033[91m"   # Rojo
@@ -23,33 +18,15 @@ CIAN = "\033[36m"
 CIAN_BRILLANTE = "\033[96m"
 BG_CIAN = "\033[46m"
 
-
-
-import os
-from pathlib import Path
-
-# 1. Obtienes la unidad (ej: "F:")
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
-print (unidad)
-h.row_space
-
-# Agregamos una barra invertida al disco para que Path reconozca que es la raíz (ej: "F:\")
-
 if unidad == "C:":
     CARPETA_DATOS = Path(unidad + "\\") / "Users" / "danie" / "Documents" / "Python Project" / "prueba" / "datos"
-elif unidad == "F:":
+else:
     CARPETA_DATOS = Path(unidad + "\\") / "Python" / "Python Project" / "prueba" / "datos"
 
 # 3. CONSEJO: Usa Path también para el archivo, es más limpio y evita mezclar os y pathlib
 ARCHIVO_DATOS = CARPETA_DATOS / "personal.json"
-
-print(f"Carpeta: {CARPETA_DATOS}")
-print(f"Archivo: {ARCHIVO_DATOS}")
-h.row_space()
-
-# ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
-# ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
 
 personal = [{
     "id_emp": "1",

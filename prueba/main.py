@@ -4,20 +4,9 @@ import renta as rta
 import os
 from pathlib import Path
 import herramientas  as h
-#................................................................................
-#CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
-#ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
-#ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")
-#ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
-#PERSONAL = os.path.join(CARPETA_DATOS, "personal.json")
-#................................................................................
-# 1. Obtienes la unidad (ej: "F:")
+
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
-print (unidad)
-h.row_space
-
-# Agregamos una barra invertida al disco para que Path reconozca que es la raíz (ej: "F:\")
 if unidad == "C:":
     CARPETA_DATOS = Path(unidad + "\\") / "Users" / "danie" / "Documents" / "Python Project" / "prueba" / "datos"
 else:

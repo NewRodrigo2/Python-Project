@@ -23,11 +23,10 @@ CIAN = "\033[36m"
 CIAN_BRILLANTE = "\033[96m"
 BG_CIAN = "\033[46m"
 
-ruta_actual = os.getcwd()
-unidad, resto = os.path.splitdrive(ruta_actual)
 
-print(f"Unidad actual: {unidad}")
-a = input ('Enter para continuar')
+
+import os
+from pathlib import Path
 
 # 1. Obtienes la unidad (ej: "F:")
 ruta_actual = os.getcwd() 
@@ -141,7 +140,7 @@ def agregar_personal():
 def menu_util():
     label1 = ("1.- crear archivo nuevo \n")
     label2 = ("2.- agregar personal nuevo \n")
-    label3 = ("3. En proceso \n")
+    label3 = ("3. Sueldos \n")
     label4 = ("4. En proceso \n")
     label5 = ("5. En proceso \n")
     label9 = ("9. Salir del programa \n")

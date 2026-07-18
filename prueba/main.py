@@ -2,14 +2,32 @@ import json
 import customtkinter as ctk
 import renta as rta
 import os
+from pathlib import Path
+import herramientas  as h
+#................................................................................
+#CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
+#ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
+#ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")
+#ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
+#PERSONAL = os.path.join(CARPETA_DATOS, "personal.json")
+#................................................................................
+# 1. Obtienes la unidad (ej: "F:")
+ruta_actual = os.getcwd() 
+unidad = os.path.splitdrive(ruta_actual)[0] 
+print (unidad)
+h.row_space
 
-#................................................................................
-CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
-ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
-ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")
-ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
-PERSONAL = os.path.join(CARPETA_DATOS, "personal.json")
-#................................................................................
+# Agregamos una barra invertida al disco para que Path reconozca que es la raíz (ej: "F:\")
+if unidad == "C:":
+    CARPETA_DATOS = Path(unidad + "\\") / "Users" / "danie" / "Documents" / "Python Project" / "prueba" / "datos"
+else:
+    CARPETA_DATOS = Path(unidad + "\\") / "Python" / "Python Project" / "prueba" / "datos"
+
+# 3. CONSEJO: Usa Path también para el archivo, es más limpio y evita mezclar os y pathlib
+RCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
+ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"
+ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"
+PERSONAL = CARPETA_DATOS / "personal.json"  # <-- Esta es la línea clave
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -99,6 +117,13 @@ class LoginApp(ctk.CTk):
                 match_usuario = (user.get("nombre") == usuario or user.get("id_emp") == usuario)
                 match_password = (user.get("pasword") == password)
                 match_area = (user.get("area") == area_esperada)
+
+                print(f"DEBUG: verificando los datos del personal")
+                print(user.get("id_emp"))
+                print(user.get("nombre"))
+                print(user.get("area"))
+                print(user.get("pasword"))
+                h.row_space()
 
                 if match_usuario and match_password and match_area:
                     usuario_valido = True

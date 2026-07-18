@@ -86,6 +86,7 @@ def menu_util():
         else:
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")
             row_space()
+            
 
           
 

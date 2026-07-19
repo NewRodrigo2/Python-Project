@@ -356,7 +356,7 @@ def menu_principal():
                 h.limpiar_pantalla()
                 print(f"\n{COLOR_EXITO}¡Gracias por usar Mi Carrito en Renta! Hasta pronto.{COLOR_RESET}\n")
                 h.row_space()
-                break
+                return
 
         # 5. EL TRUCO PARA EL MENÚ DE ADMINISTRADOR OCULTO
         # Si el usuario presiona una tecla normal, podemos validar si es el inicio de tu CLAVE_ADMIN

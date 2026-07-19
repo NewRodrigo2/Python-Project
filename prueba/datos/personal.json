@@ -28,5 +28,15 @@
         "sueldo": 0.0,
         "ausencias": 0,
         "pasword": "1q"
+    },
+    {
+        "id_emp": "4",
+        "nombre": "m",
+        "area": "administrador",
+        "hrs_cont": 0,
+        "hrs_trab": 0,
+        "sueldo": 0.0,
+        "ausencias": 0,
+        "pasword": "1q"
     }
 ]

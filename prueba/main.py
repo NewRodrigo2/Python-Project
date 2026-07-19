@@ -1,9 +1,14 @@
+'''
+Error: validacion erronea. 
+'''
 import json 
 import customtkinter as ctk
 import renta as rta
 import os
 from pathlib import Path
 import herramientas  as h
+import admin as admin
+from menu_admin import DashboardApp
 
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
@@ -88,7 +93,7 @@ class LoginApp(ctk.CTk):
         mapeo_roles = {
             "Mostrador": "mostrador",
             "Financieros": "financieros",
-            "Mecánico": "mantenimiento", # "Mecánico" equivale a "mantenimiento" en tu JSON
+            "Mecánico": "mantenimiento", 
             "Administrador": "administrador",
             "Supervisor": "supervisor"
         }
@@ -107,12 +112,15 @@ class LoginApp(ctk.CTk):
                 match_password = (user.get("pasword") == password)
                 match_area = (user.get("area") == area_esperada)
 
-                print(f"DEBUG: verificando los datos del personal")
-                print(user.get("id_emp"))
-                print(user.get("nombre"))
-                print(user.get("area"))
-                print(user.get("pasword"))
-                h.row_space()
+                print(f"\bDEBUG: VERIFICANDO DATOS DEL PERSONAL Y USUARIO\b")
+                # print(f"\b{match_usuario}\b")
+                # print(f"\b{match_password}\b")
+                print(f"\bmach_area es:    {match_area}\b")
+                print(f"\b user.get        {user.get("area")}\b")
+                print(f"\barea esperada    {area_esperada}\b")
+
+
+                h.row_space
 
                 if match_usuario and match_password and match_area:
                     usuario_valido = True
@@ -123,13 +131,31 @@ class LoginApp(ctk.CTk):
                 self.txt_usuario.delete(0, 'end')
                 self.txt_password.delete(0, 'end')
                 self.destroy()
+                nueva_ventana = DashboardApp() 
+                nueva_ventana.mainloop()
                 
                 if rol_seleccionado == "Mostrador":
                     rta.menu_principal()
+                elif rol_seleccionado == "administrador" or rol_seleccionado == "Administrador" :
+                    admin.menu_administrador()
+
                 else:
                     print(f"Abriendo menú para {rol_seleccionado} (Requiere implementar en rta)...")
             else:
-                print("Error: Usuario, contraseña o rol incorrectos.")
+                print(f"\bError: Usuario, contraseña o rol incorrectos.\b")
+
+                print(f"\bDEBUG: VERIFICANDO DATOS DEL PERSONAL Y USUARIO\b")
+                print(f'\bSEL.TEXT_USUARIO {user.get("nombre")}')
+                print(f'\bself.txt_password', user.get("pasword"))
+                print(f'\barea de user.get', user.get("area"))
+                print(f'\barea esperada', area_esperada)
+
+                print(f'\busuario', usuario)
+                print(f'\bpassword', password)
+                print(f"rol_seleccionado", rol_seleccionado)
+                h.row_space
+
+
 
         except FileNotFoundError:
             print(f"Error crítico: El archivo no existe en la ruta {PERSONAL}")

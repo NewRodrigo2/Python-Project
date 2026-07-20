@@ -7,7 +7,7 @@ class LoginApp(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Login - Mi Carrito en Renta")
-        self.geometry("800x800")
+        self.geometry("1100x800")
         self.resizable(False, False)
         self.crear_interfaz_login()  # 3. Creación de los Componentes (Widgets)
 

@@ -29,7 +29,7 @@ class DashboardApp(ctk.CTk):
         self.geometry("800x800")
         self.resizable(False, False)
 
-        # 3. Creación de los Componentes (Widgets)
+        
         self.crear_interfaz_login()
 
     def crear_interfaz_login(self):

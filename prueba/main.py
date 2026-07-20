@@ -10,6 +10,7 @@ import herramientas  as h
 import admin as admin
 from menu_admin import DashboardApp
 
+#...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
 if unidad == "C:":
@@ -21,7 +22,8 @@ else:
 RCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"
-PERSONAL = CARPETA_DATOS / "personal.json"  # <-- Esta es la línea clave
+PERSONAL = CARPETA_DATOS / "personal.json"  
+#...........................................................................
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -36,7 +38,7 @@ class LoginApp(ctk.CTk):
 
     def crear_interfaz_login(self):
         self.lbl_bienvenido = ctk.CTkLabel(
-            self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
+        self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
         )
         self.lbl_bienvenido.pack(pady=(40, 20))
 

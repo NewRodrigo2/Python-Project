@@ -1,5 +1,7 @@
 '''
-13/07/26 13:45
+se cambio un input por return true en def informe.txt
+
+pendientes: cambiar la rura 
 
 '''
 import customtkinter as ctk
@@ -122,7 +124,8 @@ def informe_rentas():
             archivo.write("\n")  # Espacio en blanco entre grupos de IDs
             archivo.write("\n")  # Espacio en blanco entre grupos de IDs
 
-    input ("¡Archivo 'autos_ordenados.txt' creado con éxito!    .... enter para continuar")
+    # input ("¡Archivo 'autos_ordenados.txt' creado con éxito!    .... enter para continuar")
+    return True
 
 def mostrar_informe():
     h.limpiar_pantalla()

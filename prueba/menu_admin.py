@@ -107,6 +107,9 @@ class DashboardApp(ctk.CTk):
         ventana_login.mainloop()
 
 
+if __name__ == "__main__":
+    app = DashboardApp()
+    app.mainloop()
 
 #--------------------------------------------------------------------------
         # # --- SELECCIÓN DE ROL / PUESTO ---
@@ -193,7 +196,3 @@ class DashboardApp(ctk.CTk):
     #         menu_administrador()                         # cambiar por def
 
 
-
-if __name__ == "__main__":
-    app = DashboardApp()
-    app.mainloop()

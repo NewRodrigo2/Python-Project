@@ -20,7 +20,7 @@ class LoginApp(ctk.CTk):
         self.lbl_bienvenido.pack(pady=(40, 20))
         
         self.lbl_rol = ctk.CTkLabel(self,
-        text="MENU GENERAL DEL SISTEMA", font=ctk.CTkFont(size=30, weight="bold")
+        text="MENU GENERAL DEL SISTEMA", font=ctk.CTkFont(size=25, weight="bold")
         )
         self.lbl_rol.pack(pady=(25, 5), padx=30, anchor="w")
         
@@ -80,9 +80,7 @@ class LoginApp(ctk.CTk):
         self.btn_salir.pack(pady=(40, 20))
     def cerrar_sesion(self):
             self.destroy()  # Destruye el Dashboard
-
-
-            
+       
 
 if __name__ == "__main__":
     app = LoginApp()

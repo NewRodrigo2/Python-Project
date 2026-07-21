@@ -7,12 +7,12 @@
         "hrs_trab": 99,
         "sueldo": 9,
         "ausencias": 9,
-        "pasword": "qwer"
+        "pasword": "1q"
     },
     {
         "id_emp": "2",
-        "nombre": "Rodrigo",
-        "area": "Mostrador",
+        "nombre": "R",
+        "area": "mostrador",
         "hrs_cont": 40,
         "hrs_trab": 40,
         "sueldo": 1000.0,

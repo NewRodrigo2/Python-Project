@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 import herramientas  as h
 import admin as admin
-
+# ------------------------------------------------------------------------------------------
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
 if unidad == "C:":
@@ -18,22 +18,19 @@ RCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"
 PERSONAL = CARPETA_DATOS / "personal.json"  # <-- Esta es la línea clave
-
+# ------------------------------------------------------------------------------------------
 
 class DashboardApp(ctk.CTk):
     def __init__(self):
         super().__init__()
-
-        # 2. Configuración de la Ventana de Login
+                                             # 2. Configuración de la Ventana de Login
         self.title("Administracion")
         self.geometry("800x800")
         self.resizable(False, False)
-
-        
         self.crear_interfaz_login()
 
     def crear_interfaz_login(self):
-        # --- TÍTULO PRINCIPAL ---
+                                               # --- TÍTULO PRINCIPAL ---
         self.lbl_bienvenido = ctk.CTkLabel(
             self, 
             text="ADMINISTRACION", 
@@ -41,7 +38,7 @@ class DashboardApp(ctk.CTk):
         )
         self.lbl_bienvenido.pack(pady=(40, 20))
 
-        # --- CONTENEDOR CENTRAL (FRAME) ---
+                                                # --- CONTENEDOR CENTRAL (FRAME) ---
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
 
@@ -96,7 +93,7 @@ class DashboardApp(ctk.CTk):
         self.btn_salir.pack(pady=(40, 20))
 
     def cerrar_sesion(self):
-        self.destroy()  # Destruye el Dashboard
+        self.destroy()                             # Destruye el Dashboard
         
         # IMPORTANTE: Para evitar errores de importación circular, 
         # puedes importar el Login aquí dentro de la función (import local)

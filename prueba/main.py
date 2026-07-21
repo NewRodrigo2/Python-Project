@@ -1,5 +1,7 @@
 '''
-Error: validacion erronea. 
+Validacion requiere que el .json sea en minusculas ya que el mapeo esta en minusculas
+asegurar que agragar personal el input sea con input(...).lower()
+
 '''
 import json 
 import customtkinter as ctk
@@ -8,7 +10,9 @@ import os
 from pathlib import Path
 import herramientas  as h
 import admin as admin
-from menu_admin import DashboardApp
+from menu_admin import DashboardApp as ma
+from menu_gral import LoginApp as mg
+
 
 #...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = os.getcwd() 
@@ -82,6 +86,11 @@ class LoginApp(ctk.CTk):
         )
         self.btn_ingresar.pack(pady=(40, 20))
 
+        self.etiqueta_mensaje = ctk.CTkLabel(
+        self, text="Esperando acción...", font=("Arial", 14), text_color="gray"
+        )
+        self.etiqueta_mensaje.pack(pady=20)
+
     def procesar_login(self):
         rol_seleccionado = self.cmb_rol.get()
         usuario = self.txt_usuario.get().strip()
@@ -114,55 +123,32 @@ class LoginApp(ctk.CTk):
                 match_password = (user.get("pasword") == password)
                 match_area = (user.get("area") == area_esperada)
 
-                print(f"\bDEBUG: VERIFICANDO DATOS DEL PERSONAL Y USUARIO\b")
-                # print(f"\b{match_usuario}\b")
-                # print(f"\b{match_password}\b")
-                print(f"\bmach_area es:    {match_area}\b")
-                print(f"\b user.get        {user.get("area")}\b")
-                print(f"\barea esperada    {area_esperada}\b")
-
-
-                h.row_space
-
                 if match_usuario and match_password and match_area:
                     usuario_valido = True
                     break
 
             if usuario_valido:
-                print(f"¡Acceso Concedido como {rol_seleccionado}!")
+                self.etiqueta_mensaje.configure(
+                    text="¡Login exitoso! Abriendo sistema...", text_color="green"
+                )
                 self.txt_usuario.delete(0, 'end')
                 self.txt_password.delete(0, 'end')
                 self.destroy()
-                nueva_ventana = DashboardApp() 
+                nueva_ventana = mg()
                 nueva_ventana.mainloop()
-                
-                if rol_seleccionado == "Mostrador":
-                    rta.menu_principal()
-                elif rol_seleccionado == "administrador" or rol_seleccionado == "Administrador" :
-                    admin.menu_administrador()
-
-                else:
-                    print(f"Abriendo menú para {rol_seleccionado} (Requiere implementar en rta)...")
             else:
-                print(f"\bError: Usuario, contraseña o rol incorrectos.\b")
-
-                print(f"\bDEBUG: VERIFICANDO DATOS DEL PERSONAL Y USUARIO\b")
-                print(f'\bSEL.TEXT_USUARIO {user.get("nombre")}')
-                print(f'\bself.txt_password', user.get("pasword"))
-                print(f'\barea de user.get', user.get("area"))
-                print(f'\barea esperada', area_esperada)
-
-                print(f'\busuario', usuario)
-                print(f'\bpassword', password)
-                print(f"rol_seleccionado", rol_seleccionado)
-                h.row_space
-
-
+                self.etiqueta_mensaje.configure(
+                    text="Error: Usuario, contraseña o rol incorrectos.", text_color="red"
+                )
 
         except FileNotFoundError:
-            print(f"Error crítico: El archivo no existe en la ruta {PERSONAL}")
+            self.etiqueta_mensaje.configure(
+                 text="Error crítico: El archivo no existe en la ruta", text_color="red"
+            )            
         except json.JSONDecodeError:
-            print("Error crítico: El archivo 'personal.json' tiene un formato inválido.")
+            self.etiqueta_mensaje.configure(
+                 text="Error crítico: El archivo 'personal.json' tiene un formato inválido.", text_color="red"
+            )            
 
 if __name__ == "__main__":
     app = LoginApp()

@@ -141,6 +141,7 @@ class LoginApp(ctk.CTk):
                 
                 # 2. Inicializamos y abrimos el menú general / dashboard
                 nueva_ventana = mg(rol_usuario=rol_seleccionado)
+                
                 nueva_ventana.mainloop()
             else:
                 self.etiqueta_mensaje.configure(

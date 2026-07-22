@@ -39,11 +39,22 @@ class DashboardApp(ctk.CTk):
         )
         self.lbl_bienvenido.pack(pady=(40, 20))
         
-        # --- CONTENEDOR CENTRAL (FRAME) ---
+# ................--- CONTENEDOR CENTRAL (FRAME) ---.................
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
+# ................--- CONTENEDOR CENTRAL (FRAME) ---.................
 
         # Botones del menú
+        self.btn_rh = ctk.CTkButton(
+            self.frame_login,  
+            text="Recursos Humanos", 
+            width=300,
+            height=40,
+            font=ctk.CTkFont(size=15, weight="bold"),
+            command=self.rec_hum
+        )
+        self.btn_rh.pack(pady=(40, 20))
+
         self.btn_agregar = ctk.CTkButton(
             self.frame_login,  
             text="Agregar nuevo auto al inventario", 
@@ -93,6 +104,43 @@ class DashboardApp(ctk.CTk):
             command=self.cerrar_sesion
         )
         self.btn_salir.pack(pady=(40, 20))
+
+    def rec_hum(self):
+        # 1. Ocultamos el frame principal del login
+        self.frame_login.pack_forget()
+        
+        # 2. Si el segundo frame no ha sido creado, lo creamos
+        if not hasattr(self, "frame_segundo"):
+            self.frame_segundo = ctk.CTkFrame(self)
+
+            # Botón para volver al primer frame
+            self.btn_agrega_rh = ctk.CTkButton(
+                self.frame_segundo,  
+                text="Agrerar Nuevo PersonL", 
+                # command=self.mostrar_menu_principal
+            )
+            self.btn_agrega_rh.pack(pady=(40, 20))
+
+            self.btn_nomina = ctk.CTkButton(
+                self.frame_segundo,  
+                text="Realizar Nomina", 
+                # command=self.mostrar_menu_principal
+            )
+            self.btn_nomina.pack(pady=(40, 20))            
+
+            self.btn_volver = ctk.CTkButton(
+                self.frame_segundo,  
+                text="Volver", 
+                command=self.mostrar_menu_principal
+            )
+            self.btn_volver.pack(pady=(40, 20))
+
+        # 3. Mostramos el segundo frame en pantalla
+        self.frame_segundo.pack(pady=10, padx=30, fill="both", expand=True)
+
+    def mostrar_menu_principal(self):
+        self.frame_segundo.pack_forget() # Ocultamos el segundo
+        self.frame_login.pack(pady=10, padx=30, fill="both", expand=True) # Volvemos a mostrar el primero
 
     def cerrar_sesion(self):
         self.destroy()                     # Destruye el Dashboard

@@ -45,10 +45,6 @@ elif unidad == "F:":
 # 3. CONSEJO: Usa Path también para el archivo, es más limpio y evita mezclar os y pathlib
 ARCHIVO_DATOS = CARPETA_DATOS / "personal.json"
 
-print(f"Carpeta: {CARPETA_DATOS}")
-print(f"Archivo: {ARCHIVO_DATOS}")
-h.row_space()
-
 # ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
 # ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
 
@@ -61,8 +57,7 @@ personal = [{
     "sueldo": 9,
     "ausencias": 9,
     "pasword": "qwer"
-}
-]
+}]
 
 def guardar_inventario_personal(archi):
     """Guarda el estado actual del inventario en el archivo JSON."""

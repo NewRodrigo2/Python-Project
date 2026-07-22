@@ -38,9 +38,10 @@ class LoginApp(ctk.CTk):
             self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
         )
         self.lbl_bienvenido.pack(pady=(40, 20))
-
+#................................................................................
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
+#................................................................................
 
         self.lbl_rol = ctk.CTkLabel(
             self.frame_login, text="Seleccione su Tipo de Personal:", font=ctk.CTkFont(size=14, weight="bold")

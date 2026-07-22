@@ -103,6 +103,9 @@ class LoginApp(ctk.CTk):
         elif rol_lower == "financieros" or rol_lower == "supervisor":
             self.btn_informe.configure(state="normal")
 
+
+    
+
     def cerrar_sesion(self):
             self.destroy()  # Destruye el Dashboard
        

@@ -1,8 +1,3 @@
-'''
-Validacion requiere que el .json sea en minusculas ya que el mapeo esta en minusculas
-asegurar que agragar personal el input sea con input(...).lower()
-
-'''
 import json 
 import customtkinter as ctk
 import renta as rta
@@ -11,10 +6,9 @@ from pathlib import Path
 import herramientas  as h
 import admin as admin
 from menu_admin import DashboardApp as ma
-from menu_gral import LoginApp as mg
+from menu_gral import LoginApp as mg  # O el menú general correspondiente
 
-
-#...................... Estableciendo la ruta de los archivos .json  ..........
+# ...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = os.getcwd() 
 unidad = os.path.splitdrive(ruta_actual)[0] 
 if unidad == "C:":
@@ -22,12 +16,11 @@ if unidad == "C:":
 else:
     CARPETA_DATOS = Path(unidad + "\\") / "Python" / "Python Project" / "prueba" / "datos"
 
-# 3. CONSEJO: Usa Path también para el archivo, es más limpio y evita mezclar os y pathlib
-RCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
+ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"
 PERSONAL = CARPETA_DATOS / "personal.json"  
-#...........................................................................
+# ...........................................................................
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -42,7 +35,7 @@ class LoginApp(ctk.CTk):
 
     def crear_interfaz_login(self):
         self.lbl_bienvenido = ctk.CTkLabel(
-        self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
+            self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
         )
         self.lbl_bienvenido.pack(pady=(40, 20))
 
@@ -87,20 +80,23 @@ class LoginApp(ctk.CTk):
         self.btn_ingresar.pack(pady=(40, 20))
 
         self.etiqueta_mensaje = ctk.CTkLabel(
-        self, text="Esperando acción...", font=("Arial", 14), text_color="gray"
+            self, text="Esperando acción...", font=("Arial", 14), text_color="gray"
         )
         self.etiqueta_mensaje.pack(pady=20)
 
     def procesar_login(self):
         rol_seleccionado = self.cmb_rol.get()
-        usuario = self.txt_usuario.get().strip()
+        # Aseguramos que el input de usuario sea procesado en minúsculas para la validación
+        usuario = self.txt_usuario.get().strip().lower()
         password = self.txt_password.get().strip()
 
         if usuario == "" or password == "":
-            print("Error: Campos vacíos")
+            self.etiqueta_mensaje.configure(
+                text="Error: Complete los campos vacíos.", text_color="orange"
+            )
             return
 
-        # Diccionario para mapear los roles de la interfaz con las áreas del JSON
+        # Diccionario para mapear los roles de la interfaz con las áreas del JSON en minúsculas
         mapeo_roles = {
             "Mostrador": "mostrador",
             "Financieros": "financieros",
@@ -118,14 +114,19 @@ class LoginApp(ctk.CTk):
             usuario_valido = False
             
             for user in usuarios_db:
-                # Comprobación de datos usando las llaves exactas de tu archivo JSON
-                match_usuario = (user.get("nombre") == usuario or user.get("id_emp") == usuario)
-                match_password = (user.get("pasword") == password)
-                match_area = (user.get("area") == area_esperada)
+                # Comprobación estandarizada aplicando .lower() a los datos leídos del JSON
+                db_nombre = str(user.get("nombre", "")).strip().lower()
+                db_id = str(user.get("id_emp", "")).strip().lower()
+                db_password = str(user.get("pasword", "")).strip()
+                db_area = str(user.get("area", "")).strip().lower()
+
+                match_usuario = (db_nombre == usuario or db_id == usuario)
+                match_password = (db_password == password)
+                match_area = (db_area == area_esperada)
 
                 if match_usuario and match_password and match_area:
                     usuario_valido = True
-                    break                 # permite romper el ciclo for - in 
+                    break                 # Rompe el ciclo for si encuentra coincidencia
 
             if usuario_valido:
                 self.etiqueta_mensaje.configure(
@@ -133,8 +134,12 @@ class LoginApp(ctk.CTk):
                 )
                 self.txt_usuario.delete(0, 'end')
                 self.txt_password.delete(0, 'end')
+                
+                # 1. Destruimos inmediatamente la ventana de login
                 self.destroy()
-                nueva_ventana = mg()
+                
+                # 2. Inicializamos y abrimos el menú general / dashboard
+                nueva_ventana = mg(rol_usuario=rol_seleccionado)
                 nueva_ventana.mainloop()
             else:
                 self.etiqueta_mensaje.configure(

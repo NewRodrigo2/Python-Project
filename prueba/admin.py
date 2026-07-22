@@ -7,9 +7,9 @@ pendientes: cambiar la rura
 import customtkinter as ctk
 import os
 import json
+from pathlib import Path
 import renta as rta
 import herramientas as h
-from pathlib import Path
 
 
 # 1. Configuración estética de CustomTkinter

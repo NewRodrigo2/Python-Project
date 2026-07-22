@@ -125,7 +125,7 @@ class LoginApp(ctk.CTk):
 
                 if match_usuario and match_password and match_area:
                     usuario_valido = True
-                    break
+                    break                 # permite romper el ciclo for - in 
 
             if usuario_valido:
                 self.etiqueta_mensaje.configure(

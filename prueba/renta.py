@@ -5,10 +5,9 @@ import os
 import json
 import msvcrt  # Librería nativa de Windows para capturar teclas al instante
 import customtkinter as ctk
-import renta as rta
-
 from datetime import datetime
 import herramientas  as h
+
 
 
 # Constantes para los colores en la terminal (Códigos ANSI)
@@ -30,14 +29,6 @@ ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
 ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
 ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
 #................................................................................
-
-# === SOLUCIÓN USB: RUTA AUTOMATIZADA ===
-# Detecta dinámicamente dónde está corriendo este archivo en tu memoria USB
-#CARPETA_PROYECTO = os.path.dirname(os.path.abspath(__file__))
-
-# Crea de forma limpia una carpeta llamada "datos" dentro del directorio del script
-#CARPETA_DATOS = os.path.join(CARPETA_PROYECTO, "datos")
-#ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
 
 CLAVE_ADMIN = "admin123" # Contraseña para la opción oculta
 
@@ -104,10 +95,6 @@ def cargar_inventario():
         print(f"\n{COLOR_ERROR}Error crítico al cargar archivos ({e}). Usando datos temporales.{COLOR_RESET}")
         h.row_space()
 
-
-
-
-
 def mostrar_inventario():
     h.dibu_enca("INVENTARIO DE AUTOS", 70, "═")                                          #  dibujando enca
     print(f"{'ID':<4} | {'Marca':<12} | {'Modelo':<12} | {'Precio/Día':<12} | Estado")
@@ -117,7 +104,6 @@ def mostrar_inventario():
        estado = f"{COLOR_EXITO}Disponible{COLOR_RESET}" if auto["disponible"] else f"{COLOR_ERROR}Rentado{COLOR_RESET}"
        # print(f"[{auto['id']}] {auto['marca']} {auto['modelo']} - ${auto['precio_dia']}/día ({estado}) rentado por {COLOR_ADMIN}{auto['dias']} dias{COLOR_RESET}")
        print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_ERROR}{estado}{COLOR_RESET}")
-
 
 def mostrar_inv_disp():
     print(f"\n{COLOR_TITULO}{'=' * 69}")
@@ -286,11 +272,6 @@ def regresar_auto():
         
     input("\nPresione Enter para continuar...")
 
-
-
-
-
-
 def menu_principal():
     cargar_inventario()
     veces = 15
@@ -365,7 +346,6 @@ def menu_principal():
             # Aquí podrías detonar tu menu_administrador()
             print(" libre para una opcion oculta")
             h.row_space()
-
 
 if __name__ == "__main__":
     menu_principal()

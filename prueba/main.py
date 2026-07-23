@@ -137,21 +137,22 @@ class LoginApp(ctk.CTk):
                 self.txt_password.delete(0, 'end')
                 
                 # 1. Destruimos inmediatamente la ventana de login
-                self.destroy()
-                
+                #self.destroy()
+                self.withdraw()
+                nueva_ventana = mg(rol_usuario=rol_seleccionado, ventana_login=self)
+                nueva_ventana.mainloop()
+
                 # 2. Inicializamos y abrimos el menú general / dashboard
                 nueva_ventana = mg(rol_usuario=rol_seleccionado)
                 
                 nueva_ventana.mainloop()
             else:
                 self.etiqueta_mensaje.configure(
-                    text="Error: Usuario, contraseña o rol incorrectos.", text_color="red"
-                )
+                    text="Error: Usuario, contraseña o rol incorrectos.", text_color="red")
 
         except FileNotFoundError:
             self.etiqueta_mensaje.configure(
-                 text="Error crítico: El archivo no existe en la ruta", text_color="red"
-            )            
+                 text="Error crítico: El archivo no existe en la ruta", text_color="red")            
         except json.JSONDecodeError:
             self.etiqueta_mensaje.configure(
                  text="Error crítico: El archivo 'personal.json' tiene un formato inválido.", text_color="red"

@@ -82,9 +82,8 @@ class LoginApp(ctk.CTk):
         # 3. Activación quirúrgica
         if rol_procesado == "mostrador": 
             self.btn_rentar.configure(state="normal") 
-        elif rol_procesado == "administrador": 
-            for btn in botones_menu: 
-                btn.configure(state="normal") 
+        elif rol_procesado == "administrador":
+             self.btn_ver.configure(state="normal")    
         elif rol_procesado == "mecanico" or rol_procesado == "mantenimiento": 
             self.btn_eliminar.configure(state="normal") 
         elif rol_procesado == "financieros" or rol_procesado == "supervisor": 

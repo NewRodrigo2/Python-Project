@@ -51,27 +51,29 @@ class LoginApp(ctk.CTk):
         # Roles de la interfaz gráfica
         self.roles_disponibles = ["Mostrador", "Financieros", "Mecánico", "Administrador", "Supervisor"]
         self.cmb_rol = ctk.CTkComboBox(
-            self.frame_login, values=self.roles_disponibles, width=320, state="readonly"
+        self.frame_login, values=self.roles_disponibles, width=320, state="readonly"
         )
+
         self.cmb_rol.set("Mostrador")
         self.cmb_rol.pack(pady=5, padx=30)
 
         self.lbl_usuario = ctk.CTkLabel(
-            self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold")
-        )
+            self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold"))
+
         self.lbl_usuario.pack(pady=(20, 5), padx=30, anchor="w")
+
         self.txt_usuario = ctk.CTkEntry(
-            self.frame_login, width=320, placeholder_text="Ej. Jose o ID"
-        )
+            self.frame_login, width=320, placeholder_text="Ej. Jose o ID")
         self.txt_usuario.pack(pady=5, padx=30)
 
         self.lbl_password = ctk.CTkLabel(
-            self.frame_login, text="Contraseña:", font=ctk.CTkFont(size=14, weight="bold")
-        )
+            self.frame_login, text="Contraseña:", font=ctk.CTkFont(size=14, weight="bold"))
+        
         self.lbl_password.pack(pady=(20, 5), padx=30, anchor="w")
+
         self.txt_password = ctk.CTkEntry(
-            self.frame_login, width=320, placeholder_text="••••••••", show="•"
-        )
+        self.frame_login, width=320, placeholder_text="••••••••", show="•")
+
         self.txt_password.pack(pady=5, padx=30)
 
         self.btn_ingresar = ctk.CTkButton(
@@ -137,15 +139,10 @@ class LoginApp(ctk.CTk):
                 self.txt_password.delete(0, 'end')
                 
                 # 1. Destruimos inmediatamente la ventana de login
-                #self.destroy()
                 self.withdraw()
                 nueva_ventana = mg(rol_usuario=rol_seleccionado, ventana_login=self)
                 nueva_ventana.mainloop()
 
-                # 2. Inicializamos y abrimos el menú general / dashboard
-                nueva_ventana = mg(rol_usuario=rol_seleccionado)
-                
-                nueva_ventana.mainloop()
             else:
                 self.etiqueta_mensaje.configure(
                     text="Error: Usuario, contraseña o rol incorrectos.", text_color="red")

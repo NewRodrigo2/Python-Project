@@ -22,7 +22,7 @@ PERSONAL = CARPETA_DATOS / "personal.json"
 # ------------------------------------------------------------------------------------------
 
 class DashboardApp(ctk.CTk):
-    def __init__(self, ventana_menu_gral=None): # <--- Cambiado aquí
+    def __init__(self, ventana_menu_gral=None): 
         super().__init__()
         self.ventana_menu_gral = ventana_menu_gral # Guardamos la referencia
         self.title("Administración")
@@ -86,7 +86,6 @@ class DashboardApp(ctk.CTk):
         if not hasattr(self, "frame_segundo"):
             self.frame_segundo = ctk.CTkFrame(self)
 
-            # --- SOLUCIÓN: Usamos una tupla ("Familia", Tamaño, "Estilo") en lugar de ctk.CTkFont ---
             fuente_botones = ("Arial", 15, "bold") 
 
             self.btn_agrega_rh = ctk.CTkButton(
@@ -94,7 +93,8 @@ class DashboardApp(ctk.CTk):
                 text="Agregar Nuevo Personal", 
                 width=300, 
                 height=40, 
-                font=fuente_botones # <--- Cambiado aquí
+                font=fuente_botones, 
+                command=self.rh_frame
             )
             self.btn_agrega_rh.pack(pady=(40, 20))
 
@@ -103,7 +103,7 @@ class DashboardApp(ctk.CTk):
                 text="Realizar Nomina", 
                 width=300, 
                 height=40, 
-                font=fuente_botones # <--- Cambiado aquí
+                font=fuente_botones
             )
             self.btn_nomina.pack(pady=(40, 20))
 
@@ -112,18 +112,58 @@ class DashboardApp(ctk.CTk):
                 text="Volver", 
                 width=300, 
                 height=40, 
-                font=fuente_botones, # <--- Cambiado aquí
+                font=fuente_botones, 
                 command=self.mostrar_menu_principal
             )
-            self.btn_volver.pack(pady=(40, 20))
+            self.btn_volver.pack(pady=(40, 20)) # <-- Ahora está correctamente dentro del if
 
         # 3. Mostramos el segundo frame en pantalla
         self.frame_segundo.pack(pady=10, padx=30, fill="both", expand=True)
+
+    def rh_frame(self):
+        self.frame_segundo.pack_forget()
+
+        if not hasattr(self, "frame_tercer"):
+            self.frame_tercer = ctk.CTkFrame(self)
+            fuente_botones = ("Arial", 15, "bold") 
+
+#.................................  INICIO  DE LOS WIDGETS  ......................................................
+
+            self.lbl_captura = ctk.CTkLabel(
+                self.frame_tercer, 
+                text="CAPTURA DE NUEVO PERSONAL", 
+                font=fuente_botones
+            )
+            self.lbl_captura.pack(pady=(40, 20))
+
+            self.txt_id = ctk.CTkEntry(
+                self.frame_tercer,
+                width=320, placeholder_text="Id del trabajador"
+            )
+            self.txt_id.pack(pady=5, padx=30)
+
+
+            self.btn_salir = ctk.CTkButton(
+                self.frame_tercer,
+                text="VOLVER",
+                font=fuente_botones,
+                command=self.mostrar_frame_segundo
+            )
+            self.btn_salir.pack(pady=(10, 20))
+
+#.................................  FIN DE LOS WIDGETS  ......................................................
+
+        self.frame_tercer.pack(pady=10, padx=30, fill="both", expand=True)
 
     def mostrar_menu_principal(self):
         if hasattr(self, "frame_segundo"):
             self.frame_segundo.pack_forget()  # Ocultamos submenú de RH
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)  # Mostramos menú admin
+
+    def mostrar_frame_segundo(self):
+        if hasattr(self,"frame_tercer"):
+            self.frame_tercer.pack_forget()
+        self.frame_segundo.pack(pady=10, padx=30, fill="both", expand=True)
 
     def cerrar_sesion(self):
         if self.ventana_menu_gral:

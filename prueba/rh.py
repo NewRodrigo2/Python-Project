@@ -3,7 +3,7 @@ Modificar estructura de la ruta
 '''
 import os
 import json
-import msvcrt  # Librería nativa de Windows para capturar teclas al instante
+import msvcrt                  # Librería nativa de Windows para capturar teclas al instante
 from datetime import datetime
 from pathlib import Path
 import herramientas  as h
@@ -113,13 +113,10 @@ def agregar_personal():
             
         h.row_space()
 
-
 def menu_util():
     label1 = ("1.- crear archivo nuevo \n")
     label2 = ("2.- agregar personal nuevo \n")
     label3 = ("3. Sueldos \n")
-    label4 = ("4. En proceso \n")
-    label5 = ("5. En proceso \n")
     label9 = ("9. Salir del programa \n")
     label10 = ("Seleccione una opcion .... \n")
     while True: 

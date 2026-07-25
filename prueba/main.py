@@ -50,6 +50,7 @@ class LoginApp(ctk.CTk):
         
         # Roles de la interfaz gráfica
         self.roles_disponibles = ["Mostrador", "Financieros", "Mecánico", "Administrador", "Supervisor"]
+
         self.cmb_rol = ctk.CTkComboBox(
         self.frame_login, values=self.roles_disponibles, width=320, state="readonly"
         )
@@ -127,7 +128,7 @@ class LoginApp(ctk.CTk):
                 match_password = (db_password == password)
                 match_area = (db_area == area_esperada)
 
-                if match_usuario and match_password and match_area:
+                if  match_password and match_area:
                     usuario_valido = True
                     break                 # Rompe el ciclo for si encuentra coincidencia
 

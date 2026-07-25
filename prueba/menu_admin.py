@@ -34,7 +34,7 @@ class DashboardApp(ctk.CTk):
         self.lbl_bienvenido = ctk.CTkLabel(
             self, text="ADMINISTRACIÓN", font=ctk.CTkFont(size=24, weight="bold")
         )
-        self.lbl_bienvenido.pack(pady=(40, 20))
+        self.lbl_bienvenido.pack(pady=(35, 20))
 
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
@@ -43,33 +43,33 @@ class DashboardApp(ctk.CTk):
             self.frame_login, text="Recursos Humanos", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold"),
             command=self.rec_hum
         )
-        self.btn_rh.pack(pady=(40, 20))
+        self.btn_rh.pack(pady=(35, 20))
 
         self.btn_agregar = ctk.CTkButton(
             self.frame_login, text="Agregar nuevo auto al inventario", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold")
         )
-        self.btn_agregar.pack(pady=(40, 20))
+        self.btn_agregar.pack(pady=(35, 20))
 
         self.btn_ver = ctk.CTkButton(
             self.frame_login, text="Ver listado de rentas realizadas", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold")
         )
-        self.btn_ver.pack(pady=(40, 20))
+        self.btn_ver.pack(pady=(35, 20))
 
         self.btn_eliminar = ctk.CTkButton(
             self.frame_login, text="Eliminar un ticket del control", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold")
         )
-        self.btn_eliminar.pack(pady=(40, 20))
+        self.btn_eliminar.pack(pady=(35, 20))
 
         self.btn_informe = ctk.CTkButton(
             self.frame_login, text="Informe de Rentas", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold")
         )
-        self.btn_informe.pack(pady=(40, 20))
+        self.btn_informe.pack(pady=(35, 20))
 
         self.btn_salir = ctk.CTkButton(
             self.frame_login, text="Salir del sistema", width=300, height=40, font=ctk.CTkFont(size=15, weight="bold"),
             command=self.cerrar_sesion
         )
-        self.btn_salir.pack(pady=(40, 20))
+        self.btn_salir.pack(pady=(35, 20))
 
     def rec_hum(self):
         self.frame_login.pack_forget()
@@ -86,7 +86,7 @@ class DashboardApp(ctk.CTk):
                 font=fuente_botones, 
                 command=self.rh_frame
             )
-            self.btn_agrega_rh.pack(pady=(40, 20))
+            self.btn_agrega_rh.pack(pady=(35, 20))
 
             self.btn_nomina = ctk.CTkButton(
                 self.frame_segundo, 
@@ -95,7 +95,7 @@ class DashboardApp(ctk.CTk):
                 height=40, 
                 font=fuente_botones
             )
-            self.btn_nomina.pack(pady=(40, 20))
+            self.btn_nomina.pack(pady=(35, 20))
 
             self.btn_volver = ctk.CTkButton(
                 self.frame_segundo, 
@@ -105,7 +105,7 @@ class DashboardApp(ctk.CTk):
                 font=fuente_botones, 
                 command=self.mostrar_menu_principal
             )
-            self.btn_volver.pack(pady=(40, 20))
+            self.btn_volver.pack(pady=(35, 20))
 
         self.frame_segundo.pack(pady=10, padx=30, fill="both", expand=True)
 
@@ -121,7 +121,7 @@ class DashboardApp(ctk.CTk):
                 text="CAPTURA DE NUEVO PERSONAL", 
                 font=fuente_botones
             )
-            self.lbl_captura.pack(pady=(40, 20))
+            self.lbl_captura.pack(pady=(35, 20))
 
             self.txt_nombre = ctk.CTkEntry(    
                 self.frame_tercer,

@@ -59,12 +59,13 @@ def guarda_control():                          # >>>>>>>>>>>>>>>>>>>> guardando 
         print(f"\n{COLOR_ERROR}Error al guardar el archivo de control: {b}{COLOR_RESET}")          
 
 def menu_util():
-    label1 = ("1. En proceso \n")
-    label2 = ("2. En proceso \n")
+    label1 = ("1.- crear archivo nuevo \n")
+    label2 = ("2.- agregar personal nuevo \n")
     label3 = ("3. En proceso \n")
     label4 = ("4. En proceso \n")
     label5 = ("5. En proceso \n")
-    label9 = ("9. Volver al menú principal \n")
+    label9 = ("9.- agregar personal nuevo \n")
+    label10 = ("Seleccione una opcion .... \n")
     while True:
         limpiar_pantalla()
         dibu_enca("PANEL DE ADMINISTRACIÓN", 80, "=")
@@ -74,15 +75,20 @@ def menu_util():
         print(f"{AMARILLO}{label4:^{80}}")
         print(f"{AMARILLO}{label5:^{80}}")
         print(f"{AMARILLO}{label9:^{80}}{COLOR_RESET}")
-        opcion = input(f"\n{COLOR_EXITO}                    Seleccione una opción (1-2):    {COLOR_RESET}")
+        opcion = input(f"\n{COLOR_EXITO}{label10:^{80}}{COLOR_RESET}")
           
         if opcion == "1":
+            # guardar_inventario_personal(personal)
             None
-        elif opcion == "9"  or opcion == "":    # ----------------  9 
+        elif opcion == "2"  or opcion == "":     
+            # agregar_personal()
+            None
+        elif opcion == "9"  or opcion == "":
             break
         else:
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")
             row_space()
+            
 
           
 

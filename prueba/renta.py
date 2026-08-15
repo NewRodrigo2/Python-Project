@@ -6,9 +6,8 @@ import json
 import msvcrt  # Librería nativa de Windows para capturar teclas al instante
 import customtkinter as ctk
 from datetime import datetime
+from pathlib import Path
 import herramientas  as h
-
-
 
 # Constantes para los colores en la terminal (Códigos ANSI)
 COLOR_TITULO = "\033[94m"  # Azul
@@ -20,15 +19,20 @@ AMARILLO = "\033[33m"
 CIAN = "\033[36m"
 CIAN_BRILLANTE = "\033[96m"
 BG_CIAN = "\033[46m"
-#................................................................................
-# RUTA SOLICITADA: Se usa os.path.join para evitar problemas con las barras invertidas en Windows
-# CARPETA_DATOS = r"D:\programacion\python"
-CARPETA_DATOS = r"C:\Users\danie\Documents\Python Project\prueba\datos"
-# CARPETA_DATOS = os.path.abspath(r"E:\Python\Python Project\datos")
-ARCHIVO_DATOS = os.path.join(CARPETA_DATOS, "inventario.json")
-ARCHIVO_CONTROL = os.path.join(CARPETA_DATOS, "control.json")   # >>>>>>>>>>>>>>>>>>  Agregando un nuevo archivo 
-ARCHIVO_TEX = os.path.join(CARPETA_DATOS, "autos_ordenados.txt")
-#................................................................................
+# ------------------------------------------------------------------------------------------
+ruta_actual = os.getcwd() 
+unidad = os.path.splitdrive(ruta_actual)[0] 
+if unidad == "C:":
+    CARPETA_DATOS = Path(unidad + "\\") / "Users" / "danie" / "Documents" / "Python Project" / "prueba" / "datos"
+else:
+    CARPETA_DATOS = Path(unidad + "\\") / "Python" / "Python Project" / "prueba" / "datos"
+
+# Rutas de archivos
+ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"
+ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"
+ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"
+PERSONAL = CARPETA_DATOS / "personal.json"  
+# ------------------------------------------------------------------------------------------
 
 CLAVE_ADMIN = "admin123" # Contraseña para la opción oculta
 
@@ -42,7 +46,8 @@ fecha_renta = "01/01/2026"
 # fecha_obj = datetime.strptime(fecha_renta, "%d/%m/%Y").date()
 AUTO_CONTROL = [
     {
-        "c_id": 1, "km_recorridos": 0, 
+        "c_id": 1, 
+        "km_recorridos": 0, 
         "c_venta_total": 0, 
         "c_fecha_renta":fecha_renta,
         "c_dias": 0
@@ -69,7 +74,7 @@ def cargar_inventario():
         if os.path.exists(ARCHIVO_DATOS):
             with open(ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
                 inventario = json.load(archivo)
-            print("✓ Archivo inventario.json cargado con éxito.")
+            # print("✓ Archivo inventario.json cargado con éxito.")
         else:
             inventario = INVENTARIO_DEFECTO
             print("⚠ No se encontró inventario.json. Usando datos por defecto.")
@@ -81,7 +86,7 @@ def cargar_inventario():
                 control = json.load(archivo_control)
             if len(control) > 0 and "c_marca" not in control[0]:
                 control.pop(0)
-            print("✓ Archivo control.json cargado con éxito.")
+            # print("✓ Archivo control.json cargado con éxito.")
         else:
             control = AUTO_CONTROL  # Inicializa con tu estructura base de control
             print("⚠ No se encontró control.json. Inicializando datos de control.")
@@ -121,7 +126,7 @@ def mostrar_inv_disp():
     print (f"\n{COLOR_ADMIN} Total de autos en la lista: {sum_disp}{COLOR_RESET}")
 
 def mostrar_inv_no_disp():
-    label = 'NVENTARIO DE AUTOS NO DISPONIBLES'
+    label = 'INVENTARIO DE AUTOS NO DISPONIBLES'
     print(f"{COLOR_TITULO}{'=' * 69}")
     print(f"{label:^{69}}")
     print(f"{'=' * 69}{COLOR_RESET}")
@@ -134,7 +139,6 @@ def mostrar_inv_no_disp():
     sum_disp = 0
     for auto in inventario:
         if not auto["disponible"]:
-            # Usamos marcadores de posición fijos (<12 significa alineado a la izquierda con 12 espacios)
             # Nota: El estado se imprime al final para que los códigos ANSI de color no rompan la alineación
             print(f"[{auto['id']:<2}] | {auto['marca']:<12} | {auto['modelo']:<12} | ${auto['precio_dia']:<11} | {COLOR_EXITO}{auto['venta']:<11} |{COLOR_RESET}")
             sum_disp += 1

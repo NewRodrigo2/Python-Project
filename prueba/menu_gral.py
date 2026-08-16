@@ -96,6 +96,17 @@ class LoginApp(ctk.CTk):
         nuva_admin = m_admin.DashboardApp(ventana_menu_gral=self) 
         nuva_admin.mainloop() 
 
+    def interfaz_renta(self):
+        self.lbl_titulo_renta = ctk.CTkLabel( 
+            self, text="RENTA DE AUTOS ", font=ctk.CTkFont(size=30, weight="bold") 
+        )
+        self.lbl_titulo_renta.pack(pady=(40,20))
+#................................................................... frame
+        self.frame_login = ctk.CTkFrame(self)
+        self.frame_login.pack(pady=10),
+        padx=30, fill="both",expand=True
+#................................................................... frame
+
     def cerrar_sesion(self): 
         # Si venimos desde el login, destruimos esta ventana y volvemos a mostrar el login original
         if self.ventana_login:

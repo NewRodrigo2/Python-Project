@@ -132,7 +132,6 @@ def agregar_personal():
             
         h.row_space()
 
-
 def menu_util():
     label1 = ("1.- crear archivo nuevo \n")
     label2 = ("2.- agregar personal nuevo \n")

@@ -140,18 +140,7 @@ class LoginApp(ctk.CTk):
         if self.frame_login:
             self.frame_login.pack_forget()
         
-        self.limpiar_encabezado()
-        
-        # 2. Configurar nuevos títulos del encabezado
-        lbl_titulo_renta = ctk.CTkLabel(
-            self.encabezado_frame, text="RENTA DE AUTOS", font=ctk.CTkFont(size=30, weight="bold")
-        )
-        lbl_titulo_renta.pack(pady=(0, 5))
-        
-        lbl_entrega = ctk.CTkLabel(
-            self.encabezado_frame, text="ENTREGA DE AUTOS", font=ctk.CTkFont(size=22, weight="bold", slant="italic")
-        )
-        lbl_entrega.pack(pady=(0, 10))
+        self.limpiar_encabezado()   
         
         # 3. LÍNEA 98 CORREGIDA: Creación y empaquetado correcto del segundo frame
         self.frame_renta = ctk.CTkFrame(self)
@@ -159,16 +148,27 @@ class LoginApp(ctk.CTk):
         
         # --- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
         lbl_info_renta = ctk.CTkLabel(
-            self.frame_renta, text="Formulario / Gestión de Rentas Activas", font=("Arial", 16)
+            self.encabezado_frame, text="GESTION DE RENTAS", font=("Arial", 34)
         )
-        lbl_info_renta.pack(pady=40)
+        lbl_info_renta.pack(pady=20)
+
+        # 2. Configurar nuevos títulos del encabezado
+        lbl_titulo_renta = ctk.CTkButton(
+            self.frame_renta, text="RENTA DE AUTOS", width=300, height=40, font=ctk.CTkFont(size=18, weight="bold")
+        )
+        lbl_titulo_renta.pack(pady=(20, 10))
         
+        lbl_entrega = ctk.CTkButton(
+            self.frame_renta, text="ENTREGA DE AUTOS",width=300, height=40, font=ctk.CTkFont(size=18, weight="bold")
+        )
+        lbl_entrega.pack(pady=(20, 10))
+
         # Botón para regresar al menú anterior
         btn_regresar = ctk.CTkButton(
-            self.frame_renta, text="Volver al Menú", width=200, height=40,
+            self.frame_renta, text="REGRESA", width=300, height=40,font=ctk.CTkFont(size=18, weight="bold"),
             command=self.regresar_menu_principal
         )
-        btn_regresar.pack(pady=20)
+        btn_regresar.pack(pady=(20,10))
 
     def regresar_menu_principal(self):
         """Destruye el frame de renta y vuelve a dibujar el menú principal."""

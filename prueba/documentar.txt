@@ -3,7 +3,8 @@ para habilitar solo el rol correspondiente.
 
 ante el problema de los tiempos para destruir la ventana y abrir una nueva en
 menu_gral / def abrir_admin(self): se crea otro def ejecutar_apertura():
-cual es la utilidad de un def dentro de otro def
+
+cual es la utilidad de un def dentro de otro def?
 
 
 

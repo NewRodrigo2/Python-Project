@@ -1,3 +1,4 @@
+''' se agrego boton salir y def salir_definitivo(self): '''
 import json 
 import customtkinter as ctk
 import renta as rta
@@ -25,11 +26,11 @@ PERSONAL = CARPETA_DATOS / "personal.json"
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
-class LoginApp(ctk.CTk):
+class VentanaLogin(ctk.CTk):
     def __init__(self):
         super().__init__()
         self.title("Login - Mi Carrito en Renta")
-        self.geometry("450x550")
+        self.geometry("450x650")
         self.resizable(False, False)
         self.crear_interfaz_login()
 
@@ -82,7 +83,14 @@ class LoginApp(ctk.CTk):
             font=ctk.CTkFont(size=15, weight="bold"), command=self.procesar_login
         )
         self.btn_ingresar.pack(pady=(40, 20))
-
+#................................................
+        self.btn_salir = ctk.CTkButton(
+            self.frame_login, text="Cerrar el Sistema", width=200, height=40, 
+            font=ctk.CTkFont(size=15, weight="bold"), 
+            command=self.salir_definitivo
+        )
+        self.btn_salir.pack(pady=(20, 20))
+#.....
         self.etiqueta_mensaje = ctk.CTkLabel(
             self, text="Esperando acción...", font=("Arial", 14), text_color="gray"
         )
@@ -154,8 +162,15 @@ class LoginApp(ctk.CTk):
         except json.JSONDecodeError:
             self.etiqueta_mensaje.configure(
                  text="Error crítico: El archivo 'personal.json' tiene un formato inválido.", text_color="red"
-            )            
+            )
+
+    def salir_definitivo(self):
+        ''' Termina el mainloop y destruye la ventana tras la animación del click.'''
+        # Esperamos 100ms para evitar el error de animación en segundo plano
+        self.after(100, self.destroy)
+
+                        
 
 if __name__ == "__main__":
-    app = LoginApp()
+    app = VentanaLogin()
     app.mainloop()

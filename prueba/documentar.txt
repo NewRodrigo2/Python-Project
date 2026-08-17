@@ -1,5 +1,11 @@
-soy estudiante de programacion autodidacta, 
-estoy estudiando python, comportate como mi profesor de programacion
+def aplicar_permiso() de menu_gral.py, requiere del rol asignado en main.py, 
+para habilitar solo el rol correspondiente. 
+
+ante el problema de los tiempos para destruir la ventana y abrir una nueva en
+menu_gral / def abrir_admin(self): se crea otro def ejecutar_apertura():
+cual es la utilidad de un def dentro de otro def
+
+
 
 IDEA: 
 1.- pasar carpeta python Proyect a c: de SRS

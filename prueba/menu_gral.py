@@ -147,12 +147,12 @@ class LoginApp(ctk.CTk):
         self.frame_renta.pack(pady=10, padx=30, fill="both", expand=True)
         
         # --- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
+        # 2. Configurar nuevos títulos del encabezado
         lbl_info_renta = ctk.CTkLabel(
             self.encabezado_frame, text="GESTION DE RENTAS", font=("Arial", 34)
         )
         lbl_info_renta.pack(pady=20)
-
-        # 2. Configurar nuevos títulos del encabezado
+        
         lbl_titulo_renta = ctk.CTkButton(
             self.frame_renta, text="RENTA DE AUTOS", width=300, height=40, font=ctk.CTkFont(size=18, weight="bold")
         )

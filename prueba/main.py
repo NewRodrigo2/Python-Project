@@ -50,7 +50,7 @@ class VentanaLogin(ctk.CTk):
         self.lbl_rol.pack(pady=(25, 5), padx=30, anchor="w")
         
         # Roles de la interfaz gráfica
-        self.roles_disponibles = ["Mostrador", "Financieros", "Mecánico", "Administrador", "Supervisor"]
+        self.roles_disponibles = ["Mostrador", "Director", "Mecánico", "Administrador", "Supervisor"]
 
         self.cmb_rol = ctk.CTkComboBox(
         self.frame_login, values=self.roles_disponibles, width=320, state="readonly"

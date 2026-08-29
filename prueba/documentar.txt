@@ -1,0 +1,37 @@
+def aplicar_permiso() de menu_gral.py, requiere del rol asignado en main.py, 
+para habilitar solo el rol correspondiente. 
+
+ante el problema de los tiempos para destruir la ventana y abrir una nueva en
+menu_gral / def abrir_admin(self): se crea otro def ejecutar_apertura():
+
+cual es la utilidad de un def dentro de otro def?
+
+
+
+IDEA: 
+1.- pasar carpeta python Proyect a c: de SRS
+
+
+PENDIENTES:  
+
+A1 = login: borrar ventana al aceptar empleado
+
+     tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 
+
+     B1 = en caso de ser administrativo preguntar por financiaros o Recursos Humanos
+
+A1 = crear copias en Drive
+...........................................................................
+B2 = crear memoria con vscod y python
+.............................................................................
+C1 = crear script taller.py
+
+FLUJO ACTUAL:
+
+main.py inicia con el login,  llama a menu_principal de renta.py 
+
+
+PREGUNATAS PARA LA IA:
+
+PREGUNATA: utilizar poo en renta.py 
+

@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "precio_dia": 100.0,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    }
+]

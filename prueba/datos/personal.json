@@ -1,0 +1,75 @@
+[
+    {
+        "id_emp": "1",
+        "nombre": "Jose Perez Jimenez",
+        "area": "mantenimiento",
+        "hrs_cont": 40,
+        "hrs_trab": 99,
+        "sueldo": 9,
+        "ausencias": 9,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "2",
+        "nombre": "R",
+        "area": "mostrador",
+        "hrs_cont": 40,
+        "hrs_trab": 40,
+        "sueldo": 1000.0,
+        "ausencias": 0,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "3",
+        "nombre": "r",
+        "area": "mostrador",
+        "hrs_cont": 40,
+        "hrs_trab": 40,
+        "sueldo": 0.0,
+        "ausencias": 0,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "4",
+        "nombre": "m",
+        "area": "administrador",
+        "hrs_cont": 0,
+        "hrs_trab": 0,
+        "sueldo": 0.0,
+        "ausencias": 0,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "5",
+        "nombre": "www",
+        "rol": "Financieros",
+        "area": "ww",
+        "hrs_cont": 1,
+        "hrs_trab": 0,
+        "sueldo": 1.0,
+        "ausencias": 0,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "6",
+        "nombre": "eee",
+        "rol": "Supervisor",
+        "area": "1",
+        "hrs_cont": 1,
+        "hrs_trab": 0,
+        "sueldo": 1.0,
+        "ausencias": 0,
+        "pasword": "1q"
+    },
+    {
+        "id_emp": "7",
+        "nombre": "12",
+        "rol": "Mostrador",
+        "area": "12",
+        "hrs_cont": 12,
+        "hrs_trab": 0,
+        "sueldo": 12.0,
+        "ausencias": 0,
+        "pasword": "12"
+    }
+]

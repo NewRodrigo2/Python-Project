@@ -1,8 +1,12 @@
-soy estudiante de programacion autodidacta, 
-estoy estudiando python, comportate como mi profesor de programacion
+def aplicar_permiso() de menu_gral.py, requiere del rol asignado en main.py, 
+para habilitar solo el rol correspondiente. 
 
-los archivos actuales en desarrollo son: 
-main.py, renta.py, admin.py herramientas.py
+ante el problema de los tiempos para destruir la ventana y abrir una nueva en
+menu_gral / def abrir_admin(self): se crea otro def ejecutar_apertura():
+
+cual es la utilidad de un def dentro de otro def?
+
+
 
 IDEA: 
 1.- pasar carpeta python Proyect a c: de SRS
@@ -10,7 +14,7 @@ IDEA:
 
 PENDIENTES:  
 
-A1 = borrar ventana al aceptar empleado
+A1 = login: borrar ventana al aceptar empleado
 
      tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 
 
@@ -18,7 +22,6 @@ A1 = borrar ventana al aceptar empleado
 
 A1 = crear copias en Drive
 ...........................................................................
-B1 = revisar correo rod.rom.ma3@gmail.com  para saber si tiene Drive
 B2 = crear memoria con vscod y python
 .............................................................................
 C1 = crear script taller.py

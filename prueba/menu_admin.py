@@ -1,3 +1,5 @@
+''' este script se llama menu_admin.py 
+'''
 import json
 import os
 from pathlib import Path

@@ -1,3 +1,5 @@
+''' este script se llama menu_gral.py 
+'''
 import customtkinter as ctk
 # import menu_admin as m_admin # Descomenta en tu entorno
 

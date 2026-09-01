@@ -4,7 +4,7 @@ import json
 import os
 from pathlib import Path
 import customtkinter as ctk
-
+from logic import RoleManager
 # Importamos nuestro módulo de Recursos Humanos
 import rh as hr 
 
@@ -24,9 +24,14 @@ PERSONAL = CARPETA_DATOS / "personal.json"
 # ------------------------------------------------------------------------------------------
 
 class DashboardApp(ctk.CTk):
-    def __init__(self, ventana_menu_gral=None): 
+    def __init__(self):
         super().__init__()
+        self.role_manager = RoleManager()
         self.ventana_menu_gral = ventana_menu_gral
+        roles_disponibles = self.role_manager.obtener_roles()
+        # aquí usas roles_disponibles para permisos o menús
+
+
         self.title("Administración")
         self.geometry("800x800")
         self.resizable(False, False)

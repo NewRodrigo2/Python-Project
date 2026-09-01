@@ -34,7 +34,6 @@ class AuthManager:
 
                 print(f"[DEBUG] db_nombre='{db_nombre}', db_id='{db_id}', db_password='{db_password}', db_area='{db_area}'")
 
-
                 match_usuario = (db_nombre == usuario or db_id == usuario)
                 match_password = (db_password == password)
                 match_area = (db_area == rol.lower())

@@ -1,17 +1,21 @@
 ''' este script se llama menu_gral.py 
 '''
 import customtkinter as ctk
+from logic import RoleManager
 # import menu_admin as m_admin # Descomenta en tu entorno
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
 class LoginApp(ctk.CTk):
-    def __init__(self, rol_usuario=None, ventana_login=None):
+    def __init__(self, rol_usuario, ventana_login):
         super().__init__()
-        self.rol = rol_usuario
+        self.role_manager = RoleManager()
         self.ventana_login = ventana_login
-        
+        self.rol = rol_usuario
+# aquí usas roles_disponibles para construir menús dinámicos
+        roles_disponibles = self.role_manager.obtener_roles()
+
         self.title("Menu General - Mi Carrito en Renta")
         self.geometry("1100x800")
         self.resizable(False, False)
@@ -24,7 +28,7 @@ class LoginApp(ctk.CTk):
         self.frame_login = None
         self.frame_renta = None
         
-        # Cargar interfaz inicial
+# Cargar interfaz inicial
         self.crear_interfaz_login()
         self.update_idletasks()
         self.aplicar_permisos()
@@ -37,7 +41,7 @@ class LoginApp(ctk.CTk):
     def crear_interfaz_login(self):
         self.limpiar_encabezado()
         
-        # Títulos en el contenedor de encabezado
+# Títulos en el contenedor de encabezado
         lbl_bienvenido = ctk.CTkLabel(
             self.encabezado_frame, 
             text="TITULO GENERAL DEL SISTEMA, NOMBRE DE LA EMPRESA", 

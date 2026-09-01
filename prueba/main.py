@@ -8,7 +8,7 @@ from pathlib import Path
 import herramientas  as h
 import admin as admin
 from menu_admin import DashboardApp as ma
-from menu_gral import LoginApp as mg  # O el menú general correspondiente
+from menu_gral import LoginApp as mg       # O el menú general correspondiente
 from logic import AuthManager, RoleManager
 
 
@@ -85,35 +85,35 @@ class VentanaLogin(ctk.CTk):
         )
         self.lbl_rol.pack(pady=(25, 5), padx=30, anchor="w")
 
-        # Roles desde RoleManager
-        roles_disponibles = self.role_manager.obtener_roles()
+# Roles desde RoleManager
+# ComboBox de roles
 
-        # ComboBox de roles
+        roles_disponibles = self.role_manager.obtener_roles()
         self.cmb_rol = ctk.CTkComboBox(
             self.frame_login, values=roles_disponibles, width=320, state="readonly"
         )
         self.cmb_rol.set(roles_disponibles[0])  # primer rol como default
         self.cmb_rol.pack(pady=5, padx=30)
 
-        # Etiqueta usuario
+# Etiqueta usuario
         self.lbl_usuario = ctk.CTkLabel(
             self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold")
         )
         self.lbl_usuario.pack(pady=(20, 5), padx=30, anchor="w")
 
-        # Campo usuario
+# Campo usuario
         self.txt_usuario = ctk.CTkEntry(
             self.frame_login, width=320, placeholder_text="Ej. Jose o ID"
         )
         self.txt_usuario.pack(pady=5, padx=30)
 
-        # Etiqueta contraseña
+# Etiqueta contraseña
         self.lbl_password = ctk.CTkLabel(
             self.frame_login, text="Contraseña:", font=ctk.CTkFont(size=14, weight="bold")
         )
         self.lbl_password.pack(pady=(20, 5), padx=30, anchor="w")
 
-        # Campo contraseña
+# Campo contraseña
         self.txt_password = ctk.CTkEntry(
             self.frame_login, width=320, placeholder_text="••••••••", show="•"
         )

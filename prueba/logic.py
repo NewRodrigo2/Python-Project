@@ -1,7 +1,19 @@
-# logic.py
+'''logic.py
+Comentario para Copilot: dejaremos in instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
+Pregunta para Copilot: ninguna
+'''
 import json
 import os
 from pathlib import Path
+# ...................... Estableciendo la ruta de los archivos .json  ..........
+ruta_actual = Path(__file__).parent
+CARPETA_DATOS = ruta_actual / "datos"
+
+ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"    # total de autos de la compañia, class InventoryManager:
+ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"     # inventario de autos rentados y no rentados, class RentalManager:
+ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"  # informe de autos rentados hasta el momento
+PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
+
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
@@ -9,8 +21,7 @@ RESET = "\033[0m"
 # Clase para autenticación, # logic.py
 # -------------------------------
 class AuthManager:
-    def __init__(self, archivo_personal):
-        # Guardamos la ruta del archivo personal.json
+    def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
         print(f"{PURPLE}[DEBUG] AuthManager inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
 
@@ -54,8 +65,10 @@ class AuthManager:
 # -------------------------------
 # Clase para gestión de roles
 # -------------------------------
-class RoleManager:
-    def __init__(self):
+class HRManager:
+    def __init__(self, archivo_personal=PERSONAL):
+        self.archivo_personal = archivo_personal
+
         # Lista centralizada de roles
         self.roles = ["Mostrador", "Director", "Mecánico", "Administrador", "Supervisor"]
 
@@ -111,7 +124,7 @@ class HRManager:
 # Clase para Inventario
 # -------------------------------
 class InventoryManager:
-    def __init__(self, archivo_inventario):
+    def __init__(self, archivo_inventario=ARCHIVO_DATOS):
         self.archivo_inventario = archivo_inventario
 
     def agregar_auto(self, datos_auto):
@@ -131,7 +144,7 @@ class InventoryManager:
 # Clase para Rentas
 # -------------------------------
 class RentalManager:
-    def __init__(self, archivo_rentas):
+    def __init__(self, archivo_rentas=ARCHIVO_CONTROL):
         self.archivo_rentas = archivo_rentas
 
     def registrar_renta(self, datos_renta):

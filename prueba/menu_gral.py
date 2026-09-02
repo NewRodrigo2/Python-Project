@@ -1,8 +1,9 @@
-''' este script se llama menu_gral.py 
+''' menu_gral.py
+
 '''
 import customtkinter as ctk
 from logic import RoleManager
-# import menu_admin as m_admin # Descomenta en tu entorno
+import menu_admin as m_admin # Descomenta en tu entorno
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -29,8 +30,8 @@ class LoginApp(ctk.CTk):
         self.frame_renta = None
         
 # Cargar interfaz inicial
-        self.crear_interfaz_login()
-        self.update_idletasks()
+        self.crear_interfaz_login()  # que es limpiar_encabezados 
+        self.update_idletasks()      
         self.aplicar_permisos()
 
     def limpiar_encabezado(self):
@@ -57,12 +58,11 @@ class LoginApp(ctk.CTk):
         )
         self.lbl_menu.pack(anchor="w")
 
-        # Crear el Frame Principal
+# Crear el Frame Principal
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
         
-        # --- BOTONES ---
-        # LÍNEA 39 CORREGIDA: Se agregó la coma faltante antes de command
+# --- BOTONES ---
         self.btn_rentar = ctk.CTkButton(
             self.frame_login, text=" Renta de autos", width=300, height=40, 
             font=("Arial", 15, "bold"), command=self.interfaz_renta 
@@ -91,25 +91,29 @@ class LoginApp(ctk.CTk):
         )
         self.btn_salir.pack(pady=(20, 10))
 
-    def aplicar_permisos(self):
-        botones_menu = [self.btn_rentar, self.btn_ver, self.btn_eliminar, self.btn_informe]
-        for btn in botones_menu:
-            btn.configure(state="disabled")
-            
-        if not self.rol:
-            print("Advertencia: No se recibió ningún rol en el Menú General.")
-            return
-            
-        rol_procesado = self.rol.lower().replace("á","a").replace("é","e").replace("í","i").replace("ó","o").replace("ú","u").strip()
-        
-        if rol_procesado == "mostrador":
-            self.btn_rentar.configure(state="normal")
-        elif rol_procesado == "administrador":
-            self.btn_ver.configure(state="normal")
-        elif rol_procesado == "mecanico" or rol_procesado == "mantenimiento":
-            self.btn_eliminar.configure(state="normal")
-        elif rol_procesado == "financieros" or rol_procesado == "supervisor":
-            self.btn_informe.configure(state="normal")
+def aplicar_permisos(self):
+    # Deshabilitamos todos los botones primero
+    botones_menu = {
+        "renta": self.btn_rentar,
+        "admin": self.btn_ver,
+        "taller": self.btn_eliminar,
+        "utilerias": self.btn_informe
+    }
+    for btn in botones_menu.values():
+        btn.configure(state="disabled")
+
+    if not self.rol:
+        print("Advertencia: No se recibió ningún rol en el Menú General.")
+        return
+
+# Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
+    permisos = self.role_manager.aplicar_permisos(self.rol)  
+
+    # Activamos solo los botones permitidos
+    for permiso in permisos:
+        if permiso in botones_menu:
+            botones_menu[permiso].configure(state="normal")
+
 
 # ...........................  correir: debe abrir menu_admin.py
     def abrir_admin(self):
@@ -171,7 +175,7 @@ class LoginApp(ctk.CTk):
 
         # Botón para regresar al menú anterior
         btn_regresar = ctk.CTkButton(
-            self.frame_renta, text="REGRESA", width=300, height=40,font=ctk.CTkFont(size=18, weight="bold"),
+            self.frame_renta, text="REGRESA A MENU PRINCIPAL", width=300, height=40,font=ctk.CTkFont(size=18, weight="bold"),
             command=self.regresar_menu_principal
         )
         btn_regresar.pack(pady=(20,10))

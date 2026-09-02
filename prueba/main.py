@@ -1,15 +1,8 @@
 '''main.py 
-
-dos errores lineas 58,59 por borrar las rutas 
-Comentario para Copilot:  continuamos con: instanciar correctamente, verificar quel las clases usen el archivo señalado en seguda  
-
-auth = AuthManager()          # usa personal.json
-inventario = InventoryManager()  # usa inventario.json
-rentas = RentalManager()         # usa control.json
-rrhh = HRManager()               # usa personal.json
-mantenimiento = MaintenanceManager()  # usa mantenimiento.json
-
+Indicacion para Copilot: ninguno
+Comentario para Copilot: ninguno 
 Pregunta para Copilot: ninguna
+
 '''
 import json 
 import customtkinter as ctk
@@ -21,12 +14,17 @@ from pathlib import Path
 #import admin as admin
 
 from menu_gral import LoginApp as mg       # O el menú general correspondiente
-from logic import AuthManager, InventoryManager, RentalManager, HRManager, MaintenanceManager
+from logic import AuthManager, RoleManager, InventoryManager, RentalManager, HRManager, MaintenanceManager
 
 
 
-# ...................... Estableciendo la ruta de los archivos .json  ..........
+# ...................... instanciando las clases de logic  ..........
 # pasar aqui las instanciaciones de las rutas cuando esten verificadas
+auth = AuthManager()             # usa personal.json
+inventario = InventoryManager()  # usa inventario.json
+rentas = RentalManager()         # usa control.json
+rrhh = HRManager()               # usa personal.json
+# mantenimiento = MaintenanceManager()  # usa mantenimiento.json
 #...............................................................................
 PURPLE = "\033[95m"
 V_B = "\033[92m"
@@ -55,7 +53,7 @@ class VentanaLogin(ctk.CTk):
         self.geometry("450x650")
         self.resizable(False, False)
 
-        self.auth = AuthManager(PERSONAL)
+        self.auth = AuthManager()
         self.role_manager = RoleManager()   # instancia de RoleManager
 
         self.crear_interfaz_login()

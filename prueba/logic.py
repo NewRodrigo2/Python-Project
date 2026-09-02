@@ -1,6 +1,6 @@
 '''logic.py
-Comentario para Copilot: dejaremos in instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
-Pregunta para Copilot: ninguna
+Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
+Pregunta para Copilot: existen dos class HRManager: es un problema?
 '''
 import json
 import os
@@ -65,7 +65,7 @@ class AuthManager:
 # -------------------------------
 # Clase para gestión de roles
 # -------------------------------
-class HRManager:
+class RoleManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
 
@@ -100,7 +100,6 @@ class HRManager:
             .replace("ú", "u")
             .strip()
         )
-
         return self.permisos.get(rol_procesado, [])
 
 
@@ -108,7 +107,7 @@ class HRManager:
 # Clase para Recursos Humanos
 # -------------------------------
 class HRManager:
-    def __init__(self, archivo_personal):
+    def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
 
     def agregar_personal(self, nombre, rol, area, hrs_cont, sueldo, password):

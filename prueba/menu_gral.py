@@ -91,29 +91,28 @@ class LoginApp(ctk.CTk):
         )
         self.btn_salir.pack(pady=(20, 10))
 
-def aplicar_permisos(self):
-    # Deshabilitamos todos los botones primero
-    botones_menu = {
-        "renta": self.btn_rentar,
-        "admin": self.btn_ver,
-        "taller": self.btn_eliminar,
-        "utilerias": self.btn_informe
-    }
-    for btn in botones_menu.values():
-        btn.configure(state="disabled")
+    def aplicar_permisos(self):
+        # Deshabilitamos todos los botones primero
+        botones_menu = {
+            "renta": self.btn_rentar,
+            "admin": self.btn_ver,
+            "taller": self.btn_eliminar,
+            "utilerias": self.btn_informe
+        }
+        for btn in botones_menu.values():
+            btn.configure(state="disabled")
 
-    if not self.rol:
-        print("Advertencia: No se recibió ningún rol en el Menú General.")
-        return
+        if not self.rol:
+            print("Advertencia: No se recibió ningún rol en el Menú General.")
+            return
 
-# Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
-    permisos = self.role_manager.aplicar_permisos(self.rol)  
+    # Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
+        permisos = self.role_manager.aplicar_permisos(self.rol)  
 
-    # Activamos solo los botones permitidos
-    for permiso in permisos:
-        if permiso in botones_menu:
-            botones_menu[permiso].configure(state="normal")
-
+        # Activamos solo los botones permitidos
+        for permiso in permisos:
+            if permiso in botones_menu:
+                botones_menu[permiso].configure(state="normal")
 
 # ...........................  correir: debe abrir menu_admin.py
     def abrir_admin(self):

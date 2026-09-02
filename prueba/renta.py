@@ -1,5 +1,14 @@
-# MODIFICADO EL 13/07/26  11:19 am
-# C:\Users\danie\Documents\Python Project> git switch secund_pba_branch.py
+'''
+renta.py
+Este script fue el original para rentar y regresar un auto, tomalo como base para incorporar una nueva logica en logic.py y dejar en
+menu_general.py la parte grafica, mostrando el listado de autos disponibles, pregunta cual auto desea rentar, etc.., 
+en regresar auto mostrar el listado de autos rentados verificar cuantos dias lo rento y cuantos lo uso, calcular la diferencia a pagar,
+
+verificar que el archivo control.json no este vacio, en su caso agregar la lista por defecto,
+instanciar las clases necesarias, 
+hacer las importaciones correspondientes,
+
+'''
 
 import os
 import json

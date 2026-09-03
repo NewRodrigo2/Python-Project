@@ -14,6 +14,7 @@ class LoginApp(ctk.CTk):
         self.role_manager = RoleManager()
         self.ventana_login = ventana_login
         self.rol = rol_usuario
+
 # aquí usas roles_disponibles para construir menús dinámicos
         roles_disponibles = self.role_manager.obtener_roles()
 
@@ -21,7 +22,7 @@ class LoginApp(ctk.CTk):
         self.geometry("1100x800")
         self.resizable(False, False)
         
-        # Contenedor principal para los títulos mutables
+# Contenedor principal para los títulos mutables
         self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")
         self.encabezado_frame.pack(pady=(40, 5), fill="x", padx=30)
         
@@ -147,7 +148,7 @@ class LoginApp(ctk.CTk):
     def interfaz_renta(self):
         # 1. Ocultar el frame anterior para dar espacio al nuevo
         if self.frame_login:
-            self.frame_login.pack_forget()
+           self.frame_login.pack_forget()
         
         self.limpiar_encabezado()   
         
@@ -155,15 +156,19 @@ class LoginApp(ctk.CTk):
         self.frame_renta = ctk.CTkFrame(self)
         self.frame_renta.pack(pady=10, padx=30, fill="both", expand=True)
         
-        # --- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
-        # 2. Configurar nuevos títulos del encabezado
+# --- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
+# 2. Configurar nuevos títulos del encabezado
+
         lbl_info_renta = ctk.CTkLabel(
             self.encabezado_frame, text="GESTION DE RENTAS", font=("Arial", 34)
         )
         lbl_info_renta.pack(pady=20)
         
         lbl_titulo_renta = ctk.CTkButton(
-            self.frame_renta, text="RENTA DE AUTOS", width=300, height=40, font=ctk.CTkFont(size=18, weight="bold")
+            self.frame_renta, text="RENTA DE AUTOS", width=300, height=40, 
+            font=ctk.CTkFont(size=18, weight="bold"),
+            command=self.renta_auto
+
         )
         lbl_titulo_renta.pack(pady=(20, 10))
         
@@ -178,6 +183,37 @@ class LoginApp(ctk.CTk):
             command=self.regresar_menu_principal
         )
         btn_regresar.pack(pady=(20,10))
+
+    def renta_auto(self):
+# Limpiar frame anterior si existe
+        if hasattr(self, "frame_renta") and self.frame_renta is not None:
+            self.frame_renta.destroy()
+
+# Crear nuevo frame
+        frame_renta = ctk.CTkFrame(self)
+        frame_renta.pack(fill="both", expand=True)
+
+# Encabezado
+        lbl_titulo = ctk.CTkLabel(frame_renta, text="Autos disponibles para renta", font=("Arial", 20))
+        lbl_titulo.pack(pady=10)
+
+# Obtener listado desde InventoryManager
+        autos_disponibles = self.ventana_login.inventario.obtener_autos_disponibles()
+
+# Mostrar listado en labels
+        if autos_disponibles:
+            for auto in autos_disponibles:
+                texto = f"{auto['id']} - {auto['marca']} {auto['modelo']} ({auto['año']})"
+                lbl_auto = ctk.CTkLabel(frame_renta, text=texto)
+                lbl_auto.pack(anchor="w", padx=20)
+        else:
+            lbl_vacio = ctk.CTkLabel(frame_renta, text="No hay autos disponibles ❌")
+            lbl_vacio.pack(pady=20)
+
+# Botón para regresar al menú principal
+        btn_regresar = ctk.CTkButton(frame_renta, text="Regresar", command=self.regresar_menu_principal)
+        btn_regresar.pack(pady=20)
+ 
 
     def regresar_menu_principal(self):
         """Destruye el frame de renta y vuelve a dibujar el menú principal."""

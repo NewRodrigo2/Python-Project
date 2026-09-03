@@ -1,6 +1,6 @@
 '''logic.py
 Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
-Pregunta para Copilot: existen dos class HRManager: es un problema?
+Pregunta para Copilot: ninguna
 '''
 import json
 import os
@@ -17,6 +17,8 @@ PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
+print("[DEBUG:logic.py] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
+
 # -------------------------------
 # Clase para autenticación, # logic.py
 # -------------------------------
@@ -30,20 +32,20 @@ class AuthManager:
         Valida usuario, contraseña y rol contra el archivo JSON.
         Retorna True si la validación es correcta, False en caso contrario.
         """
-        print(f"[DEBUG] validar_usuario llamado con usuario='{usuario}', password='{password}', rol='{rol}'")
+        print(f"[DEBUG:logic.py] validar_usuario llamado con usuario='{usuario}', password='{password}', rol='{rol}'")
         try:
             with open(self.archivo_personal, "r", encoding="utf-8") as archivo:
                 usuarios_db = json.load(archivo)
                 print(f"{PURPLE}[DEBUG] Archivo cargado, total usuarios: {len(usuarios_db)}{RESET}")
 
             for user in usuarios_db:
-                print(f"{PURPLE}[DEBUG] Comparando con registro: {user}{RESET}")
+                print(f"{PURPLE}[DEBUG:logic.py] Comparando con registro: {user}{RESET}")
                 db_nombre = str(user.get("nombre", "")).strip().lower()
                 db_id = str(user.get("id_emp", "")).strip().lower()
                 db_password = str(user.get("pasword", "")).strip()
                 db_area = str(user.get("area", "")).strip().lower()
 
-                print(f"[DEBUG] db_nombre='{db_nombre}', db_id='{db_id}', db_password='{db_password}', db_area='{db_area}'")
+                print(f"[DEBUG:logic.py] db_nombre='{db_nombre}', db_id='{db_id}', db_password='{db_password}', db_area='{db_area}'")
 
                 match_usuario = (db_nombre == usuario or db_id == usuario)
                 match_password = (db_password == password)
@@ -60,7 +62,6 @@ class AuthManager:
         except json.JSONDecodeError:
             print("Error crítico: El archivo personal.json tiene un formato inválido.")
             return False
-
 
 # -------------------------------
 # Clase para gestión de roles
@@ -101,7 +102,6 @@ class RoleManager:
             .strip()
         )
         return self.permisos.get(rol_procesado, [])
-
 
 # -------------------------------
 # Clase para Recursos Humanos

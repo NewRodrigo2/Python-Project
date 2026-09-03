@@ -16,31 +16,17 @@ from pathlib import Path
 from menu_gral import LoginApp as mg       # O el menú general correspondiente
 from logic import AuthManager, RoleManager, InventoryManager, RentalManager, HRManager, MaintenanceManager
 
-
-
 # ...................... instanciando las clases de logic  ..........
-# pasar aqui las instanciaciones de las rutas cuando esten verificadas
-auth = AuthManager()             # usa personal.json
-inventario = InventoryManager()  # usa inventario.json
-rentas = RentalManager()         # usa control.json
-rrhh = HRManager()               # usa personal.json
+# instancias de las clases de logic de forma global comentadas por que se instanciaron en la clase  Ventana_Login()
+#auth = AuthManager()             # usa personal.json
+#inventario = InventoryManager()  # usa inventario.json
+#rentas = RentalManager()         # usa control.json
+#rrhh = HRManager()               # usa personal.json
 # mantenimiento = MaintenanceManager()  # usa mantenimiento.json
 #...............................................................................
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
-
-''' 
-# Debug prints para confirmar rutas
-# Debug prints con color
-print(f"{PURPLE}[DEBUG] main.py {ruta_actual}{RESET}")
-print(f"{PURPLE}[DEBUG] Ruta actual: {V_B}{ruta_actual}{RESET}")
-print(f"{PURPLE}[DEBUG] Carpeta de datos:{V_B} {CARPETA_DATOS}{RESET}")
-print(f"{PURPLE}[DEBUG] Archivo inventario.json:{V_B} {ARCHIVO_DATOS}{RESET}")
-print(f"{PURPLE}[DEBUG] Archivo control.json:{V_B} {ARCHIVO_CONTROL}{RESET}")
-print(f"{PURPLE}[DEBUG] Archivo autos_ordenados.txt:{V_B} {ARCHIVO_TEX}{RESET}")
-print(f"{PURPLE}[DEBUG] Archivo personal.json:{V_B} {PERSONAL}{RESET}")
-'''
 # ...........................................................................
 
 ctk.set_appearance_mode("Dark")
@@ -53,8 +39,13 @@ class VentanaLogin(ctk.CTk):
         self.geometry("450x650")
         self.resizable(False, False)
 
-        self.auth = AuthManager()
-        self.role_manager = RoleManager()   # instancia de RoleManager
+# Instancias de managers (se crean una sola vez aquí)
+        self.auth = AuthManager("personal.json")
+        self.role = RoleManager("roles.json")
+        self.inventario = InventoryManager("inventario.json")
+        self.rental = RentalManager("control.json")
+        self.hr = HRManager("personal.json")
+        self.maintenance = MaintenanceManager("mantenimiento.json")
 
         self.crear_interfaz_login()
 
@@ -78,7 +69,7 @@ class VentanaLogin(ctk.CTk):
 # Roles desde RoleManager
 # ComboBox de roles
 
-        roles_disponibles = self.role_manager.obtener_roles()
+        roles_disponibles = self.role.obtener_roles()
         self.cmb_rol = ctk.CTkComboBox(
             self.frame_login, values=roles_disponibles, width=320, state="readonly"
         )

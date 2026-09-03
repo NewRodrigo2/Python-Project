@@ -8,19 +8,23 @@ import os
 from pathlib import Path
 # ...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = Path(__file__).parent 
-CARPETA_DATOS = ruta_actual / "datos"
+ruta_datos = Path(__file__).parent / "datos" / "personal.json"
+
+CARPETA_DATOS = ruta_datos
 
 ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"    # total de autos de la compañia, class InventoryManager:
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"     # inventario de autos rentados y no rentados, class RentalManager:
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"  # informe de autos rentados hasta el momento
 PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
 
-print("<DEBUG:logic.py> CARPETA DE DATOS",CARPETA_DATOS)
-print("<DEBUG:logic.py>RUTA DEL ARCHIVO PERSONAL", PERSONAL)
 
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
+
+print(f"<DEBUG:logic.py> CARPETA DE DATOS,....  {CARPETA_DATOS}")
+print(f"<DEBUG:logic.py>RUTA DEL ARCHIVO PERSONAL,....{ PERSONAL}")
+
 
 # -------------------------------
 # Clase para autenticación, # logic.py
@@ -28,16 +32,20 @@ RESET = "\033[0m"
 class AuthManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
-        print(f"{PURPLE}[DEBUG:logic.py] AuthManager inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
-        print(f"[DEBUG:logic.py] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
+#..DEBUG....
+        print(f"{PURPLE}[DEBUG:logic.py/AuthManager] ..inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
+        print(f"[DEBUG:logic.py/AuthManager] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
 
     def validar_usuario(self, usuario, password, rol):
-        """
-        Valida usuario, contraseña y rol contra el archivo JSON.
-        Retorna True si la validación es correcta, False en caso contrario.
-        """
-        print(f"[DEBUG:logic.py] validar_usuario llamado con usuario='{usuario}', password='{password}', rol='{rol}'")
+
+        print(f"[DEBUG:logic.py/AuthManager/validar_usuario] validar_usuario llamado con usuario='{usuario}', password='{password}', rol='{rol}'")
+        print(f"{PURPLE}[DEBUG:logic.py/AuthManager/validar_usuario] ..inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
+
         try:
+# .....DEBUG            
+            print("Ruta absoluta usada:", Path(self.archivo_personal).resolve())
+            print("Existe el archivo?:", Path(self.archivo_personal).exists())
+
             with open(self.archivo_personal, "r", encoding="utf-8") as archivo:
                 usuarios_db = json.load(archivo)
                 print(f"{PURPLE}[DEBUG] Archivo cargado, total usuarios: {len(usuarios_db)}{RESET}")
@@ -113,6 +121,7 @@ class RoleManager:
 class HRManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
+
 
     def agregar_personal(self, nombre, rol, area, hrs_cont, sueldo, password):
         """Agrega nuevo personal al archivo JSON."""

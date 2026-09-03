@@ -47,7 +47,7 @@ class VentanaLogin(ctk.CTk):
         self.resizable(False, False)
 
 # Instancias de managers (se crean una sola vez aquí)
-        self.auth = AuthManager(CARPETA_DATOS / "personal.json")
+        self.auth = AuthManager("F:/Python/Python Project/prueba/datos/personal.json")
         self.role = RoleManager("roles.json")
         self.inventario = InventoryManager("inventario.json")
         self.rental = RentalManager("control.json")

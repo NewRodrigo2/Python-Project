@@ -8,7 +8,7 @@ import os
 from pathlib import Path
 # ...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = Path(__file__).parent 
-ruta_datos = Path(__file__).parent / "datos" / "personal.json"
+ruta_datos = Path(__file__).parent / "datos"
 
 CARPETA_DATOS = ruta_datos
 

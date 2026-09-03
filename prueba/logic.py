@@ -1,4 +1,5 @@
 '''logic.py
+
 Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
 Pregunta para Copilot: ninguna
 '''
@@ -6,7 +7,7 @@ import json
 import os
 from pathlib import Path
 # ...................... Estableciendo la ruta de los archivos .json  ..........
-ruta_actual = Path(__file__).parent
+ruta_actual = Path(__file__).parent 
 CARPETA_DATOS = ruta_actual / "datos"
 
 ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"    # total de autos de la compañia, class InventoryManager:
@@ -14,10 +15,12 @@ ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"     # inventario de autos renta
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"  # informe de autos rentados hasta el momento
 PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
 
+print("<DEBUG:logic.py> CARPETA DE DATOS",CARPETA_DATOS)
+print("<DEBUG:logic.py>RUTA DEL ARCHIVO PERSONAL", PERSONAL)
+
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
-print("[DEBUG:logic.py] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
 
 # -------------------------------
 # Clase para autenticación, # logic.py
@@ -25,7 +28,8 @@ print("[DEBUG:logic.py] Ruta absoluta esperada:", Path(self.archivo_personal).re
 class AuthManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
-        print(f"{PURPLE}[DEBUG] AuthManager inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
+        print(f"{PURPLE}[DEBUG:logic.py] AuthManager inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
+        print(f"[DEBUG:logic.py] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
 
     def validar_usuario(self, usuario, password, rol):
         """

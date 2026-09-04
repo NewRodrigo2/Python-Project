@@ -6,6 +6,7 @@ Pregunta para Copilot: ninguna
 import json
 import os
 from pathlib import Path
+from datetime import datetime
 # ...................... Estableciendo la ruta de los archivos .json  ..........
 ruta_actual = Path(__file__).parent 
 ruta_datos = Path(__file__).parent / "datos"
@@ -16,15 +17,14 @@ ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"    # total de autos de la comp
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"     # inventario de autos rentados y no rentados, class RentalManager:
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"  # informe de autos rentados hasta el momento
 PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
-
-
+#..........
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
+#..........
 
 print(f"<DEBUG:logic.py> CARPETA DE DATOS,....  {CARPETA_DATOS}")
 print(f"<DEBUG:logic.py>RUTA DEL ARCHIVO PERSONAL,....{ PERSONAL}")
-
 
 # -------------------------------
 # Clase para autenticación, # logic.py
@@ -131,33 +131,147 @@ class HRManager:
         """Calcula la nómina del personal registrado."""
         pass
 
-
 # -------------------------------
 # Clase para Inventario
 # -------------------------------
+
+
 class InventoryManager:
-    def __init__(self, archivo_inventario=ARCHIVO_DATOS):
-        self.archivo_inventario = archivo_inventario
+    def __init__(self, archivo_path=ARCHIVO_DATOS):
+        self.archivo_datos = archivo_path
+        self.carpeta_datos = CARPETA_DATOS
+      
+        self.INVENTARIO_DEFECTO = [
+            {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "dias": 0, "km": 0, "venta": 0},
+            {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "dias": 0, "km": 0, "venta": 0},
+            {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False, "dias": 0, "km": 0, "venta": 0}
+        ]
+        
+        self.AUTO_CONTROL = [
+            {
+                "c_id": 1, 
+                "km_recorridos": 0, 
+                "c_venta_total": 0, 
+                "c_fecha_renta": "01/01/2026",
+                "c_dias": 0
+            } 
+        ]
 
-    def agregar_auto(self, datos_auto):
-        """Agrega un nuevo auto al inventario."""
-        pass
+        # Cargar datos al instanciar
+        self.cargar_inventario()
+        self.verificar_control()
 
-    def eliminar_ticket(self, ticket_id):
-        """Elimina un ticket del control."""
-        pass
+    def cargar_inventario(self):
+        """Lee el inventario.json o carga los valores por defecto si no existe."""
+        if not os.path.exists(self.CARPETA_DATOS):
+            os.makedirs(self.CARPETA_DATOS)
 
-    def generar_informe(self):
-        """Genera un informe de autos o rentas."""
-        pass
+        if os.path.exists(self.ARCHIVO_DATOS):
+            try:
+                with open(self.ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
+                    self.inventario = json.load(archivo)
+            except Exception:
+                self.inventario = self.INVENTARIO_DEFECTO
+        else:
+            self.inventario = self.INVENTARIO_DEFECTO
+            self.guardar_inventario()
 
+    def guardar_inventario(self):
+        with open(self.ARCHIVO_DATOS, "w", encoding="utf-8") as archivo:
+            json.dump(self.inventario, archivo, indent=4, ensure_ascii=False)
+
+    def verificar_control(self):
+        """Verifica que control.json no esté vacío; si lo está, agrega la lista por defecto."""
+        if os.path.exists(self.ARCHIVO_CONTROL):
+            try:
+                with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as archivo:
+                    control = json.load(archivo)
+                    if not control: # Si está vacío []
+                        self.guarda_control(self.AUTO_CONTROL)
+            except Exception:
+                self.guarda_control(self.AUTO_CONTROL)
+        else:
+            self.guarda_control(self.AUTO_CONTROL)
+
+    def guarda_control(self, datos=None):
+        if datos is None:
+            datos = self.AUTO_CONTROL
+        with open(self.ARCHIVO_CONTROL, "w", encoding="utf-8") as archivo:
+            json.dump(datos, archivo, indent=4, ensure_ascii=False)
+
+    def obtener_autos_disponibles(self):
+        """Devuelve únicamente la lista de autos que tienen disponible = True."""
+        self.cargar_inventario()
+        return [auto for auto in self.inventario if auto.get("disponible", False)]
+
+    def obtener_autos_rentados(self):
+        """Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
+        self.cargar_inventario()
+        return [auto for auto in self.inventario if not auto.get("disponible", True)]
+
+    def procesar_renta(self, id_auto, dias_p_renta):
+        """Renta un auto actualizando su estado y guardando los cambios."""
+        for auto in self.inventario:
+            if auto["id"] == id_auto:
+                if auto["disponible"]:
+                    auto["disponible"] = False
+                    auto["dias"] = dias_p_renta
+                    auto["venta"] = dias_p_renta * auto["precio_dia"]
+                    auto["km"] = 0
+                    self.guardar_inventario()
+                    return True, f"¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}."
+                else:
+                    return False, "Lo sentimos, este auto ya está rentado."
+        return False, "El ID introducido no existe."
+
+    def procesar_regreso(self, id_regresar, dias_reales, km_nuevos):
+        """Calcula costos, actualiza inventario y añade un registro a control.json."""
+        for auto in self.inventario:
+            if auto["id"] == id_regresar and not auto["disponible"]:
+                # Calcular días a cobrar (el mayor entre los días pactados y los utilizados)
+                d_dias = dias_reales if dias_reales > auto["dias"] else auto["dias"]
+                costo_total = (auto["precio_dia"] * d_dias) + km_nuevos
+
+                # Actualizar auto
+                auto["disponible"] = True
+                auto["dias"] = d_dias
+                auto["km"] += km_nuevos
+                auto["venta"] += costo_total
+                self.guardar_inventario()
+
+                # Cargar control actual para agregar el ticket nuevo
+                try:
+                    with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as f:
+                        control = json.load(f)
+                except Exception:
+                    control = []
+
+                num_transaccion = len(control) + 1
+                fecha_actual = datetime.now().strftime("%d/%m/%Y")
+
+                nueva_renta = {
+                    "transaccion_id": num_transaccion,
+                    "c_id": auto["id"],
+                    "c_marca": auto["marca"],
+                    "c_modelo": auto["modelo"],
+                    "km_recorridos": km_nuevos,
+                    "c_venta_total": costo_total,
+                    "c_fecha_renta": fecha_actual,
+                    "c_dias": dias_reales
+                }
+                control.append(nueva_renta)
+                self.guarda_control(control)
+
+                return True, num_transaccion, costo_total
+
+        return False, 0, 0
 
 # -------------------------------
 # Clase para Rentas
 # -------------------------------
 class RentalManager:
-    def __init__(self, archivo_rentas=ARCHIVO_CONTROL):
-        self.archivo_rentas = archivo_rentas
+    def __init__(self, archivo_control=ARCHIVO_CONTROL):
+        self.archivo_control = archivo_control
 
     def registrar_renta(self, datos_renta):
         """Registra una nueva renta."""

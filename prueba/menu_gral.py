@@ -2,7 +2,7 @@
 
 '''
 import customtkinter as ctk
-from logic import RoleManager
+from logic import RoleManager,InventoryManager
 import menu_admin as m_admin # Descomenta en tu entorno
 
 ctk.set_appearance_mode("Dark")
@@ -14,6 +14,7 @@ class LoginApp(ctk.CTk):
         self.role_manager = RoleManager()
         self.ventana_login = ventana_login
         self.rol = rol_usuario
+        self.inventario = InventoryManager()
 
 # aquí usas roles_disponibles para construir menús dinámicos
         roles_disponibles = self.role_manager.obtener_roles()

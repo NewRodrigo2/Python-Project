@@ -157,7 +157,7 @@ class InventoryManager:
             } 
         ]
 
-        # Cargar datos al instanciar
+# Cargar datos al instanciar
         self.cargar_inventario()
         self.verificar_control()
 

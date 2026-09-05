@@ -1,7 +1,9 @@
 '''logic.py
+datos necesarios para Copilot: este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
+rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 
 Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
-Pregunta para Copilot: ninguna
+Pregunta para Copilot: en el  def cargar_inventario(self): se utiliza os.path.exists(self.archivo_dato), es correcto?
 '''
 import json
 import os
@@ -17,6 +19,7 @@ ARCHIVO_DATOS = CARPETA_DATOS / "inventario.json"    # total de autos de la comp
 ARCHIVO_CONTROL = CARPETA_DATOS / "control.json"     # inventario de autos rentados y no rentados, class RentalManager:
 ARCHIVO_TEX = CARPETA_DATOS / "autos_ordenados.txt"  # informe de autos rentados hasta el momento
 PERSONAL = CARPETA_DATOS / "personal.json"           # plantilla de personal
+ARCHIVO_MTTO = CARPETA_DATOS / "mtto.json"
 #..........
 PURPLE = "\033[95m"
 V_B = "\033[92m"
@@ -135,7 +138,6 @@ class HRManager:
 # Clase para Inventario
 # -------------------------------
 
-
 class InventoryManager:
     def __init__(self, archivo_path=ARCHIVO_DATOS):
         self.archivo_datos = archivo_path
@@ -156,19 +158,19 @@ class InventoryManager:
                 "c_dias": 0
             } 
         ]
-
+        
 # Cargar datos al instanciar
         self.cargar_inventario()
         self.verificar_control()
 
     def cargar_inventario(self):
         """Lee el inventario.json o carga los valores por defecto si no existe."""
-        if not os.path.exists(self.CARPETA_DATOS):
-            os.makedirs(self.CARPETA_DATOS)
+        if not Path(self.archivo_datos).exists():
+            os.makedirs(self.carpeta_datos)
 
-        if os.path.exists(self.ARCHIVO_DATOS):
+        if Path(self.archivo_datos).exists():
             try:
-                with open(self.ARCHIVO_DATOS, "r", encoding="utf-8") as archivo:
+                with open(self.archivo_datos, "r", encoding="utf-8") as archivo:
                     self.inventario = json.load(archivo)
             except Exception:
                 self.inventario = self.INVENTARIO_DEFECTO
@@ -177,12 +179,12 @@ class InventoryManager:
             self.guardar_inventario()
 
     def guardar_inventario(self):
-        with open(self.ARCHIVO_DATOS, "w", encoding="utf-8") as archivo:
+        with open(self.archivo_datos, "w", encoding="utf-8") as archivo:
             json.dump(self.inventario, archivo, indent=4, ensure_ascii=False)
 
     def verificar_control(self):
         """Verifica que control.json no esté vacío; si lo está, agrega la lista por defecto."""
-        if os.path.exists(self.ARCHIVO_CONTROL):
+        if os.path.exists(self.carpeta_datos):
             try:
                 with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as archivo:
                     control = json.load(archivo)
@@ -196,7 +198,7 @@ class InventoryManager:
     def guarda_control(self, datos=None):
         if datos is None:
             datos = self.AUTO_CONTROL
-        with open(self.ARCHIVO_CONTROL, "w", encoding="utf-8") as archivo:
+        with open(ARCHIVO_CONTROL, "w", encoding="utf-8") as archivo:
             json.dump(datos, archivo, indent=4, ensure_ascii=False)
 
     def obtener_autos_disponibles(self):
@@ -286,7 +288,7 @@ class RentalManager:
 # Clase para Mantenimiento
 # -------------------------------
 class MaintenanceManager:
-    def __init__(self, archivo_mantenimiento):
+    def __init__(self, ARCHIVO_MTTO):
         self.archivo_mantenimiento = archivo_mantenimiento
 
     def registrar_mantenimiento(self, datos_mantenimiento):

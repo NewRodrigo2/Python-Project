@@ -7,7 +7,8 @@ rama activa class_pyton
 todos los script , clases , metodos que se importan estan actualizados
 ruta de archivos en documentar.txt
 
-Objetivo de la revision: ninguno 
+Objetivo de la revision: 
+al realizar Instancias de rutas a los archivos de datos. debe se ser de acuerda a la unidad de trabajo
 Pregunta para Copilot: ninguna
 
 '''
@@ -46,13 +47,15 @@ class VentanaLogin(ctk.CTk):
         self.geometry("450x650")
         self.resizable(False, False)
 
-# Instancias de managers (se crean una sola vez aquí)
-        self.auth = AuthManager("F:/Python/Python Project/prueba/datos/personal.json")
-        self.role = RoleManager("roles.json")
-        self.inventario = InventoryManager("inventario.json")
-        self.rental = RentalManager("control.json")
-        self.hr = HRManager("personal.json")
-        self.maintenance = MaintenanceManager("mantenimiento.json")
+# Instancias de rutas a los archivos de datos.
+        self.auth = AuthManager()
+        self.role = RoleManager()
+        self.inventario = InventoryManager()
+        self.rental = RentalManager()
+        self.hr = HRManager()
+        self.mtto = MaintenanceManager()
+
+
 
         self.crear_interfaz_login()
 

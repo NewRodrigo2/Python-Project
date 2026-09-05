@@ -288,7 +288,7 @@ class RentalManager:
 # Clase para Mantenimiento
 # -------------------------------
 class MaintenanceManager:
-    def __init__(self, ARCHIVO_MTTO):
+    def __init__(self, archivo_mantenimiento = ARCHIVO_MTTO):
         self.archivo_mantenimiento = archivo_mantenimiento
 
     def registrar_mantenimiento(self, datos_mantenimiento):

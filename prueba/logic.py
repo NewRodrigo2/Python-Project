@@ -26,41 +26,24 @@ V_B = "\033[92m"
 RESET = "\033[0m"
 #..........
 
-print(f"<DEBUG:logic.py> CARPETA DE DATOS,....  {CARPETA_DATOS}")
-print(f"<DEBUG:logic.py>RUTA DEL ARCHIVO PERSONAL,....{ PERSONAL}")
-
 # -------------------------------
 # Clase para autenticación, # logic.py
 # -------------------------------
 class AuthManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
-#..DEBUG....
-        print(f"{PURPLE}[DEBUG:logic.py/AuthManager] ..inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
-        print(f"[DEBUG:logic.py/AuthManager] Ruta absoluta esperada:", Path(self.archivo_personal).resolve())
 
     def validar_usuario(self, usuario, password, rol):
 
-        print(f"[DEBUG:logic.py/AuthManager/validar_usuario] validar_usuario llamado con usuario='{usuario}', password='{password}', rol='{rol}'")
-        print(f"{PURPLE}[DEBUG:logic.py/AuthManager/validar_usuario] ..inicializado con archivo:{V_B} {self.archivo_personal}{RESET}")
-
         try:
-# .....DEBUG            
-            print("Ruta absoluta usada:", Path(self.archivo_personal).resolve())
-            print("Existe el archivo?:", Path(self.archivo_personal).exists())
-
             with open(self.archivo_personal, "r", encoding="utf-8") as archivo:
                 usuarios_db = json.load(archivo)
-                print(f"{PURPLE}[DEBUG] Archivo cargado, total usuarios: {len(usuarios_db)}{RESET}")
 
             for user in usuarios_db:
-                print(f"{PURPLE}[DEBUG:logic.py] Comparando con registro: {user}{RESET}")
                 db_nombre = str(user.get("nombre", "")).strip().lower()
                 db_id = str(user.get("id_emp", "")).strip().lower()
                 db_password = str(user.get("pasword", "")).strip()
                 db_area = str(user.get("area", "")).strip().lower()
-
-                print(f"[DEBUG:logic.py] db_nombre='{db_nombre}', db_id='{db_id}', db_password='{db_password}', db_area='{db_area}'")
 
                 match_usuario = (db_nombre == usuario or db_id == usuario)
                 match_password = (db_password == password)

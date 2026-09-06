@@ -17,8 +17,7 @@ class LoginApp(ctk.CTk):
         self.ventana_login = ventana_login
         self.rol = rol_usuario
         self.inventario = InventoryManager()
-        self.crear_interfaz_login()
-        
+        self.crear_interfaz_login()       
 
 # aquí usas roles_disponibles para construir menús dinámicos
         roles_disponibles = self.role_manager.obtener_roles()
@@ -40,80 +39,71 @@ class LoginApp(ctk.CTk):
         self.update_idletasks()      
         self.aplicar_permisos()
 
-def limpiar_encabezado(self):
-    """Elimina los widgets del encabezado para redibujarlos."""
-    for widget in self.encabezado_frame.winfo_children():
-        widget.destroy()
+    def limpiar_encabezado(self):
+        """Elimina los widgets del encabezado para redibujarlos."""
+        for widget in self.encabezado_frame.winfo_children():
+            widget.destroy()
 
-def crear_interfaz_login(self):
-    # self.limpiar_encabezado()
-    
-    # --- FRAME ENCABEZADO ---
-    self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")
-    self.encabezado_frame.grid(row=0, column=0, padx=20, pady=10, sticky="ew")
+    def crear_interfaz_login(self):
+        # self.limpiar_encabezado()
+        
+#--- FRAME ENCABEZADO ---
+        self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.encabezado_frame.grid(row=0, column=0, padx=20, pady=10, sticky="ew")
 
-    # Títulos en el contenedor de encabezado
-    lbl_bienvenido = ctk.CTkLabel(
-        self.encabezado_frame, 
-        text="MI CARRITO EN RENTA", 
-        font=ctk.CTkFont(size=25, weight="bold")
-    )
-    lbl_bienvenido.grid(row=0, column=0, padx=10, pady=20, sticky="ew")
-    
-    rol_texto = f" - Rol Activo {self.rol}" if self.rol else " - Sin Rol"
-    self.lbl_menu = ctk.CTkLabel(
-        self.encabezado_frame, 
-        text=f"MENU GENERAL DEL SISTEMA {rol_texto}", 
-        font=ctk.CTkFont(size=22, weight="bold")
-    )
-    self.lbl_menu.grid(row=1, column=0, padx=10, pady=20, sticky="ew")
+#--- Títulos en el contenedor de encabezado
+        lbl_bienvenido = ctk.CTkLabel(
+            self.encabezado_frame, 
+            text="MI CARRITO EN RENTA", 
+            font=ctk.CTkFont(size=25, weight="bold"))
+        lbl_bienvenido.grid(row=0, column=0, padx=10, pady=20, sticky="ew")
+        
+        rol_texto = f" - Rol Activo {self.rol}" if self.rol else " - Sin Rol"
+        self.lbl_menu = ctk.CTkLabel(
+            self.encabezado_frame, 
+            text=f"MENU GENERAL DEL SISTEMA {rol_texto}", 
+            font=ctk.CTkFont(size=22, weight="bold"))
+        self.lbl_menu.grid(row=1, column=0, padx=10, pady=20, sticky="ew")
 
-    # --- FRAME PRINCIPAL (BOTONES) ---
-    self.frame_login = ctk.CTkFrame(self)
-    self.frame_login.grid(row=1, column=0, padx=30, pady=10, sticky="nsew")
+#--- FRAME PRINCIPAL (BOTONES) ---
+        self.frame_login = ctk.CTkFrame(self)
+        self.frame_login.grid(row=1, column=0, padx=30, pady=10, sticky="nsew")
 
-    # --- BOTONES EN UNA SOLA FILA ---
-    self.btn_rentar = ctk.CTkButton(
-        self.frame_login, text=" Renta de autos", width=300, height=40, 
-        font=("Arial", 15, "bold"), command=self.interfaz_renta
-    )
-    self.btn_rentar.grid(row=0, column=0, padx=10, pady=20, sticky="ew")
+#--- BOTONES EN UNA SOLA FILA ---
+        self.btn_rentar = ctk.CTkButton(
+            self.frame_login, text=" Renta de autos", width=300, height=40, 
+            font=("Arial", 15, "bold"), command=self.interfaz_renta)
+        self.btn_rentar.grid(row=0, column=0, padx=10, pady=20, sticky="ew")
 
-    self.btn_ver = ctk.CTkButton(
-        self.frame_login, text=" Administracion", width=300, height=40, 
-        font=("Arial", 15, "bold"), command=self.abrir_admin
-    )
-    self.btn_ver.grid(row=0, column=1, padx=10, pady=20, sticky="ew")
+        self.btn_ver = ctk.CTkButton(
+            self.frame_login, text=" Administracion", width=300, height=40, 
+            font=("Arial", 15, "bold"), command=self.abrir_admin)
+        self.btn_ver.grid(row=0, column=1, padx=10, pady=20, sticky="ew")
 
-    self.btn_eliminar = ctk.CTkButton(
-        self.frame_login, text=" Taller / mantenimiento", width=300, height=40, 
-        font=("Arial", 15, "bold")
-    )
-    self.btn_eliminar.grid(row=0, column=2, padx=10, pady=20, sticky="ew")
+        self.btn_eliminar = ctk.CTkButton(
+            self.frame_login, text=" Taller / mantenimiento", width=300, height=40, 
+            font=("Arial", 15, "bold"))
+        self.btn_eliminar.grid(row=0, column=2, padx=10, pady=20, sticky="ew")
 
-    self.btn_informe = ctk.CTkButton(
-        self.frame_login, text=" Utilerias ", width=300, height=40, 
-        font=("Arial", 15, "bold")
-    )
-    self.btn_informe.grid(row=0, column=3, padx=10, pady=20, sticky="ew")
+        self.btn_informe = ctk.CTkButton(
+            self.frame_login, text=" Utilerias ", width=300, height=40, 
+            font=("Arial", 15, "bold"))
+        self.btn_informe.grid(row=0, column=3, padx=10, pady=20, sticky="ew")
 
-    self.btn_salir = ctk.CTkButton(
-        self.frame_login, text=" Salir del sistema", width=300, height=40, 
-        font=("Arial", 15, "bold"), command=self.cerrar_sesion
-    )
-    self.btn_salir.grid(row=0, column=4, padx=10, pady=20, sticky="ew")
+        self.btn_salir = ctk.CTkButton(
+            self.frame_login, text=" Salir del sistema", width=300, height=40, 
+            font=("Arial", 15, "bold"), command=self.cerrar_sesion)
+        self.btn_salir.grid(row=0, column=4, padx=10, pady=20, sticky="ew")
 
-    # --- Configuración de columnas para que se expandan ---
-    for i in range(5):  # número de columnas
-        self.frame_login.grid_columnconfigure(i, weight=1)
+#--- Configuración de columnas para que se expandan ---
+        for i in range(5):  # número de columnas
+            self.frame_login.grid_columnconfigure(i, weight=1)
 
-    # --- Configuración de filas/columnas en la ventana principal ---
-    self.grid_rowconfigure(0, weight=0)  # encabezado no se expande
-    self.grid_rowconfigure(1, weight=1)  # frame_login sí se expande
-    self.grid_columnconfigure(0, weight=1)
-
-
-
+#--- Configuración de filas/columnas en la ventana principal ---
+        self.grid_rowconfigure(0, weight=0)  # encabezado no se expande
+        self.grid_rowconfigure(1, weight=1)  # frame_login sí se expande
+        self.grid_columnconfigure(0, weight=1)
+        
     def aplicar_permisos(self):
         # Deshabilitamos todos los botones primero
         botones_menu = {
@@ -129,7 +119,7 @@ def crear_interfaz_login(self):
             print("Advertencia: No se recibió ningún rol en el Menú General.")
             return
 
-# Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
+#--- Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
         permisos = self.role_manager.aplicar_permisos(self.rol)  
 
         # Activamos solo los botones permitidos
@@ -176,9 +166,9 @@ def crear_interfaz_login(self):
         
         # 3. LÍNEA 98 CORREGIDA: Creación y empaquetado correcto del segundo frame
         self.frame_renta = ctk.CTkFrame(self)
-        self.frame_renta.pack(pady=10, padx=30, fill="both", expand=True)
+        self.frame_renta.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
         
-# --- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
+#--- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
 # 2. Configurar nuevos títulos del encabezado
 
         lbl_info_renta = ctk.CTkLabel(

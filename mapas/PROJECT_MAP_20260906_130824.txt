@@ -1,0 +1,147 @@
+Mapa del proyecto generado el 2026-09-06 13:08:24.323402
+============================================================
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\admin.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\analiza.py
+  Clase: ClassAnalyzer (hereda de ast.NodeVisitor)
+    Métodos:
+      - __init__ (línea 6)
+      - visit_FunctionDef (línea 11)
+    Atributos self:
+      - self.methods (línea 7)
+      - self.attrs (línea 8)
+      - self.bases (línea 9)
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\herramientas.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\logic.py
+  Clase: AuthManager (hereda de object)
+    Métodos:
+      - __init__ (línea 33)
+      - validar_usuario (línea 36)
+    Atributos self:
+      - self.archivo_personal (línea 34)
+  Clase: RoleManager (hereda de object)
+    Métodos:
+      - __init__ (línea 68)
+      - obtener_roles (línea 83)
+      - aplicar_permisos (línea 87)
+    Atributos self:
+      - self.archivo_personal (línea 69)
+      - self.roles (línea 72)
+      - self.permisos (línea 75)
+  Clase: HRManager (hereda de object)
+    Métodos:
+      - __init__ (línea 108)
+      - agregar_personal (línea 112)
+      - calcular_nomina (línea 116)
+    Atributos self:
+      - self.archivo_personal (línea 109)
+  Clase: InventoryManager (hereda de object)
+    Métodos:
+      - __init__ (línea 125)
+      - cargar_inventario (línea 149)
+      - guardar_inventario (línea 164)
+      - verificar_control (línea 168)
+      - guarda_control (línea 181)
+      - obtener_autos_disponibles (línea 187)
+      - obtener_autos_rentados (línea 192)
+      - procesar_renta (línea 197)
+      - procesar_regreso (línea 212)
+    Atributos self:
+      - self.archivo_datos (línea 126)
+      - self.carpeta_datos (línea 127)
+      - self.INVENTARIO_DEFECTO (línea 129)
+      - self.AUTO_CONTROL (línea 135)
+  Clase: RentalManager (hereda de object)
+    Métodos:
+      - __init__ (línea 258)
+      - registrar_renta (línea 261)
+      - registrar_entrega (línea 265)
+    Atributos self:
+      - self.archivo_control (línea 259)
+  Clase: MaintenanceManager (hereda de object)
+    Métodos:
+      - __init__ (línea 274)
+      - registrar_mantenimiento (línea 277)
+    Atributos self:
+      - self.archivo_mantenimiento (línea 275)
+  Clase: UtilitiesManager (hereda de object)
+    Métodos:
+      - __init__ (línea 286)
+      - generar_reporte_general (línea 289)
+    Atributos self:
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\main.py
+  Clase: VentanaLogin (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 44)
+      - crear_interfaz_login (línea 62)
+      - procesar_login (línea 133)
+      - salir_definitivo (línea 149)
+    Atributos self:
+      - self.auth (línea 51)
+      - self.role (línea 52)
+      - self.inventario (línea 53)
+      - self.rental (línea 54)
+      - self.hr (línea 55)
+      - self.mtto (línea 56)
+      - self.lbl_bienvenido (línea 64)
+      - self.frame_login (línea 70)
+      - self.lbl_rol (línea 74)
+      - self.cmb_rol (línea 83)
+      - self.lbl_usuario (línea 90)
+      - self.txt_usuario (línea 96)
+      - self.lbl_password (línea 102)
+      - self.txt_password (línea 108)
+      - self.btn_ingresar (línea 114)
+      - self.btn_salir (línea 121)
+      - self.etiqueta_mensaje (línea 128)
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\menu_admin.py
+  Clase: DashboardApp (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 27)
+      - crear_interfaz_login (línea 40)
+      - rec_hum (línea 81)
+      - rh_frame (línea 119)
+      - graba_dato (línea 195)
+      - limpiar_formulario (línea 226)
+      - mostrar_menu_principal (línea 235)
+      - mostrar_frame_segundo (línea 240)
+      - cerrar_sesion (línea 247)
+    Atributos self:
+      - self.role_manager (línea 29)
+      - self.ventana_menu_gral (línea 30)
+      - self.lbl_bienvenido (línea 41)
+      - self.frame_login (línea 46)
+      - self.btn_rh (línea 49)
+      - self.btn_agregar (línea 55)
+      - self.btn_ver (línea 60)
+      - self.btn_eliminar (línea 65)
+      - self.btn_informe (línea 70)
+      - self.btn_salir (línea 75)
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\menu_gral.py
+  Clase: LoginApp (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 14)
+    Atributos self:
+      - self.role_manager (línea 16)
+      - self.ventana_login (línea 17)
+      - self.rol (línea 18)
+      - self.inventario (línea 19)
+      - self.encabezado_frame (línea 30)
+      - self.frame_login (línea 34)
+      - self.frame_renta (línea 35)
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\menu_renta.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\menu_rh.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\renta.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\rh.py
+
+Archivo: c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba\utilerias.py

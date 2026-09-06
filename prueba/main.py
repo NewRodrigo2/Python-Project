@@ -55,8 +55,6 @@ class VentanaLogin(ctk.CTk):
         self.hr = HRManager()
         self.mtto = MaintenanceManager()
 
-
-
         self.crear_interfaz_login()
 
     def crear_interfaz_login(self):

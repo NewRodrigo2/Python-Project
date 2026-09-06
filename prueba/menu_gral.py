@@ -1,5 +1,6 @@
 ''' menu_gral.py
-
+datos necesarios para Copilot: este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
+rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 '''
 import customtkinter as ctk
 from logic import RoleManager,InventoryManager
@@ -16,6 +17,7 @@ class LoginApp(ctk.CTk):
         self.ventana_login = ventana_login
         self.rol = rol_usuario
         self.inventario = InventoryManager()
+        self.crear_interfaz_login()
         
 
 # aquí usas roles_disponibles para construir menús dinámicos
@@ -44,7 +46,7 @@ def limpiar_encabezado(self):
         widget.destroy()
 
 def crear_interfaz_login(self):
-    self.limpiar_encabezado()
+    # self.limpiar_encabezado()
     
     # --- FRAME ENCABEZADO ---
     self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")

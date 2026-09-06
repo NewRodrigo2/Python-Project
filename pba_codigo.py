@@ -19,7 +19,7 @@ def animar():
     # Movemos la pelota en la dirección X e Y (dx, dy)
     canvas.move(pelota, velocidad_x, 0)
     
-    # Obtenemos las coordenadas actuales de la pelota para que reote en los bordes
+    # Obtenemos las coordenadas actuales de la pelota para que rebote en los bordes
     posicion = canvas.coords(pelota)
     x1, y1, x2, y2 = posicion
     

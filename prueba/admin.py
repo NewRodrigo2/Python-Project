@@ -1,7 +1,7 @@
 '''
 se cambio un input por return true en def informe.txt
-
-pendientes: cambiar la rura 
+PENDIENTES:
+1.- verificar que se agrege el total del invenatario de autos a inventario, antes de agregar un nuevo auto con append
 
 '''
 import customtkinter as ctk
@@ -196,8 +196,8 @@ def agrega_auto():
                     "venta": venta
                 }
                 
-                inventario.append(nuevo_auto)
-                h.guardar_inventario()
+                inventario.append(nuevo_auto)    # agrega el reistro al listado (objeto) inventario
+                h.guardar_inventario(inventario)
                 
                 print(f"\n{COLOR_EXITO}¡Vehículo registrado con éxito! Asignado ID: [{nuevo_id}]{COLOR_RESET}")
                 h.row_space()
@@ -235,7 +235,8 @@ def menu_administrador():
              informe_rentas()
         elif opcion == "5":
              None
-        elif opcion == "9":
+        elif opcion == "9" or opcion =="":
+            h.limpiar_pantalla
             return
         else:
             print(f"\n{COLOR_ERROR}Opción no válida.{COLOR_RESET}")

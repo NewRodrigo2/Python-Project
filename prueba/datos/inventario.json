@@ -1,1 +1,25 @@
-[]
+[
+    {
+        "id": 1,
+        "marca": "Ford",
+        "modelo": "Ranger",
+        "precio_dia": 100.0,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0,
+        "FechaInicial": "dd/mm/aa"
+    },
+
+    {
+        "id": 2,
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "precio_dia": 100.0,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0,
+        "FechaInicial": "dd/mm/aa"
+    }
+]

@@ -71,5 +71,16 @@
         "sueldo": 12.0,
         "ausencias": 0,
         "pasword": "12"
+    },
+    {
+        "id_emp": "8",
+        "nombre": "daniel",
+        "rol": "Mostrador",
+        "area": "dfd",
+        "hrs_cont": 45,
+        "hrs_trab": 0,
+        "sueldo": 21111.0,
+        "ausencias": 0,
+        "pasword": "1q"
     }
 ]

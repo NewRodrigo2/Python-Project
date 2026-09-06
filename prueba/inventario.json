@@ -1,0 +1,32 @@
+[
+    {
+        "id": 1,
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "precio_dia": 45,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    },
+    {
+        "id": 2,
+        "marca": "Nissan",
+        "modelo": "Versa",
+        "precio_dia": 50,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    },
+    {
+        "id": 3,
+        "marca": "Chevrolet",
+        "modelo": "Aveo",
+        "precio_dia": 40,
+        "disponible": false,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    }
+]

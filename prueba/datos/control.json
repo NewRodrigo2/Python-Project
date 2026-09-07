@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "c_id": 1,
+        "km_recorridos": 0,
+        "c_venta_total": 0,
+        "c_fecha_renta": "01/01/2026",
+        "c_dias": 0
+    }
+]

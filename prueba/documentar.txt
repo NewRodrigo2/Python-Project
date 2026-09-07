@@ -1,15 +1,55 @@
-def aplicar_permiso() de menu_gral.py, requiere del rol asignado en main.py, 
-para habilitar solo el rol correspondiente. 
+cd "Python Project"
+Set-ExecutionPolicy Bypass -Scope Process -Force
+git config --global --add safe.directory "F:/Python/Python Project" 
+.venv\Scripts\Activate.ps1 
+cd prueba
+git branch
+git pull origin class_python
+python main.py
 
-ante el problema de los tiempos para destruir la ventana y abrir una nueva en
-menu_gral / def abrir_admin(self): se crea otro def ejecutar_apertura():
 
-cual es la utilidad de un def dentro de otro def?
+Archivo principal: confirmación de cuál es el main.py que estás ejecutando.
+Este es el script mas actualizado hasta el mommento.
 
+Ubicación de módulos: ruta exacta de archivos como logic.py, menu_gral.py, admin.py, etc.
+    
+    Directorio: F:\Python\Python Project\prueba
 
+Mode                 LastWriteTime         Length Name                                                      
+----                 -------------         ------ ----                                                      
+d-----     20/08/2026  04:18 p. m.                __pycache__                                               
+d-----     20/08/2026  04:18 p. m.                datos                                                     
+-a----     20/08/2026  04:18 p. m.          10538 admin.py                                                  
+-a----     20/08/2026  04:18 p. m.           1036 documentar.txt                                            
+-a----     20/08/2026  04:18 p. m.           2640 herramientas.py                                           
+-a----     20/08/2026  04:18 p. m.              4 menu_renta.py                                             
+-a----     20/08/2026  04:18 p. m.              4 menu_rh.py                                                
+-a----     20/08/2026  04:18 p. m.           3061 rh.py                                                     
+-a----     20/08/2026  04:18 p. m.           5619 utilerias.py                                              
+-a----     31/08/2026  08:38 p. m.           9514 menu_admin.py                                             
+-a----     02/09/2026  08:22 p. m.           6582 logic.py                                                  
+-a----     02/09/2026  07:27 p. m.           5654 main.py                                                   
+-a----     02/09/2026  06:35 p. m.           9226 menu_gral.py                                              
+-a----     02/09/2026  03:04 p. m.          16326 renta.py                                                  
 
-IDEA: 
-1.- pasar carpeta python Proyect a c: de SRS
+Carpeta de datos: confirmación de que la carpeta datos existe y contiene los .json (personal.json, inventario.json, control.json, etc.).
+    
+    Directorio: F:\Python\Python Project\prueba\datos
+Mode                 LastWriteTime         Length Name                                                                                                                                                                                
+----                 -------------         ------ ----                                                                                                                                                                                
+-a----     20/08/2026  04:18 p. m.           4638 autos_ordenados.txt                                                                                                                                                                 
+-a----     20/08/2026  04:18 p. m.              2 control.json                                                                                                                                                                        
+-a----     20/08/2026  04:18 p. m.            208 inventario.json                                                                                                                                                                     
+-a----     20/08/2026  04:18 p. m.           1863 personal.json                                                                                                                                                                       
+
+Estado de Git: rama activa y si está sincronizada (push/pull recientes).
+     class_pyton actualizada hoy al iniciar la jornada de trabajo, pull origin class_pyton
+
+Dependencias: si el script depende de otros módulos, necesito saber si esos también están listos o requieren revisión.
+     todos los script , clases , metodos que se importan estan actualizados
+
+Objetivo de la revisión: qué quieres lograr con el script (ej. depurar errores, migrar a GUI, mejorar estructura, añadir funciones).
+
 
 
 PENDIENTES:  
@@ -25,13 +65,3 @@ A1 = crear copias en Drive
 B2 = crear memoria con vscod y python
 .............................................................................
 C1 = crear script taller.py
-
-FLUJO ACTUAL:
-
-main.py inicia con el login,  llama a menu_principal de renta.py 
-
-
-PREGUNATAS PARA LA IA:
-
-PREGUNATA: utilizar poo en renta.py 
-

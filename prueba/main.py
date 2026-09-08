@@ -1,10 +1,6 @@
 ''' 
-datos necesarios para Copilot: 
-este es mi script main.py, 
-es el mas actualizado, 
-se realizo un git pull al inicio de la joranada, 
-rama activa class_pyton
-todos los script , clases , metodos que se importan estan actualizados
+datos necesarios para Copilot:este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
+rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 ruta de archivos en documentar.txt
 
 Objetivo de la revision: 

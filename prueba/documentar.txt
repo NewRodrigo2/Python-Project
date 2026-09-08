@@ -1,3 +1,5 @@
+EN LA OFICINA
+
 cd "Python Project"
 Set-ExecutionPolicy Bypass -Scope Process -Force
 git config --global --add safe.directory "F:/Python/Python Project" 
@@ -45,16 +47,11 @@ Mode                 LastWriteTime         Length Name
 Estado de Git: rama activa y si está sincronizada (push/pull recientes).
      class_pyton actualizada hoy al iniciar la jornada de trabajo, pull origin class_pyton
 
-Dependencias: si el script depende de otros módulos, necesito saber si esos también están listos o requieren revisión.
-     todos los script , clases , metodos que se importan estan actualizados
-
 Objetivo de la revisión: qué quieres lograr con el script (ej. depurar errores, migrar a GUI, mejorar estructura, añadir funciones).
 
 
 
 PENDIENTES:  
-
-A1 = login: borrar ventana al aceptar empleado
 
      tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 
 
@@ -64,4 +61,4 @@ A1 = crear copias en Drive
 ...........................................................................
 B2 = crear memoria con vscod y python
 .............................................................................
-C1 = crear script taller.py
+C1 = crear script taller.pY

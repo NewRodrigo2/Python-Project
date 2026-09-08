@@ -9,7 +9,7 @@ class MethodAnalyzer(ast.NodeVisitor):
         self.returns = []
 
     def visit_Call(self, node):
-        # Captura llamadas a funciones o métodos
+# Captura llamadas a funciones o métodos
         if isinstance(node.func, ast.Attribute):
             self.calls.append(ast.unparse(node.func))
         elif isinstance(node.func, ast.Name):

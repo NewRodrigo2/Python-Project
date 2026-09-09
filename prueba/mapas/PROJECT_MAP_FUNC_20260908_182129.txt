@@ -1,0 +1,269 @@
+Mapa funcional del proyecto generado el 2026-09-08 18:21:30.789299
+============================================================
+
+Archivo: f:\Python\Python Project\prueba\admin.py
+
+
+Archivo: f:\Python\Python Project\prueba\herramientas.py
+
+
+Archivo: f:\Python\Python Project\prueba\menu_renta.py
+
+
+Archivo: f:\Python\Python Project\prueba\menu_rh.py
+
+
+Archivo: f:\Python\Python Project\prueba\rh.py
+
+
+Archivo: f:\Python\Python Project\prueba\utilerias.py
+
+
+Archivo: f:\Python\Python Project\prueba\menu_admin.py
+
+  Clase: DashboardApp (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 27)
+        Llama a: super().__init__, super, RoleManager, self.role_manager.obtener_roles, self.title, self.geometry, self.resizable, self.crear_interfaz_login
+        Usa atributos: role_manager, ventana_menu_gral, role_manager, title, geometry, resizable, crear_interfaz_login
+      - crear_interfaz_login (línea 40)
+        Llama a: ctk.CTkLabel, ctk.CTkFont, self.lbl_bienvenido.pack, ctk.CTkFrame, self.frame_login.pack, ctk.CTkButton, ctk.CTkFont, self.btn_rh.pack, ctk.CTkButton, ctk.CTkFont, self.btn_agregar.pack, ctk.CTkButton, ctk.CTkFont, self.btn_ver.pack, ctk.CTkButton, ctk.CTkFont, self.btn_eliminar.pack, ctk.CTkButton, ctk.CTkFont, self.btn_informe.pack, ctk.CTkButton, ctk.CTkFont, self.btn_salir.pack
+        Usa atributos: lbl_bienvenido, lbl_bienvenido, frame_login, frame_login, btn_rh, frame_login, rec_hum, btn_rh, btn_agregar, frame_login, btn_agregar, btn_ver, frame_login, btn_ver, btn_eliminar, frame_login, btn_eliminar, btn_informe, frame_login, btn_informe, btn_salir, frame_login, cerrar_sesion, btn_salir
+      - rec_hum (línea 81)
+        Llama a: self.frame_login.pack_forget, hasattr, ctk.CTkFrame, ctk.CTkButton, self.btn_agrega_rh.pack, ctk.CTkButton, self.btn_nomina.pack, ctk.CTkButton, self.btn_volver.pack, self.frame_segundo.pack
+        Usa atributos: frame_login, frame_segundo, btn_agrega_rh, frame_segundo, rh_frame, btn_agrega_rh, btn_nomina, frame_segundo, btn_nomina, btn_volver, frame_segundo, mostrar_menu_principal, btn_volver, frame_segundo
+      - rh_frame (línea 119)
+        Llama a: self.frame_segundo.pack_forget, hasattr, ctk.CTkFrame, ctk.CTkLabel, self.lbl_captura.pack, ctk.CTkEntry, self.txt_nombre.pack, ctk.CTkComboBox, self.cmb_rol.set, self.cmb_rol.pack, ctk.CTkEntry, self.txt_area.pack, ctk.CTkEntry, self.txt_hr_cont.pack, ctk.CTkEntry, self.txt_sueldo.pack, ctk.CTkEntry, self.txt_psw.pack, ctk.CTkButton, self.btn_grabar.pack, ctk.CTkLabel, self.lbl_estado.pack, ctk.CTkButton, self.btn_salir.pack, self.frame_tercer.pack
+        Usa atributos: frame_segundo, frame_tercer, lbl_captura, frame_tercer, lbl_captura, txt_nombre, frame_tercer, txt_nombre, roles_disponibles, cmb_rol, frame_tercer, roles_disponibles, cmb_rol, cmb_rol, txt_area, frame_tercer, txt_area, txt_hr_cont, frame_tercer, txt_hr_cont, txt_sueldo, frame_tercer, txt_sueldo, txt_psw, frame_tercer, txt_psw, btn_grabar, frame_tercer, graba_dato, btn_grabar, lbl_estado, frame_tercer, lbl_estado, btn_salir, frame_tercer, mostrar_frame_segundo, btn_salir, frame_tercer
+      - graba_dato (línea 195)
+        Llama a: self.txt_nombre.get().strip, self.txt_nombre.get, self.cmb_rol.get, self.txt_area.get().strip, self.txt_area.get, self.txt_hr_cont.get().strip, self.txt_hr_cont.get, self.txt_sueldo.get().strip, self.txt_sueldo.get, self.txt_psw.get().strip, self.txt_psw.get, self.lbl_estado.configure, hr.agregar_personal_gui, self.lbl_estado.configure, self.limpiar_formulario, self.lbl_estado.configure
+        Usa atributos: txt_nombre, cmb_rol, txt_area, txt_hr_cont, txt_sueldo, txt_psw, lbl_estado, lbl_estado, limpiar_formulario, lbl_estado
+      - limpiar_formulario (línea 226)
+        Llama a: self.txt_nombre.delete, self.cmb_rol.set, self.txt_area.delete, self.txt_hr_cont.delete, self.txt_sueldo.delete, self.txt_psw.delete
+        Usa atributos: txt_nombre, cmb_rol, txt_area, txt_hr_cont, txt_sueldo, txt_psw
+      - mostrar_menu_principal (línea 235)
+        Llama a: hasattr, self.frame_segundo.pack_forget, self.frame_login.pack
+        Usa atributos: frame_segundo, frame_login
+      - mostrar_frame_segundo (línea 240)
+        Llama a: hasattr, self.frame_tercer.pack_forget, hasattr, self.lbl_estado.configure, self.frame_segundo.pack
+        Usa atributos: frame_tercer, lbl_estado, frame_segundo
+      - cerrar_sesion (línea 247)
+        Llama a: self.destroy, self.ventana_menu_gral.deiconify, self.destroy
+        Usa atributos: ventana_menu_gral, destroy, ventana_menu_gral, destroy
+    Atributos self:
+      - self.role_manager = RoleManager() (línea 29)
+      - self.ventana_menu_gral = ventana_menu_gral (línea 30)
+      - self.lbl_bienvenido = ctk.CTkLabel(self, text='ADMINISTRACIÓN', font=ctk.CTkFont(size=24, weight='bold')) (línea 41)
+      - self.frame_login = ctk.CTkFrame(self) (línea 46)
+      - self.btn_rh = ctk.CTkButton(self.frame_login, text='Recursos Humanos', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold'), command=self.rec_hum) (línea 49)
+      - self.btn_agregar = ctk.CTkButton(self.frame_login, text='Agregar nuevo auto al inventario', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold')) (línea 55)
+      - self.btn_ver = ctk.CTkButton(self.frame_login, text='Ver listado de rentas realizadas', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold')) (línea 60)
+      - self.btn_eliminar = ctk.CTkButton(self.frame_login, text='Eliminar un ticket del control', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold')) (línea 65)
+      - self.btn_informe = ctk.CTkButton(self.frame_login, text='Informe de Rentas', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold')) (línea 70)
+      - self.btn_salir = ctk.CTkButton(self.frame_login, text='Salir del sistema', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold'), command=self.cerrar_sesion) (línea 75)
+
+Archivo: f:\Python\Python Project\prueba\renta.py
+
+
+Archivo: f:\Python\Python Project\prueba\logic.py
+
+  Clase: AuthManager (hereda de object)
+    Métodos:
+      - __init__ (línea 33)
+        Usa atributos: archivo_personal
+      - validar_usuario (línea 36)
+        Llama a: open, json.load, str(user.get('nombre', '')).strip().lower, str(user.get('nombre', '')).strip, str, user.get, str(user.get('id_emp', '')).strip().lower, str(user.get('id_emp', '')).strip, str, user.get, str(user.get('pasword', '')).strip, str, user.get, str(user.get('area', '')).strip().lower, str(user.get('area', '')).strip, str, user.get, rol.lower, print, print
+        Usa atributos: archivo_personal
+        Retorna: True, False, False, False
+    Atributos self:
+      - self.archivo_personal = archivo_personal (línea 34)
+  Clase: RoleManager (hereda de object)
+    Métodos:
+      - __init__ (línea 68)
+        Usa atributos: archivo_personal, roles, permisos
+      - obtener_roles (línea 83)
+        Usa atributos: roles
+        Retorna: self.roles
+      - aplicar_permisos (línea 87)
+        Llama a: rol.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace('ú', 'u').strip, rol.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace('ó', 'o').replace, rol.lower().replace('á', 'a').replace('é', 'e').replace('í', 'i').replace, rol.lower().replace('á', 'a').replace('é', 'e').replace, rol.lower().replace('á', 'a').replace, rol.lower().replace, rol.lower, self.permisos.get
+        Usa atributos: permisos
+        Retorna: [], self.permisos.get(rol_procesado, [])
+    Atributos self:
+      - self.archivo_personal = archivo_personal (línea 69)
+      - self.roles = ['Mostrador', 'Director', 'Mecánico', 'Administrador', 'Supervisor'] (línea 72)
+      - self.permisos = {'mostrador': ['renta'], 'administrador': ['admin'], 'mecanico': ['taller'], 'supervisor': ['utilerias'], 'director': ['admin', 'renta', 'utilerias']} (línea 75)
+  Clase: HRManager (hereda de object)
+    Métodos:
+      - __init__ (línea 108)
+        Usa atributos: archivo_personal
+      - agregar_personal (línea 112)
+      - calcular_nomina (línea 116)
+    Atributos self:
+      - self.archivo_personal = archivo_personal (línea 109)
+  Clase: InventoryManager (hereda de object)
+    Métodos:
+      - __init__ (línea 125)
+        Llama a: self.cargar_inventario, self.verificar_control
+        Usa atributos: archivo_datos, carpeta_datos, INVENTARIO_DEFECTO, AUTO_CONTROL, cargar_inventario, verificar_control
+      - cargar_inventario (línea 149)
+        Llama a: Path(self.archivo_datos).exists, Path, os.makedirs, Path(self.archivo_datos).exists, Path, open, json.load, self.guardar_inventario
+        Usa atributos: archivo_datos, carpeta_datos, archivo_datos, archivo_datos, inventario, inventario, INVENTARIO_DEFECTO, inventario, INVENTARIO_DEFECTO, guardar_inventario
+      - guardar_inventario (línea 164)
+        Llama a: open, json.dump
+        Usa atributos: archivo_datos, inventario
+      - verificar_control (línea 168)
+        Llama a: os.path.exists, open, json.load, self.guarda_control, self.guarda_control, self.guarda_control
+        Usa atributos: carpeta_datos, ARCHIVO_CONTROL, guarda_control, AUTO_CONTROL, guarda_control, AUTO_CONTROL, guarda_control, AUTO_CONTROL
+      - guarda_control (línea 181)
+        Llama a: open, json.dump
+        Usa atributos: AUTO_CONTROL
+      - obtener_autos_disponibles (línea 187)
+        Llama a: self.cargar_inventario, auto.get
+        Usa atributos: cargar_inventario, inventario
+        Retorna: [auto for auto in self.inventario if auto.get('disponible', False)]
+      - obtener_autos_rentados (línea 192)
+        Llama a: self.cargar_inventario, auto.get
+        Usa atributos: cargar_inventario, inventario
+        Retorna: [auto for auto in self.inventario if not auto.get('disponible', True)]
+      - procesar_renta (línea 197)
+        Llama a: self.guardar_inventario
+        Usa atributos: inventario, guardar_inventario
+        Retorna: (True, f"¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}."), (False, 'Lo sentimos, este auto ya está rentado.'), (False, 'El ID introducido no existe.')
+      - procesar_regreso (línea 212)
+        Llama a: self.guardar_inventario, open, json.load, len, datetime.now().strftime, datetime.now, control.append, self.guarda_control
+        Usa atributos: inventario, guardar_inventario, ARCHIVO_CONTROL, guarda_control
+        Retorna: (True, num_transaccion, costo_total), (False, 0, 0)
+    Atributos self:
+      - self.archivo_datos = archivo_path (línea 126)
+      - self.carpeta_datos = CARPETA_DATOS (línea 127)
+      - self.INVENTARIO_DEFECTO = [{'id': 1, 'marca': 'Toyota', 'modelo': 'Yaris', 'precio_dia': 45, 'disponible': True, 'dias': 0, 'km': 0, 'venta': 0}, {'id': 2, 'marca': 'Nissan', 'modelo': 'Versa', 'precio_dia': 50, 'disponible': True, 'dias': 0, 'km': 0, 'venta': 0}, {'id': 3, 'marca': 'Chevrolet', 'modelo': 'Aveo', 'precio_dia': 40, 'disponible': False, 'dias': 0, 'km': 0, 'venta': 0}] (línea 129)
+      - self.AUTO_CONTROL = [{'c_id': 1, 'km_recorridos': 0, 'c_venta_total': 0, 'c_fecha_renta': '01/01/2026', 'c_dias': 0}] (línea 135)
+  Clase: RentalManager (hereda de object)
+    Métodos:
+      - __init__ (línea 258)
+        Usa atributos: archivo_control
+      - registrar_renta (línea 261)
+      - registrar_entrega (línea 265)
+    Atributos self:
+      - self.archivo_control = archivo_control (línea 259)
+  Clase: MaintenanceManager (hereda de object)
+    Métodos:
+      - __init__ (línea 274)
+        Usa atributos: archivo_mantenimiento
+      - registrar_mantenimiento (línea 277)
+    Atributos self:
+      - self.archivo_mantenimiento = archivo_mantenimiento (línea 275)
+  Clase: UtilitiesManager (hereda de object)
+    Métodos:
+      - __init__ (línea 286)
+      - generar_reporte_general (línea 289)
+    Atributos self:
+
+Archivo: f:\Python\Python Project\prueba\main.py
+
+  Clase: VentanaLogin (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 40)
+        Llama a: super().__init__, super, self.title, self.geometry, self.resizable, AuthManager, RoleManager, InventoryManager, RentalManager, HRManager, MaintenanceManager, self.crear_interfaz_login
+        Usa atributos: title, geometry, resizable, auth, role, inventario, rental, hr, mtto, crear_interfaz_login
+      - crear_interfaz_login (línea 56)
+        Llama a: ctk.CTkLabel, ctk.CTkFont, self.lbl_bienvenido.pack, ctk.CTkFrame, self.frame_login.pack, ctk.CTkLabel, ctk.CTkFont, self.lbl_rol.pack, self.role.obtener_roles, ctk.CTkComboBox, self.cmb_rol.set, self.cmb_rol.pack, ctk.CTkLabel, ctk.CTkFont, self.lbl_usuario.pack, ctk.CTkEntry, self.txt_usuario.pack, ctk.CTkLabel, ctk.CTkFont, self.lbl_password.pack, ctk.CTkEntry, self.txt_password.pack, ctk.CTkButton, ctk.CTkFont, self.btn_ingresar.pack, ctk.CTkButton, ctk.CTkFont, self.btn_salir.pack, ctk.CTkLabel, self.etiqueta_mensaje.pack
+        Usa atributos: lbl_bienvenido, lbl_bienvenido, frame_login, frame_login, lbl_rol, frame_login, lbl_rol, role, cmb_rol, frame_login, cmb_rol, cmb_rol, lbl_usuario, frame_login, lbl_usuario, txt_usuario, frame_login, txt_usuario, lbl_password, frame_login, lbl_password, txt_password, frame_login, txt_password, btn_ingresar, frame_login, procesar_login, btn_ingresar, btn_salir, frame_login, salir_definitivo, btn_salir, etiqueta_mensaje, etiqueta_mensaje
+      - procesar_login (línea 127)
+        Llama a: self.txt_usuario.get().strip().lower, self.txt_usuario.get().strip, self.txt_usuario.get, self.txt_password.get().strip, self.txt_password.get, self.cmb_rol.get, self.auth.validar_usuario, self.etiqueta_mensaje.configure, self.withdraw, mg, nueva_ventana.mainloop, self.etiqueta_mensaje.configure
+        Usa atributos: txt_usuario, txt_password, cmb_rol, auth, etiqueta_mensaje, withdraw, etiqueta_mensaje
+      - salir_definitivo (línea 143)
+        Llama a: self.after
+        Usa atributos: after, destroy
+    Atributos self:
+      - self.auth = AuthManager() (línea 47)
+      - self.role = RoleManager() (línea 48)
+      - self.inventario = InventoryManager() (línea 49)
+      - self.rental = RentalManager() (línea 50)
+      - self.hr = HRManager() (línea 51)
+      - self.mtto = MaintenanceManager() (línea 52)
+      - self.lbl_bienvenido = ctk.CTkLabel(self, text='INICIAR SESIÓN', font=ctk.CTkFont(size=24, weight='bold')) (línea 58)
+      - self.frame_login = ctk.CTkFrame(self) (línea 64)
+      - self.lbl_rol = ctk.CTkLabel(self.frame_login, text='Seleccione su Tipo de Personal:', font=ctk.CTkFont(size=14, weight='bold')) (línea 68)
+      - self.cmb_rol = ctk.CTkComboBox(self.frame_login, values=roles_disponibles, width=320, state='readonly') (línea 77)
+      - self.lbl_usuario = ctk.CTkLabel(self.frame_login, text='Nombre de Usuario o ID:', font=ctk.CTkFont(size=14, weight='bold')) (línea 84)
+      - self.txt_usuario = ctk.CTkEntry(self.frame_login, width=320, placeholder_text='Ej. Jose o ID') (línea 90)
+      - self.lbl_password = ctk.CTkLabel(self.frame_login, text='Contraseña:', font=ctk.CTkFont(size=14, weight='bold')) (línea 96)
+      - self.txt_password = ctk.CTkEntry(self.frame_login, width=320, placeholder_text='••••••••', show='•') (línea 102)
+      - self.btn_ingresar = ctk.CTkButton(self.frame_login, text='Ingresar al Sistema', width=200, height=40, font=ctk.CTkFont(size=15, weight='bold'), command=self.procesar_login) (línea 108)
+      - self.btn_salir = ctk.CTkButton(self.frame_login, text='Cerrar el Sistema', width=200, height=40, font=ctk.CTkFont(size=15, weight='bold'), command=self.salir_definitivo) (línea 115)
+      - self.etiqueta_mensaje = ctk.CTkLabel(self, text='Esperando acción...', font=('Arial', 14), text_color='gray') (línea 122)
+
+Archivo: f:\Python\Python Project\prueba\menu_gral.py
+
+  Clase: LoginApp (hereda de ctk.CTk)
+    Métodos:
+      - __init__ (línea 21)
+        Llama a: super().__init__, super, self.title, self.geometry, self.resizable, LogicController, FrameManager, self.frames.crear_menu_principal, self.logic.aplicar_permisos
+        Usa atributos: title, geometry, resizable, logic, frames, logic, frames, logic, frames
+    Atributos self:
+      - self.logic = LogicController(rol_usuario, ventana_login, self) (línea 28)
+      - self.frames = FrameManager(self, self.logic) (línea 29)
+  Clase: FrameManager (hereda de object)
+    Métodos:
+      - __init__ (línea 37)
+        Usa atributos: root, logic, encabezado_frame, frame_login, frame_renta
+      - limpiar_encabezado (línea 44)
+        Llama a: self.encabezado_frame.winfo_children, widget.destroy
+        Usa atributos: encabezado_frame, encabezado_frame
+      - crear_menu_principal (línea 49)
+        Llama a: self.limpiar_encabezado, ctk.CTkFrame, self.encabezado_frame.grid, ctk.CTkLabel, ctk.CTkFont, lbl_bienvenido.grid, ctk.CTkLabel, ctk.CTkFont, self.lbl_menu.grid, ctk.CTkButton, self.btn_rentar.grid, ctk.CTkButton, self.btn_ver.grid, ctk.CTkButton, self.btn_eliminar.grid, ctk.CTkButton, self.btn_informe.grid, ctk.CTkButton, self.btn_salir.grid, range, self.encabezado_frame.grid_columnconfigure, self.root.grid_rowconfigure, self.root.grid_columnconfigure
+        Usa atributos: limpiar_encabezado, encabezado_frame, root, encabezado_frame, encabezado_frame, logic, logic, lbl_menu, encabezado_frame, lbl_menu, btn_rentar, encabezado_frame, interfaz_renta, btn_rentar, btn_ver, encabezado_frame, logic, btn_ver, btn_eliminar, encabezado_frame, btn_eliminar, btn_informe, encabezado_frame, btn_informe, btn_salir, encabezado_frame, logic, btn_salir, encabezado_frame, root, root
+      - interfaz_renta (línea 97)
+        Llama a: self.limpiar_encabezado, ctk.CTkLabel, ctk.CTkFont, lbl_bienvenido.grid, ctk.CTkFrame, self.frame_renta.grid, ctk.CTkLabel, lbl_info.grid, ctk.CTkButton, btn_renta.grid, ctk.CTkButton, btn_regresar.grid
+        Usa atributos: limpiar_encabezado, encabezado_frame, frame_renta, root, frame_renta, frame_renta, frame_renta, mostrar_auto, frame_renta, cerrar_frame_renta
+      - mostrar_auto (línea 121)
+        Llama a: ctk.CTkFrame, self.frame_login.grid, ctk.CTkLabel, lbl_info.grid, ctk.CTkLabel, lbl_ver.grid
+        Usa atributos: frame_login, root, frame_login, frame_login, frame_login
+      - cerrar_frame_renta (línea 132)
+        Llama a: self.frame_renta.destroy, self.crear_menu_principal
+        Usa atributos: frame_renta, frame_renta, crear_menu_principal
+    Atributos self:
+      - self.root = root (línea 38)
+      - self.logic = logic (línea 39)
+      - self.encabezado_frame = None (línea 40)
+      - self.frame_login = None (línea 41)
+      - self.frame_renta = None (línea 42)
+      - self.encabezado_frame = ctk.CTkFrame(self.root, fg_color='transparent') (línea 51)
+      - self.lbl_menu = ctk.CTkLabel(self.encabezado_frame, text=f'MENU GENERAL DEL SISTEMA {rol_texto}', font=ctk.CTkFont(size=14, weight='bold')) (línea 60)
+      - self.btn_rentar = ctk.CTkButton(self.encabezado_frame, text='Renta de autos', command=self.interfaz_renta) (línea 67)
+      - self.btn_ver = ctk.CTkButton(self.encabezado_frame, text='Administración', command=self.logic.abrir_admin) (línea 72)
+      - self.btn_eliminar = ctk.CTkButton(self.encabezado_frame, text='Taller / mantenimiento') (línea 77)
+      - self.btn_informe = ctk.CTkButton(self.encabezado_frame, text='Utilerías') (línea 80)
+      - self.btn_salir = ctk.CTkButton(self.encabezado_frame, text='Salir del sistema', command=self.logic.cerrar_sesion) (línea 83)
+      - self.frame_renta = ctk.CTkFrame(self.root) (línea 105)
+      - self.frame_login = ctk.CTkFrame(self.root) (línea 123)
+  Clase: LogicController (hereda de object)
+    Métodos:
+      - __init__ (línea 139)
+        Llama a: RoleManager, InventoryManager
+        Usa atributos: role_manager, inventario, rol, ventana_login, ventana_principal
+      - aplicar_permisos (línea 146)
+        Llama a: botones.values, btn.configure, self.role_manager.aplicar_permisos, botones[permiso].configure
+        Usa atributos: role_manager, rol
+      - abrir_admin (línea 161)
+        Llama a: self.ventana_principal.withdraw, m_admin.DashboardApp, nueva_admin.protocol, self.regresar_desde_admin, nueva_admin.mainloop, self.ventana_principal.after
+        Usa atributos: ventana_principal, ventana_principal, regresar_desde_admin, ventana_principal
+      - ejecutar (línea 162)
+        Llama a: self.ventana_principal.withdraw, m_admin.DashboardApp, nueva_admin.protocol, self.regresar_desde_admin, nueva_admin.mainloop
+        Usa atributos: ventana_principal, ventana_principal, regresar_desde_admin
+      - regresar_desde_admin (línea 169)
+        Llama a: ventana_admin.destroy, self.ventana_principal.deiconify, self.aplicar_permisos
+        Usa atributos: ventana_principal, aplicar_permisos, ventana_principal
+      - renta_auto (línea 174)
+        Llama a: self.inventario.obtener_autos_disponibles, print
+        Usa atributos: inventario
+      - cerrar_sesion (línea 182)
+        Llama a: self.ventana_principal.destroy, self.ventana_login.deiconify, self.ventana_principal.destroy
+        Usa atributos: ventana_login, ventana_principal, ventana_login, ventana_principal
+    Atributos self:
+      - self.role_manager = RoleManager() (línea 140)
+      - self.inventario = InventoryManager() (línea 141)
+      - self.rol = rol_usuario (línea 142)
+      - self.ventana_login = ventana_login (línea 143)
+      - self.ventana_principal = ventana_principal (línea 144)

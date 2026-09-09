@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Mapa del proyecto</title>
+<style>body{font-family:Arial;margin:20px;} h2{color:#2c3e50;} h3{color:#16a085;} ul{margin-left:20px;} </style>
+</head>
+<body>
+<h1>📌 Mapa del proyecto</h1>
+<p>Generado el 2026-09-06 13:08:24.325449</p>
+<hr>
+<h2>📂 Archivo: admin.py</h2>
+<h2>📂 Archivo: analiza.py</h2>
+<h3>🏷️ Clase: ClassAnalyzer (hereda de ast.NodeVisitor)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 6)</li>
+<li>visit_FunctionDef (línea 11)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.methods (línea 7)</li>
+<li>self.attrs (línea 8)</li>
+<li>self.bases (línea 9)</li>
+</ul>
+<h2>📂 Archivo: herramientas.py</h2>
+<h2>📂 Archivo: logic.py</h2>
+<h3>🏷️ Clase: AuthManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 33)</li>
+<li>validar_usuario (línea 36)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_personal (línea 34)</li>
+</ul>
+<h3>🏷️ Clase: RoleManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 68)</li>
+<li>obtener_roles (línea 83)</li>
+<li>aplicar_permisos (línea 87)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_personal (línea 69)</li>
+<li>self.roles (línea 72)</li>
+<li>self.permisos (línea 75)</li>
+</ul>
+<h3>🏷️ Clase: HRManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 108)</li>
+<li>agregar_personal (línea 112)</li>
+<li>calcular_nomina (línea 116)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_personal (línea 109)</li>
+</ul>
+<h3>🏷️ Clase: InventoryManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 125)</li>
+<li>cargar_inventario (línea 149)</li>
+<li>guardar_inventario (línea 164)</li>
+<li>verificar_control (línea 168)</li>
+<li>guarda_control (línea 181)</li>
+<li>obtener_autos_disponibles (línea 187)</li>
+<li>obtener_autos_rentados (línea 192)</li>
+<li>procesar_renta (línea 197)</li>
+<li>procesar_regreso (línea 212)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_datos (línea 126)</li>
+<li>self.carpeta_datos (línea 127)</li>
+<li>self.INVENTARIO_DEFECTO (línea 129)</li>
+<li>self.AUTO_CONTROL (línea 135)</li>
+</ul>
+<h3>🏷️ Clase: RentalManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 258)</li>
+<li>registrar_renta (línea 261)</li>
+<li>registrar_entrega (línea 265)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_control (línea 259)</li>
+</ul>
+<h3>🏷️ Clase: MaintenanceManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 274)</li>
+<li>registrar_mantenimiento (línea 277)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.archivo_mantenimiento (línea 275)</li>
+</ul>
+<h3>🏷️ Clase: UtilitiesManager (hereda de object)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 286)</li>
+<li>generar_reporte_general (línea 289)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+</ul>
+<h2>📂 Archivo: main.py</h2>
+<h3>🏷️ Clase: VentanaLogin (hereda de ctk.CTk)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 44)</li>
+<li>crear_interfaz_login (línea 62)</li>
+<li>procesar_login (línea 133)</li>
+<li>salir_definitivo (línea 149)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.auth (línea 51)</li>
+<li>self.role (línea 52)</li>
+<li>self.inventario (línea 53)</li>
+<li>self.rental (línea 54)</li>
+<li>self.hr (línea 55)</li>
+<li>self.mtto (línea 56)</li>
+<li>self.lbl_bienvenido (línea 64)</li>
+<li>self.frame_login (línea 70)</li>
+<li>self.lbl_rol (línea 74)</li>
+<li>self.cmb_rol (línea 83)</li>
+<li>self.lbl_usuario (línea 90)</li>
+<li>self.txt_usuario (línea 96)</li>
+<li>self.lbl_password (línea 102)</li>
+<li>self.txt_password (línea 108)</li>
+<li>self.btn_ingresar (línea 114)</li>
+<li>self.btn_salir (línea 121)</li>
+<li>self.etiqueta_mensaje (línea 128)</li>
+</ul>
+<h2>📂 Archivo: menu_admin.py</h2>
+<h3>🏷️ Clase: DashboardApp (hereda de ctk.CTk)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 27)</li>
+<li>crear_interfaz_login (línea 40)</li>
+<li>rec_hum (línea 81)</li>
+<li>rh_frame (línea 119)</li>
+<li>graba_dato (línea 195)</li>
+<li>limpiar_formulario (línea 226)</li>
+<li>mostrar_menu_principal (línea 235)</li>
+<li>mostrar_frame_segundo (línea 240)</li>
+<li>cerrar_sesion (línea 247)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.role_manager (línea 29)</li>
+<li>self.ventana_menu_gral (línea 30)</li>
+<li>self.lbl_bienvenido (línea 41)</li>
+<li>self.frame_login (línea 46)</li>
+<li>self.btn_rh (línea 49)</li>
+<li>self.btn_agregar (línea 55)</li>
+<li>self.btn_ver (línea 60)</li>
+<li>self.btn_eliminar (línea 65)</li>
+<li>self.btn_informe (línea 70)</li>
+<li>self.btn_salir (línea 75)</li>
+</ul>
+<h2>📂 Archivo: menu_gral.py</h2>
+<h3>🏷️ Clase: LoginApp (hereda de ctk.CTk)</h3>
+<h4>Métodos:</h4>
+<ul>
+<li>__init__ (línea 14)</li>
+</ul>
+<h4>Atributos self:</h4>
+<ul>
+<li>self.role_manager (línea 16)</li>
+<li>self.ventana_login (línea 17)</li>
+<li>self.rol (línea 18)</li>
+<li>self.inventario (línea 19)</li>
+<li>self.encabezado_frame (línea 30)</li>
+<li>self.frame_login (línea 34)</li>
+<li>self.frame_renta (línea 35)</li>
+</ul>
+<h2>📂 Archivo: menu_renta.py</h2>
+<h2>📂 Archivo: menu_rh.py</h2>
+<h2>📂 Archivo: renta.py</h2>
+<h2>📂 Archivo: rh.py</h2>
+<h2>📂 Archivo: utilerias.py</h2>
+</body>
+</html>

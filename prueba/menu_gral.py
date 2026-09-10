@@ -95,7 +95,7 @@ class FrameManager:
         self.limpiar_encabezado()
         
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
-            text="GESTION DE RENTAS /  interfaz_renta ",
+            text="GESTION DE RENTAS",
             font=ctk.CTkFont(size=15, weight="bold"))
         lbl_bienvenido.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
@@ -103,7 +103,7 @@ class FrameManager:
         self.frame_renta.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
 
         btn_renta = ctk.CTkButton(self.frame_renta, 
-            text="RENTA DE AUTOS",
+            text="ENTREGA DE AUTOS",
             command=self.mostrar_auto)
         btn_renta.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
@@ -113,7 +113,7 @@ class FrameManager:
         btn_b1.grid(row=0, column=1, padx=10, pady=10, sticky="ew")        
 
         btn_regresar = ctk.CTkButton(self.frame_renta, 
-            text="Regresar", 
+            text="RETURN", 
             command=self.cerrar_frame_renta)
         btn_regresar.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
 
@@ -128,13 +128,23 @@ class FrameManager:
         tot_autos = len(autos)
 
         lbl_total = ctk.CTkLabel(self.frame_renta, text=f"Total de autos disponibles: {tot_autos}")
-        lbl_total.grid(row=0, column=3, padx=10, pady=10, sticky="w")
+        lbl_total.grid(row=0, column=3, padx=10, pady=10, sticky="ew")
 
-        lbl_id = ctk.CTkLabel(self.frame_renta, text=f"Id AUTO A RENTAR")
-        lbl_total.grid(row=1, column=2, padx=10, pady=10, sticky="w")
+        lbl_id = ctk.CTkLabel(self.frame_renta, text=f"ID DE AUTO A RENTAR")
+        lbl_id.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
 
         ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
-        ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="w")     
+        ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
+
+        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"KM ESTIMADOS")
+        lbl_1.grid(row=2,column=2, padx=10, pady=10, sticky="ew")
+
+        ent_1 =ctk.CTkEntry(self.frame_renta, width=70)
+        ent_1.grid(row=2,column=3, padx=10, pady=10, sticky="e")
+
+        lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
+        lbl_2.grid(row=3,column=2, padx=10, pady=10, sticky="ew")
+
 
         if autos:
             fila = 2

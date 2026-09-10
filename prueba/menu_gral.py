@@ -2,10 +2,8 @@
 datos necesarios para Copilot:este es mi script menu_gral.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
 rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 ruta de archivos en documentar.txt
-
-Objetivo de la revision: mensaje de error en linea 112
-
-Pregunta para Copilot: por que este error?
+Objetivo de la revision: ayudame a mostrar el inventario de autos en  frame_renta al dar clic en el btn_renta
+Pregunta para Copilot: ninguna
 
 '''
 
@@ -58,10 +56,10 @@ class FrameManager:
 
         rol_texto = f" - Rol Activo {self.logic.rol}" if self.logic.rol else " - Sin Rol"
         self.lbl_menu = ctk.CTkLabel(self.encabezado_frame,
-            text=f"MENU GENERAL DEL SISTEMA {rol_texto}",
+            text=f"  MENU GENERAL  {rol_texto}",
             font=ctk.CTkFont(size=14, weight="bold")
         )
-        self.lbl_menu.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+        self.lbl_menu.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
 
         # Botones principales
         self.btn_rentar = ctk.CTkButton(self.encabezado_frame, text="Renta de autos",
@@ -90,49 +88,88 @@ class FrameManager:
             self.encabezado_frame.grid_columnconfigure(i, weight=1)
 
 #--- Configuración de filas/columnas en la ventana principal
-        # self.root.grid_rowconfigure(0, weight=0)  # encabezado no se expande
-        self.root.grid_rowconfigure(1, weight=1)  # frame principal sí se expande
+        self.root.grid_rowconfigure(1, weight=1)        # frame principal sí se expande
         self.root.grid_columnconfigure(0, weight=1)
 
     def interfaz_renta(self):
         self.limpiar_encabezado()
-        pba = f"prueba"
+        
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
-            text="GESTION DE RENTAS / desde interfaz_renta ",
+            text="GESTION DE RENTAS /  interfaz_renta ",
             font=ctk.CTkFont(size=15, weight="bold"))
         lbl_bienvenido.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
 
         self.frame_renta = ctk.CTkFrame(self.root)
         self.frame_renta.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
 
-        lbl_info = ctk.CTkLabel(self.frame_renta, text=f"GESTIÓN DE RENTAS/self.frame_renta {pba} ")
-        lbl_info.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
-
         btn_renta = ctk.CTkButton(self.frame_renta, 
             text="RENTA DE AUTOS",
             command=self.mostrar_auto)
-        btn_renta.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+        btn_renta.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+
+        btn_b1 = ctk.CTkButton(self.frame_renta, 
+            text="REGRESA DE AUTOS")
+#--- command=)
+        btn_b1.grid(row=0, column=1, padx=10, pady=10, sticky="ew")        
 
         btn_regresar = ctk.CTkButton(self.frame_renta, 
             text="Regresar", 
             command=self.cerrar_frame_renta)
-        btn_regresar.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+        btn_regresar.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
 
     def mostrar_auto(self):
+#--- Limpiar contenido previo en frame_renta
+        for widget in self.frame_renta.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.destroy()
+
+#--- Obtener autos disponibles desde InventoryManager
+        autos = self.logic.inventario.obtener_autos_disponibles()
+        tot_autos = len(autos)
+
+        lbl_total = ctk.CTkLabel(self.frame_renta, text=f"Total de autos disponibles: {tot_autos}")
+        lbl_total.grid(row=0, column=3, padx=10, pady=10, sticky="w")
+
+        lbl_id = ctk.CTkLabel(self.frame_renta, text=f"Id AUTO A RENTAR")
+        lbl_total.grid(row=1, column=2, padx=10, pady=10, sticky="w")
+
+        ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
+        ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="w")     
+
+        if autos:
+            fila = 2
+            for auto in autos:
+                texto = f"{auto['id']} - {auto['marca']} | {auto['modelo']} | ${auto['precio_dia']} por día"
+                lbl_auto = ctk.CTkLabel(self.frame_renta, text=texto, anchor="w")
+                lbl_auto.grid(row=fila, column=0, padx=10, pady=5, sticky="w")
+                fila += 1
+        else:
+            lbl_vacio = ctk.CTkLabel(self.frame_renta, text="No hay autos disponibles ❌")
+            lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+
+
+
 #--- falta crear lo botones para que muestre los autos        
-        self.frame_login = ctk.CTkFrame(self.root)
-        self.frame_login.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
+    def mostrar_auto1(self):
+        self.logic.renta_auto()
 
-        lbl_info = ctk.CTkLabel(self.frame_login, text="EN ESTE FRAME COLOCAR LOS AUTOS PARA RENTA Y LOS WIDGET")
-        lbl_info.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
+        lbl_info = ctk.CTkLabel(self.frame_renta, text=f"EN ESTE FRAME COLOCAR LOS AUTOS PARA RENTA Y LOS WIDGET ")
+        lbl_info.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        lbl_ver = ctk.CTkLabel(self.frame_login, text="aqui debe salir la lista de autos")
-        lbl_ver.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+
 
     def cerrar_frame_renta(self):
         if self.frame_renta:
             self.frame_renta.destroy()
-            self.crear_menu_principal()        
+            self.crear_menu_principal()    
+
+    def mostrar_frame_login():
+        self.frame_login = ctk.CTkFrame(self.root)
+        self.frame_login.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
+
+        lbl_ver = ctk.CTkLabel(self.frame_login, text="aqui debe salir la lista de autos / frame_login")
+        lbl_ver.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+#--- en espera de widgets 
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""
@@ -171,13 +208,7 @@ class LogicController:
         self.ventana_principal.deiconify()
         self.aplicar_permisos(self.ventana_principal.frames)
 
-    def renta_auto(self):
-        autos = self.inventario.obtener_autos_disponibles()
-        if autos:
-            for auto in autos:
-                texto=f"{auto['id']} - {auto['marca']} {auto['modelo']} {auto['precio_dia']}"
-        else:
-            print("No hay autos disponibles ❌")
+
 
     def cerrar_sesion(self):
         if self.ventana_login:

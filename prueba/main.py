@@ -82,14 +82,12 @@ class VentanaLogin(ctk.CTk):
 
 # Etiqueta usuario
         self.lbl_usuario = ctk.CTkLabel(
-            self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold")
-        )
+            self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold"))
         self.lbl_usuario.pack(pady=(20, 5), padx=30, anchor="w")
 
 # Campo usuario
         self.txt_usuario = ctk.CTkEntry(
-            self.frame_login, width=320, placeholder_text="Ej. Jose o ID"
-        )
+            self.frame_login, width=320, placeholder_text="Ej. Jose o ID")
         self.txt_usuario.pack(pady=5, padx=30)
 
 # Etiqueta contraseña

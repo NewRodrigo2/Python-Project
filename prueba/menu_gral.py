@@ -136,11 +136,20 @@ class FrameManager:
         ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
         ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
 
-        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"KM ESTIMADOS")
+        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"DIAS ESTIMADOS POR RENTAR")
         lbl_1.grid(row=2,column=2, padx=10, pady=10, sticky="ew")
 
-        ent_1 =ctk.CTkEntry(self.frame_renta, width=70)
+        ent_1 = ctk.CTkEntry(self.frame_renta, width=70)
         ent_1.grid(row=2,column=3, padx=10, pady=10, sticky="e")
+
+        dias = ent_1.get()
+
+#--- Botón para calcular precio
+        btn_calcular = ctk.CTkButton(
+            self.frame_renta, 
+            text="Calcular precio", 
+            command=lambda: self.calcular_precio(ent_id.get(), ent_1.get()))
+        btn_calcular.grid(row=4, column=3, padx=10, pady=10, sticky="e")      
 
         lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
         lbl_2.grid(row=3,column=2, padx=10, pady=10, sticky="ew")
@@ -156,8 +165,38 @@ class FrameManager:
         else:
             lbl_vacio = ctk.CTkLabel(self.frame_renta, text="No hay autos disponibles ❌")
             lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+            
+#--- mostrar presupuesto  / falta boton acepta renta
+    def calcular_precio(self, id_auto, dias_str):
+        try:
+            dias = int(dias_str)
+        except ValueError:
+            lbl_error = ctk.CTkLabel(self.frame_renta, text="⚠️ Ingresa un número válido de días")
+            lbl_error.grid(row=5, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+            return
+
+        total = self.logic.inventario.calcular_precio(id_auto, dias)
+        if total is not None:
+            lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
+            lbl_total.grid(row=3, column=3, columnspan=2, padx=10, pady=10, sticky="ew")
+
+            # Botón para confirmar renta
+            btn_confirmar = ctk.CTkButton(
+                self.frame_renta,
+                text="Confirmar renta",
+                command=lambda: self.confirmar_renta(id_auto, dias)
+            )
+            btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
 
+    def confirmar_renta(self, id_auto, dias):
+        exito = self.logic.inventario.renta_auto(id_auto, dias)
+        if exito:
+            lbl_ok = ctk.CTkLabel(self.frame_renta, text="✅ Renta confirmada y registrada")
+            lbl_ok.grid(row=8, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+        else:
+            lbl_fail = ctk.CTkLabel(self.frame_renta, text="❌ No se pudo confirmar la renta")
+            lbl_fail.grid(row=8, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
 #--- falta crear lo botones para que muestre los autos        
     def mostrar_auto1(self):

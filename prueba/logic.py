@@ -1,5 +1,5 @@
 '''logic.py
-datos necesarios para Copilot: este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
+datos necesarios para Copilot: este es mi script logic.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
 rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 
 Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
@@ -125,26 +125,28 @@ class InventoryManager:
     def __init__(self, archivo_path=ARCHIVO_DATOS):
         self.archivo_datos = archivo_path
         self.carpeta_datos = CARPETA_DATOS
-      
+        self.ARCHIVO_CONTROL = os.path.join(self.carpeta_datos, "control.json")  # ✅ Definir ruta
+
         self.INVENTARIO_DEFECTO = [
             {"id": 1, "marca": "Toyota", "modelo": "Yaris", "precio_dia": 45, "disponible": True, "dias": 0, "km": 0, "venta": 0},
             {"id": 2, "marca": "Nissan", "modelo": "Versa", "precio_dia": 50, "disponible": True, "dias": 0, "km": 0, "venta": 0},
             {"id": 3, "marca": "Chevrolet", "modelo": "Aveo", "precio_dia": 40, "disponible": False, "dias": 0, "km": 0, "venta": 0}
         ]
-        
+
         self.AUTO_CONTROL = [
             {
-                "c_id": 1, 
-                "km_recorridos": 0, 
-                "c_venta_total": 0, 
+                "c_id": 1,
+                "km_recorridos": 0,
+                "c_venta_total": 0,
                 "c_fecha_renta": "01/01/2026",
                 "c_dias": 0
-            } 
+            }
         ]
-        
-# Cargar datos al instanciar
+
+        # Cargar datos al instanciar
         self.cargar_inventario()
         self.verificar_control()
+
 
     def cargar_inventario(self):
         """Lee el inventario.json o carga los valores por defecto si no existe."""
@@ -250,6 +252,16 @@ class InventoryManager:
                 return True, num_transaccion, costo_total
 
         return False, 0, 0
+
+    def obtener_autos_disponibles(self):
+        return [a for a in self.autos if a["disponible"]]
+
+    def calcular_precio(self, id_auto, dias):
+        auto = next((a for a in self.autos if str(a["id"]) == str(id_auto)), None)
+        if auto:
+            return auto["precio_dia"] * dias
+        return None
+
 
 # -------------------------------
 # Clase para Rentas

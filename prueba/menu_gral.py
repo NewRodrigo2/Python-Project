@@ -16,15 +16,17 @@ ctk.set_default_color_theme("blue")
 
 class LoginApp(ctk.CTk):
     """Ventana principal del menú general."""
-    def __init__(self, rol_usuario, ventana_login=None):
+    def __init__(self, rol_usuario, ventana_login, inventory):
         super().__init__()
         self.title("Menu General - Mi Carrito en Renta")
         self.geometry("1000x900")
         self.resizable(False, False)
 
 # Controladores
-        self.logic = LogicController(rol_usuario, ventana_login, self)
-        self.frames = FrameManager(self, self.logic)
+        self.inventory = inventory
+        self.logic = LogicController(rol_usuario, ventana_login, self, self.inventory)
+        self.frames = FrameManager(self, self.logic, self.inventory)
+        self.inventario = InventoryManager()
 
 # Inicializar interfaz
         self.frames.crear_menu_principal()
@@ -38,6 +40,7 @@ class FrameManager:
         self.encabezado_frame = None
         self.frame_login = None
         self.frame_renta = None
+        self.inventory = inventory
 
     def limpiar_encabezado(self):
         if self.encabezado_frame:
@@ -133,22 +136,20 @@ class FrameManager:
         lbl_id = ctk.CTkLabel(self.frame_renta, text=f"ID DE AUTO A RENTAR")
         lbl_id.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
 
-        ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
-        ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
+        self.ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
+        self.ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
 
         lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"DIAS ESTIMADOS POR RENTAR")
         lbl_1.grid(row=2,column=2, padx=10, pady=10, sticky="ew")
 
-        ent_1 = ctk.CTkEntry(self.frame_renta, width=70)
-        ent_1.grid(row=2,column=3, padx=10, pady=10, sticky="e")
-
-        dias = ent_1.get()
+        self.ent_1 = ctk.CTkEntry(self.frame_renta, width=70)
+        self.ent_1.grid(row=2,column=3, padx=10, pady=10, sticky="e")
 
 #--- Botón para calcular precio
         btn_calcular = ctk.CTkButton(
             self.frame_renta, 
             text="Calcular precio", 
-            command=lambda: self.calcular_precio(ent_id.get(), ent_1.get()))
+            command=lambda: self.calcular_precio(self.ent_id.get(), self.ent_1.get()))
         btn_calcular.grid(row=4, column=3, padx=10, pady=10, sticky="e")      
 
         lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
@@ -169,7 +170,10 @@ class FrameManager:
 #--- mostrar presupuesto  / falta boton acepta renta
     def calcular_precio(self, id_auto, dias_str):
         try:
-            dias = int(dias_str)
+            id_auto = int(self.ent_id.get())
+            dias = int(self.ent_1.get())
+            total = self.logic.inventario.calcular_precio(id_auto, dias)
+                       
         except ValueError:
             lbl_error = ctk.CTkLabel(self.frame_renta, text="⚠️ Ingresa un número válido de días")
             lbl_error.grid(row=5, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
@@ -178,19 +182,14 @@ class FrameManager:
         total = self.logic.inventario.calcular_precio(id_auto, dias)
         if total is not None:
             lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
-            lbl_total.grid(row=3, column=3, columnspan=2, padx=10, pady=10, sticky="ew")
+            lbl_total.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
-            # Botón para confirmar renta
-            btn_confirmar = ctk.CTkButton(
-                self.frame_renta,
-                text="Confirmar renta",
-                command=lambda: self.confirmar_renta(id_auto, dias)
-            )
+            btn_confirmar = ctk.CTkButton(self.frame_renta, text="Confirmar renta",
+                                        command=lambda: self.confirmar_renta(id_auto, dias))
             btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
-
     def confirmar_renta(self, id_auto, dias):
-        exito = self.logic.inventario.renta_auto(id_auto, dias)
+        exito = self.inventory.procesar_renta(id_auto, dias)
         if exito:
             lbl_ok = ctk.CTkLabel(self.frame_renta, text="✅ Renta confirmada y registrada")
             lbl_ok.grid(row=8, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
@@ -205,26 +204,24 @@ class FrameManager:
         lbl_info = ctk.CTkLabel(self.frame_renta, text=f"EN ESTE FRAME COLOCAR LOS AUTOS PARA RENTA Y LOS WIDGET ")
         lbl_info.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-
-
     def cerrar_frame_renta(self):
         if self.frame_renta:
             self.frame_renta.destroy()
             self.crear_menu_principal()    
 
-    def mostrar_frame_login():
-        self.frame_login = ctk.CTkFrame(self.root)
-        self.frame_login.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
+#---    def mostrar_frame_login():
+#---     self.frame_login = ctk.CTkFrame(self.root)
+#---     self.frame_login.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
 
-        lbl_ver = ctk.CTkLabel(self.frame_login, text="aqui debe salir la lista de autos / frame_login")
-        lbl_ver.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+#---     lbl_ver = ctk.CTkLabel(self.frame_login, text="aqui debe salir la lista de autos / frame_login")
+#---     lbl_ver.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 #--- en espera de widgets 
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""
     def __init__(self, rol_usuario, ventana_login, ventana_principal):
         self.role_manager = RoleManager()
-        self.inventario = InventoryManager()
+        self.inventario = inventory
         self.rol = rol_usuario
         self.ventana_login = ventana_login
         self.ventana_principal = ventana_principal

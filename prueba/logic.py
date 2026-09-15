@@ -147,7 +147,6 @@ class InventoryManager:
         self.cargar_inventario()
         self.verificar_control()
 
-
     def cargar_inventario(self):
         """Lee el inventario.json o carga los valores por defecto si no existe."""
         if not Path(self.archivo_datos).exists():
@@ -186,18 +185,18 @@ class InventoryManager:
         with open(ARCHIVO_CONTROL, "w", encoding="utf-8") as archivo:
             json.dump(datos, archivo, indent=4, ensure_ascii=False)
 
+#--- Asegura que el inventario esté cargado
     def obtener_autos_disponibles(self):
-        """Devuelve únicamente la lista de autos que tienen disponible = True."""
         self.cargar_inventario()
         return [auto for auto in self.inventario if auto.get("disponible", False)]
 
+#""" Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
     def obtener_autos_rentados(self):
-        """Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
         self.cargar_inventario()
         return [auto for auto in self.inventario if not auto.get("disponible", True)]
 
+#""" Renta un auto actualizando su estado y guardando los cambios."""
     def procesar_renta(self, id_auto, dias_p_renta):
-        """Renta un auto actualizando su estado y guardando los cambios."""
         for auto in self.inventario:
             if auto["id"] == id_auto:
                 if auto["disponible"]:
@@ -253,19 +252,17 @@ class InventoryManager:
 
         return False, 0, 0
 
-    def obtener_autos_disponibles(self):
-        return [a for a in self.autos if a["disponible"]]
-
     def calcular_precio(self, id_auto, dias):
-        auto = next((a for a in self.autos if str(a["id"]) == str(id_auto)), None)
+        auto = next((a for a in self.inventario if int(a["id"]) == int(id_auto) and a["disponible"]), None)
         if auto:
             return auto["precio_dia"] * dias
         return None
 
 
-# -------------------------------
-# Clase para Rentas
-# -------------------------------
+
+#--- ----------------------------
+#---    Clase para Rentas
+#--- ----------------------------
 class RentalManager:
     def __init__(self, archivo_control=ARCHIVO_CONTROL):
         self.archivo_control = archivo_control

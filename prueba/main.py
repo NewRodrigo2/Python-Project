@@ -133,7 +133,12 @@ class VentanaLogin(ctk.CTk):
         if usuario_valido:
             self.etiqueta_mensaje.configure(text="¡Login exitoso! Abriendo sistema...", text_color="green")
             self.withdraw()
-            nueva_ventana = mg(rol_usuario=rol_seleccionado, ventana_login=self)
+            nueva_ventana = mg(
+                rol_usuario=rol_seleccionado, 
+                ventana_login=self,
+                inventory=self.inventario
+                )
+
             nueva_ventana.mainloop()
         else:
             self.etiqueta_mensaje.configure(text="Error: Usuario, contraseña o rol incorrectos.", text_color="red")

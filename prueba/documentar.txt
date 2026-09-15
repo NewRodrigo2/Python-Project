@@ -1,13 +1,16 @@
 EN LA OFICINA
 
 cd "Python Project"
+
 Set-ExecutionPolicy Bypass -Scope Process -Force
 git config --global --add safe.directory "F:/Python/Python Project" 
 .venv\Scripts\Activate.ps1 
 cd prueba
+
 git branch
 git pull origin class_python
 python main.py
+
 
 
 Archivo principal: confirmación de cuál es el main.py que estás ejecutando.

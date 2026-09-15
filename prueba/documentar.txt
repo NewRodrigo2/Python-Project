@@ -1,5 +1,6 @@
 EN LA OFICINA
 
+..... OJO  ....  >  CREAR UN MAPA Y PASARLO A COPILOT
 cd "Python Project"
 
 Set-ExecutionPolicy Bypass -Scope Process -Force

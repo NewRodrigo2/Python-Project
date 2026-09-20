@@ -34,7 +34,7 @@ class LoginApp(ctk.CTk):
 
 class FrameManager:
     """Encargado de crear y manejar los distintos frames."""
-    def __init__(self, root, logic):
+    def __init__(self, root, logic, inventory):
         self.root = root
         self.logic = logic
         self.encabezado_frame = None
@@ -219,7 +219,7 @@ class FrameManager:
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""
-    def __init__(self, rol_usuario, ventana_login, ventana_principal):
+    def __init__(self, rol_usuario, ventana_login, ventana_principal, inventory):
         self.role_manager = RoleManager()
         self.inventario = inventory
         self.rol = rol_usuario

@@ -10,7 +10,6 @@
         "venta": 0,
         "FechaInicial": "dd/mm/aa"
     },
-
     {
         "id": 2,
         "marca": "Toyota",
@@ -21,5 +20,35 @@
         "km": 0,
         "venta": 0,
         "FechaInicial": "dd/mm/aa"
+    },
+    {
+        "id": 3,
+        "marca": "Toyota",
+        "modelo": "Yaris",
+        "precio_dia": 45,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    },
+    {
+        "id": 4,
+        "marca": "Nissan",
+        "modelo": "Versa",
+        "precio_dia": 50,
+        "disponible": true,
+        "dias": 0,
+        "km": 0,
+        "venta": 0
+    },
+    {
+        "id": 5,
+        "marca": "Chevrolet",
+        "modelo": "Aveo",
+        "precio_dia": 40,
+        "disponible": false,
+        "dias": 4,
+        "km": 0,
+        "venta": 160
     }
 ]

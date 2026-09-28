@@ -111,14 +111,67 @@ class FrameManager:
         btn_renta.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
 
         btn_b1 = ctk.CTkButton(self.frame_renta, 
-            text="REGRESA DE AUTOS")
-#--- command=)
+            text="REGRESA DE AUTOS",
+            command=self.regresa_auto)
         btn_b1.grid(row=0, column=1, padx=10, pady=10, sticky="ew")        
 
         btn_regresar = ctk.CTkButton(self.frame_renta, 
             text="RETURN", 
             command=self.cerrar_frame_renta)
         btn_regresar.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
+
+    def regresa_auto(self):
+
+        for widget in self.frame_renta.winfo_children():
+            if isinstance(widget, ctk.CTkLabel):
+                widget.destroy()
+        autos = self.logic.inventario.obtener_autos_rentados()
+        tot_autos = len(autos)
+
+        if autos:
+            fila = 2
+            for auto in autos:
+                texto = f"{auto['id']} - {auto['marca']} | {auto['modelo']} | ${auto['precio_dia']} por día"
+                lbl_auto = ctk.CTkLabel(self.frame_renta, text=texto, anchor="w")
+                lbl_auto.grid(row=fila, column=0, padx=10, pady=5, sticky="w")
+                fila += 1
+        else:
+            lbl_vacio = ctk.CTkLabel(self.frame_renta, text="No hay autos rentados ❌")
+            lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+
+        lbl_total = ctk.CTkLabel(self.frame_renta, text=f"Total de autos rentados: {tot_autos}")
+        lbl_total.grid(row=0, column=3, padx=10, pady=10, sticky="ew")
+
+        lbl_id = ctk.CTkLabel(self.frame_renta, text=f"ID DE AUTO A REGRESAR")
+        lbl_id.grid(row=1, column=2, padx=10, pady=10, sticky="ew")
+
+        self.ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
+        self.ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
+
+        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"DIAS ESTIMADOS RENTADOS")
+        lbl_1.grid(row=2,column=2, padx=10, pady=10, sticky="ew")
+
+        self.dias_rent = ctk.CTkEntry(self.frame_renta, width=70)
+        self.dias_rent.grid(row=2,column=3, padx=10, pady=10, sticky="e")
+
+        lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"KILOMETROS RECORRIDOS")
+        lbl_2.grid(row=3,column=2, padx=10, pady=10, sticky="ew")
+
+        self.km_rec = ctk.CTkEntry(self.frame_renta, width=70)
+        self.km_rec.grid(row=3,column=3, padx=10, pady=10, sticky="e")        
+
+#--- Botón para calcular precio
+        btn_calcular1 = ctk.CTkButton(
+            self.frame_renta, 
+            text="Calcular presupuesto", 
+            command=lambda: self.calcular_presupuesto( self.km_rec.get(),self.dias_rent.get(),self.ent_id.get())
+            )
+        btn_calcular1.grid(row=5, column=3, padx=10, pady=10, sticky="e")      
+
+        lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
+        lbl_2.grid(row=4,column=2, padx=10, pady=10, sticky="ew")
+
+
 
     def mostrar_auto(self):
 #--- Limpiar contenido previo en frame_renta
@@ -187,6 +240,16 @@ class FrameManager:
             btn_confirmar = ctk.CTkButton(self.frame_renta, text="Confirmar renta",
                                         command=lambda: self.confirmar_renta(id_auto, dias))
             btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+
+
+    def calcular_presupuesto(self,km,dias,id):
+        for auto in self.inventory.inventario:
+            if id == [id]:
+                precio_dia = [precio_dia]   
+        presupuesto= (precio_dia*dias)+ km
+        return presupuesto
+        
+
 
     def confirmar_renta(self, id_auto, dias):
         exito = self.inventory.procesar_renta(id_auto, dias)

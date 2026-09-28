@@ -143,7 +143,7 @@ class InventoryManager:
             }
         ]
 
-        # Cargar datos al instanciar
+#--- Cargar datos al instanciar
         self.cargar_inventario()
         self.verificar_control()
 
@@ -190,12 +190,12 @@ class InventoryManager:
         self.cargar_inventario()
         return [auto for auto in self.inventario if auto.get("disponible", False)]
 
-#""" Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
+#--- Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
     def obtener_autos_rentados(self):
         self.cargar_inventario()
         return [auto for auto in self.inventario if not auto.get("disponible", True)]
 
-#""" Renta un auto actualizando su estado y guardando los cambios."""
+#--- Renta un auto actualizando su estado y guardando los cambios."""
     def procesar_renta(self, id_auto, dias_p_renta):
         for auto in self.inventario:
             if auto["id"] == id_auto:
@@ -214,18 +214,18 @@ class InventoryManager:
         """Calcula costos, actualiza inventario y añade un registro a control.json."""
         for auto in self.inventario:
             if auto["id"] == id_regresar and not auto["disponible"]:
-                # Calcular días a cobrar (el mayor entre los días pactados y los utilizados)
+#--- Calcular días a cobrar (el mayor entre los días pactados y los utilizados)
                 d_dias = dias_reales if dias_reales > auto["dias"] else auto["dias"]
                 costo_total = (auto["precio_dia"] * d_dias) + km_nuevos
 
-                # Actualizar auto
+#--- Actualizar auto
                 auto["disponible"] = True
                 auto["dias"] = d_dias
                 auto["km"] += km_nuevos
                 auto["venta"] += costo_total
                 self.guardar_inventario()
 
-                # Cargar control actual para agregar el ticket nuevo
+#--- Cargar control actual para agregar el ticket nuevo
                 try:
                     with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as f:
                         control = json.load(f)

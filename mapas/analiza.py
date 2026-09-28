@@ -83,7 +83,7 @@ def analizar_proyecto(carpeta):
 
 if __name__ == "__main__":
 
-    #F:\Python\Python Project\prueba
+#  F:\Python\Python Project\prueba
     proyecto = analizar_proyecto("c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba")
     carpeta_mapas = os.path.join("c:/Users/Rodrigo/Documents/GitHub/Python-Project", "mapas")
     os.makedirs(carpeta_mapas, exist_ok=True)

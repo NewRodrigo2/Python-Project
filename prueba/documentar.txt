@@ -13,10 +13,6 @@ git pull origin class_python
 python main.py
 
 
-
-Archivo principal: confirmación de cuál es el main.py que estás ejecutando.
-Este es el script mas actualizado hasta el mommento.
-
 Ubicación de módulos: ruta exacta de archivos como logic.py, menu_gral.py, admin.py, etc.
     
     Directorio: F:\Python\Python Project\prueba
@@ -47,13 +43,6 @@ Mode                 LastWriteTime         Length Name
 -a----     20/08/2026  04:18 p. m.              2 control.json                                                                                                                                                                        
 -a----     20/08/2026  04:18 p. m.            208 inventario.json                                                                                                                                                                     
 -a----     20/08/2026  04:18 p. m.           1863 personal.json                                                                                                                                                                       
-
-Estado de Git: rama activa y si está sincronizada (push/pull recientes).
-     class_pyton actualizada hoy al iniciar la jornada de trabajo, pull origin class_pyton
-
-Objetivo de la revisión: qué quieres lograr con el script (ej. depurar errores, migrar a GUI, mejorar estructura, añadir funciones).
-
-
 
 PENDIENTES:  
 

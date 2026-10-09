@@ -1,0 +1,49 @@
+# Memoria dinámica optimizada
+
+## main.py
+
+
+### VentanaLogin
+- __init__ → inicializa atributos principales
+- Atributo: self.auth
+- Atributo: self.role
+- Atributo: self.inventario
+- Atributo: self.rental
+- Atributo: self.hr
+- Atributo: self.mtto
+- crear_interfaz_login → acción definida
+- Atributo: self.lbl_bienvenido
+- Atributo: self.lbl_bienvenido.pack(pady
+- Atributo: self.frame_login
+- Atributo: self.frame_login.pack(pady
+- Atributo: self.lbl_rol
+- Atributo: self.frame_login, text
+- Atributo: self.lbl_rol.pack(pady
+- Atributo: roles_disponibles
+- Atributo: self.cmb_rol
+- Atributo: self.frame_login, values
+- Atributo: self.cmb_rol.pack(pady
+- Atributo: self.lbl_usuario
+- Atributo: self.lbl_usuario.pack(pady
+- Atributo: self.txt_usuario
+- Atributo: self.frame_login, width
+- Atributo: self.txt_usuario.pack(pady
+- Atributo: self.lbl_password
+- Atributo: self.lbl_password.pack(pady
+- Atributo: self.txt_password
+- Atributo: self.txt_password.pack(pady
+- Atributo: self.btn_ingresar
+- Atributo: font
+- Atributo: self.btn_ingresar.pack(pady
+- Atributo: self.btn_salir
+- Atributo: self.btn_salir.pack(pady
+- Atributo: self.etiqueta_mensaje
+- Atributo: self.etiqueta_mensaje.pack(pady
+- procesar_login → acción definida
+- Atributo: usuario
+- Atributo: password
+- Atributo: rol_seleccionado
+- Atributo: usuario_valido
+- Atributo: self.etiqueta_mensaje.configure(text
+- Atributo: inventory
+- salir_definitivo → acción definida

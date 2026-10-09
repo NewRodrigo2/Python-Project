@@ -1,49 +1,95 @@
 # Memoria dinámica optimizada
 
-## main.py
+## menu_gral.py
 
 
-### VentanaLogin
+### LoginApp
 - __init__ → inicializa atributos principales
-- Atributo: self.auth
-- Atributo: self.role
+- Atributo: self.inventory
+- Atributo: self.logic
+- Atributo: self.frames
 - Atributo: self.inventario
-- Atributo: self.rental
-- Atributo: self.hr
-- Atributo: self.mtto
-- crear_interfaz_login → acción definida
-- Atributo: self.lbl_bienvenido
-- Atributo: self.lbl_bienvenido.pack(pady
+
+### FrameManager
+- __init__ → inicializa atributos principales
+- Atributo: self.root
+- Atributo: self.logic
+- Atributo: self.encabezado_frame
 - Atributo: self.frame_login
-- Atributo: self.frame_login.pack(pady
-- Atributo: self.lbl_rol
-- Atributo: self.frame_login, text
-- Atributo: self.lbl_rol.pack(pady
-- Atributo: roles_disponibles
-- Atributo: self.cmb_rol
-- Atributo: self.frame_login, values
-- Atributo: self.cmb_rol.pack(pady
-- Atributo: self.lbl_usuario
-- Atributo: self.lbl_usuario.pack(pady
-- Atributo: self.txt_usuario
-- Atributo: self.frame_login, width
-- Atributo: self.txt_usuario.pack(pady
-- Atributo: self.lbl_password
-- Atributo: self.lbl_password.pack(pady
-- Atributo: self.txt_password
-- Atributo: self.txt_password.pack(pady
-- Atributo: self.btn_ingresar
-- Atributo: font
-- Atributo: self.btn_ingresar.pack(pady
+- Atributo: self.frame_renta
+- Atributo: self.inventory
+- limpiar_encabezado → acción definida
+- crear_menu_principal → acción definida
+- Atributo: self.encabezado_frame.grid(row
+- Atributo: lbl_bienvenido
+- Atributo: rol_texto
+- Atributo: self.lbl_menu
+- Atributo: self.lbl_menu.grid(row
+- Atributo: self.btn_rentar
+- Atributo: command
+- Atributo: self.btn_rentar.grid(row
+- Atributo: self.btn_ver
+- Atributo: self.btn_ver.grid(row
+- Atributo: self.btn_eliminar
+- Atributo: self.btn_eliminar.grid(row
+- Atributo: self.btn_informe
+- Atributo: self.btn_informe.grid(row
 - Atributo: self.btn_salir
-- Atributo: self.btn_salir.pack(pady
-- Atributo: self.etiqueta_mensaje
-- Atributo: self.etiqueta_mensaje.pack(pady
-- procesar_login → acción definida
-- Atributo: usuario
-- Atributo: password
-- Atributo: rol_seleccionado
-- Atributo: usuario_valido
-- Atributo: self.etiqueta_mensaje.configure(text
-- Atributo: inventory
-- salir_definitivo → acción definida
+- Atributo: self.btn_salir.grid(row
+- Atributo: self.encabezado_frame.grid_columnconfigure(i, weight
+- Atributo: self.root.grid_rowconfigure(1, weight
+- Atributo: self.root.grid_columnconfigure(0, weight
+- interfaz_renta → acción definida
+- Atributo: self.frame_renta.grid(row
+- Atributo: btn_renta
+- Atributo: btn_b1
+- Atributo: btn_regresar
+- regresa_auto → acción definida
+- Atributo: autos
+- Atributo: lbl_auto
+- Atributo: lbl_vacio
+- Atributo: lbl_total
+- Atributo: lbl_id
+- Atributo: self.ent_id
+- Atributo: self.ent_id.grid(row
+- Atributo: lbl_1
+- Atributo: self.dias_rent
+- Atributo: self.dias_rent.grid(row
+- Atributo: lbl_2
+- Atributo: self.km_rec
+- Atributo: self.km_rec.grid(row
+- mostrar_auto → acción definida
+- Atributo: self.ent_1
+- Atributo: self.ent_1.grid(row
+- calcular_precio → acción definida
+- Atributo: id_auto
+- Atributo: dias
+- Atributo: total
+- Atributo: lbl_error
+- Atributo: btn_confirmar
+- calcular_presupuesto → acción definida
+- confirmar_renta → acción definida
+- Atributo: exito
+- Atributo: lbl_ok
+- Atributo: lbl_fail
+- mostrar_auto1 → acción definida
+- Atributo: lbl_info
+- cerrar_frame_renta → acción definida
+- Atributo: #---     self.frame_login
+- Atributo: #---     self.frame_login.grid(row
+- Atributo: #---     lbl_ver
+
+### LogicController
+- __init__ → inicializa atributos principales
+- Atributo: self.role_manager
+- Atributo: self.inventario
+- Atributo: self.rol
+- Atributo: self.ventana_login
+- Atributo: self.ventana_principal
+- aplicar_permisos → acción definida
+- Atributo: permisos
+- abrir_admin → acción definida
+- ejecutar → acción definida
+- Atributo: nueva_admin
+- regresar_desde_admin → acción definida
+- cerrar_sesion → acción definida

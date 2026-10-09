@@ -148,7 +148,7 @@ class FrameManager:
         self.ent_id = ctk.CTkEntry(self.frame_renta, width=50)  
         self.ent_id.grid(row=1, column=3, padx=10, pady=10, sticky="e")  
 
-        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"DIAS ESTIMADOS RENTADOS")
+        lbl_1 = ctk.CTkLabel(self.frame_renta, text=f"DIAS REALES RENTADOS")
         lbl_1.grid(row=2,column=2, padx=10, pady=10, sticky="ew")
 
         self.dias_rent = ctk.CTkEntry(self.frame_renta, width=70)

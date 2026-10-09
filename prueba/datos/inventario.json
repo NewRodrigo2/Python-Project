@@ -4,10 +4,10 @@
         "marca": "Ford",
         "modelo": "Ranger",
         "precio_dia": 100.0,
-        "disponible": true,
-        "dias": 0,
+        "disponible": false,
+        "dias": 2,
         "km": 0,
-        "venta": 0,
+        "venta": 200.0,
         "FechaInicial": "dd/mm/aa"
     },
     {
@@ -15,10 +15,10 @@
         "marca": "Toyota",
         "modelo": "Yaris",
         "precio_dia": 100.0,
-        "disponible": true,
-        "dias": 0,
+        "disponible": false,
+        "dias": 5,
         "km": 0,
-        "venta": 0,
+        "venta": 500.0,
         "FechaInicial": "dd/mm/aa"
     },
     {

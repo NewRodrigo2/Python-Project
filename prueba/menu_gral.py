@@ -168,10 +168,8 @@ class FrameManager:
             )
         btn_calcular1.grid(row=5, column=3, padx=10, pady=10, sticky="e")      
 
-        lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
+        lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO {presupuesto}")
         lbl_2.grid(row=4,column=2, padx=10, pady=10, sticky="ew")
-
-
 
     def mostrar_auto(self):
 #--- Limpiar contenido previo en frame_renta
@@ -208,7 +206,6 @@ class FrameManager:
         lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"PRESUPUESTO ESTIMADO")
         lbl_2.grid(row=3,column=2, padx=10, pady=10, sticky="ew")
 
-
         if autos:
             fila = 2
             for auto in autos:
@@ -242,14 +239,44 @@ class FrameManager:
             btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
 
-    def calcular_presupuesto(self,km,dias,id):
-        for auto in self.inventory.inventario:
-            if id == [id]:
-                precio_dia = [precio_dia]   
-        presupuesto= (precio_dia*dias)+ km
-        return presupuesto
-        
+    def calcular_presupuesto(self, km_str, dias_str, id_str):
+        try:
+            id_auto = int(id_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str) # O int(km_str) según prefieras
+        except ValueError: 
+            lbl_error = ctk.CTkLabel(self.frame_renta, text="⚠️ Ingresa valores numéricos válidos en los campos.")
+            lbl_error.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+            return
 
+        # Buscar el auto en el inventario para obtener su precio por día
+        auto_encontrado = None
+        for auto in self.inventory.inventario:
+            if int(auto["id"]) == id_auto:
+                auto_encontrado = auto
+                break
+
+        if auto_encontrado:
+            precio_dia = auto_encontrado["precio_dia"]
+            dias_pactados = auto_encontrado["dias"]
+
+#--- Puedes cobrar el mayor entre los días pactados y los reales, o directo los reales.
+            d_dias = dias_reales if dias_reales > dias_pactados else dias_pactados
+            
+#--- Cálculo del presupuesto/costo total (Precio por día * días + kilómetros recorridos)
+            presupuesto = (precio_dia * d_dias) + km_nuevos
+
+#--- Mostrar el resultado en pantalla
+            lbl_resultado = ctk.CTkLabel(self.frame_renta, text=f"💰 Presupuesto estimado: ${presupuesto}")
+            lbl_resultado.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+            
+#--- Opcional: Aquí mismo podrías habilitar o mostrar un botón para confirmar la devolución real 
+#--- llamando a self.logic.inventario.procesar_regreso(...) si ya deseas cerrar la transacción.
+            return presupuesto
+        else:
+            lbl_error = ctk.CTkLabel(self.frame_renta, text="❌ El ID de auto no existe o no está rentado.")
+            lbl_error.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+            return None
 
     def confirmar_renta(self, id_auto, dias):
         exito = self.inventory.procesar_renta(id_auto, dias)
@@ -271,14 +298,6 @@ class FrameManager:
         if self.frame_renta:
             self.frame_renta.destroy()
             self.crear_menu_principal()    
-
-#---    def mostrar_frame_login():
-#---     self.frame_login = ctk.CTkFrame(self.root)
-#---     self.frame_login.grid(row=2, column=0, padx=20, pady=10, sticky="nsew")
-
-#---     lbl_ver = ctk.CTkLabel(self.frame_login, text="aqui debe salir la lista de autos / frame_login")
-#---     lbl_ver.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
-#--- en espera de widgets 
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""
@@ -316,8 +335,6 @@ class LogicController:
         ventana_admin.destroy()
         self.ventana_principal.deiconify()
         self.aplicar_permisos(self.ventana_principal.frames)
-
-
 
     def cerrar_sesion(self):
         if self.ventana_login:

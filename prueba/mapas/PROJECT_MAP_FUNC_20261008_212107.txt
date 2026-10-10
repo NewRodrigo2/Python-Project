@@ -1,23 +1,6 @@
 Mapa funcional del proyecto generado el 2026-10-08 21:21:07.995979
 ============================================================
 
-Archivo: f:\Python\Python Project\prueba\admin.py
-
-
-Archivo: f:\Python\Python Project\prueba\herramientas.py
-
-
-Archivo: f:\Python\Python Project\prueba\menu_renta.py
-
-
-Archivo: f:\Python\Python Project\prueba\menu_rh.py
-
-
-Archivo: f:\Python\Python Project\prueba\rh.py
-
-
-Archivo: f:\Python\Python Project\prueba\utilerias.py
-
 
 Archivo: f:\Python\Python Project\prueba\menu_admin.py
 
@@ -80,8 +63,6 @@ Archivo: f:\Python\Python Project\prueba\menu_admin.py
 
       - self.btn_salir = ctk.CTkButton(self.frame_login, text='Salir del sistema', width=300, height=40, font=ctk.CTkFont(size=15, weight='bold'), command=self.cerrar_sesion) (línea 75)
 
-
-Archivo: f:\Python\Python Project\prueba\renta.py
 
 
 Archivo: f:\Python\Python Project\prueba\main.py

@@ -2,7 +2,7 @@
 datos necesarios para Copilot:este es mi script menu_gral.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
 rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
 ruta de archivos en documentar.txt
-Objetivo de la revision: ayudame a mostrar el inventario de autos en  frame_renta al dar clic en el btn_renta
+Objetivo de la revision: 
 Pregunta para Copilot: ninguna
 
 '''
@@ -218,25 +218,23 @@ class FrameManager:
             lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
             
 #--- mostrar presupuesto  / falta boton acepta renta
-    def calcular_precio(self, id_auto, dias_str):
-        try:
-            id_auto = int(self.ent_id.get())
-            dias = int(self.ent_1.get())
-            total = self.logic.inventario.calcular_precio(id_auto, dias)
-                       
-        except ValueError:
-            lbl_error = ctk.CTkLabel(self.frame_renta, text="⚠️ Ingresa un número válido de días")
-            lbl_error.grid(row=5, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
-            return
+    def calcular_precio(self):
+            # Toma los datos directamente de los Entry de la interfaz
+            total, mensaje = self.logic.calcular_precio_renta(self.ent_id.get(), self.ent_1.get())
+            
+            if total is not None:
+                lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
+                lbl_total.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
-        total = self.logic.inventario.calcular_precio(id_auto, dias)
-        if total is not None:
-            lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
-            lbl_total.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
-
-            btn_confirmar = ctk.CTkButton(self.frame_renta, text="Confirmar renta",
-                                        command=lambda: self.confirmar_renta(id_auto, dias))
-            btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+                btn_confirmar = ctk.CTkButton(
+                    self.frame_renta, 
+                    text="Confirmar renta",
+                    command=lambda: self.confirmar_renta(int(self.ent_id.get()), int(self.ent_1.get()))
+                )
+                btn_confirmar.grid(row=7, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
+            else:
+                lbl_error = ctk.CTkLabel(self.frame_renta, text=mensaje)
+                lbl_error.grid(row=5, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
 
 
     def calcular_presupuesto(self, km_str, dias_str, id_str):
@@ -270,7 +268,6 @@ class FrameManager:
             lbl_resultado = ctk.CTkLabel(self.frame_renta, text=f"💰 Presupuesto estimado: ${presupuesto}")
             lbl_resultado.grid(row=6, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
             
-#--- Opcional: Aquí mismo podrías habilitar o mostrar un botón para confirmar la devolución real 
 #--- llamando a self.logic.inventario.procesar_regreso(...) si ya deseas cerrar la transacción.
             return presupuesto
         else:
@@ -342,8 +339,41 @@ class LogicController:
             self.ventana_login.deiconify()
         else:
             self.ventana_principal.destroy()
-         
+
+    def calcular_precio_renta(self, id_auto_str, dias_str):
+        try:
+            id_auto = int(id_auto_str)
+            dias = int(dias_str)
+            total = self.inventario.calcular_precio(id_auto, dias)
+            return total, "OK"
+        except ValueError:
+            return None, "⚠️ Ingresa un número válido de días y un ID correcto."
+
+    def calcular_presupuesto_regreso(self, km_str, dias_str, id_str):
+        try:
+            id_auto = int(id_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str)
+        except ValueError:
+            return None, "⚠️ Ingresa valores numéricos válidos en los campos."
+
+        auto_encontrado = next((a for a in self.inventario.inventario if int(a["id"]) == id_auto), None)
+        
+        if auto_encontrado:
+            precio_dia = auto_encontrado["precio_dia"]
+            dias_pactados = auto_encontrado["dias"]
+            d_dias = dias_reales if dias_reales > dias_pactados else dias_pactados
+            presupuesto = (precio_dia * d_dias) + km_nuevos
+            return presupuesto, "OK"
+        else:
+            return None, "❌ El ID de auto no existe o no está en el inventario."
+
+    def confirmar_renta_auto(self, id_auto, dias):
+        exito, mensaje = self.inventario.procesar_renta(id_auto, dias)
+        return exito, mensaje
+
 if __name__ == "__main__":
     # Prueba local simulando rol de mostrador
     app = LoginApp(rol_usuario="mostrador")
     app.mainloop()
+

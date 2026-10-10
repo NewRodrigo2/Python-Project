@@ -7,3 +7,4 @@
 
 
 
+deberia de mover los metodos  calcular_precio, calcular_presupuesto, confirmar_renta a la clase LogicController?

@@ -197,62 +197,113 @@ class InventoryManager:
 
 #--- Renta un auto actualizando su estado y guardando los cambios."""
     def procesar_renta(self, id_auto, dias_p_renta):
+        if dias_p_renta <= 0:
+            return False, "Los días de renta deben ser mayores que cero."
+
         for auto in self.inventario:
             if auto["id"] == id_auto:
                 if auto["disponible"]:
                     auto["disponible"] = False
                     auto["dias"] = dias_p_renta
-                    auto["venta"] = dias_p_renta * auto["precio_dia"]
+                    # Conservamos los días pactados para compararlos con los días reales al devolver.
+                    auto["dias_pactados"] = dias_p_renta
+                    auto.pop("dias_reales", None)
+                    auto.pop("dias_cobrados", None)
                     auto["km"] = 0
+                    # Durante la renta, venta muestra el importe provisional de esta operación.
+                    auto["venta"] = dias_p_renta * auto["precio_dia"]
                     self.guardar_inventario()
                     return True, f"¡Éxito! Ha rentado el {auto['marca']} {auto['modelo']}."
                 else:
                     return False, "Lo sentimos, este auto ya está rentado."
         return False, "El ID introducido no existe."
 
+    def calcular_presupuesto_regreso(self, id_auto, dias_reales, km_nuevos):
+        """Calcula el cobro de una devolución sin modificar ni guardar el inventario."""
+        try:
+            id_auto = int(id_auto)
+            dias_reales = int(dias_reales)
+            km_nuevos = float(km_nuevos)
+        except (TypeError, ValueError):
+            return None, "Ingresa un ID, días y kilómetros válidos."
+
+        if dias_reales <= 0:
+            return None, "Los días reales deben ser mayores que cero."
+        if km_nuevos < 0:
+            return None, "Los kilómetros no pueden ser negativos."
+
+        self.cargar_inventario()
+        auto = next(
+            (a for a in self.inventario if int(a["id"]) == id_auto and not a.get("disponible", True)),
+            None,
+        )
+        if auto is None:
+            return None, "El ID no corresponde a un auto rentado."
+
+        # El cobro respeta al menos los días pactados, mientras guardamos aparte los reales.
+        dias_pactados = int(auto.get("dias_pactados", auto.get("dias", 0)))
+        dias_cobrados = max(dias_reales, dias_pactados)
+        presupuesto = (auto["precio_dia"] * dias_cobrados) + km_nuevos
+        return presupuesto, "OK"
+
     def procesar_regreso(self, id_regresar, dias_reales, km_nuevos):
-        """Calcula costos, actualiza inventario y añade un registro a control.json."""
-        for auto in self.inventario:
-            if auto["id"] == id_regresar and not auto["disponible"]:
-#--- Calcular días a cobrar (el mayor entre los días pactados y los utilizados)
-                d_dias = dias_reales if dias_reales > auto["dias"] else auto["dias"]
-                costo_total = (auto["precio_dia"] * d_dias) + km_nuevos
+        """Confirma una devolución, actualiza inventario y agrega su registro de control."""
+        presupuesto, mensaje = self.calcular_presupuesto_regreso(
+            id_regresar, dias_reales, km_nuevos
+        )
+        if presupuesto is None:
+            return False, mensaje
 
-#--- Actualizar auto
-                auto["disponible"] = True
-                auto["dias"] = d_dias
-                auto["km"] += km_nuevos
-                auto["venta"] += costo_total
-                self.guardar_inventario()
+        id_regresar = int(id_regresar)
+        dias_reales = int(dias_reales)
+        km_nuevos = float(km_nuevos)
+        auto = next(
+            a for a in self.inventario
+            if int(a["id"]) == id_regresar and not a.get("disponible", True)
+        )
+        dias_pactados = int(auto.get("dias_pactados", auto.get("dias", 0)))
+        dias_cobrados = max(dias_reales, dias_pactados)
 
-#--- Cargar control actual para agregar el ticket nuevo
-                try:
-                    with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as f:
-                        control = json.load(f)
-                except Exception:
-                    control = []
+        # El campo dias refleja los días reales; los días cobrados quedan explícitos.
+        auto["disponible"] = True
+        auto["dias"] = dias_reales
+        auto["dias_reales"] = dias_reales
+        auto["dias_pactados"] = dias_pactados
+        auto["dias_cobrados"] = dias_cobrados
+        auto["km"] = auto.get("km", 0) + km_nuevos
+        # Sustituimos el importe provisional de la renta por el cobro final, sin duplicarlo.
+        auto["venta"] = presupuesto
+        self.guardar_inventario()
 
-                num_transaccion = len(control) + 1
-                fecha_actual = datetime.now().strftime("%d/%m/%Y")
+        # Conservamos el historial de devoluciones en control.json.
+        try:
+            with open(self.ARCHIVO_CONTROL, "r", encoding="utf-8") as archivo:
+                control = json.load(archivo)
+        except (FileNotFoundError, json.JSONDecodeError):
+            control = []
 
-                nueva_renta = {
-                    "transaccion_id": num_transaccion,
-                    "c_id": auto["id"],
-                    "c_marca": auto["marca"],
-                    "c_modelo": auto["modelo"],
-                    "km_recorridos": km_nuevos,
-                    "c_venta_total": costo_total,
-                    "c_fecha_renta": fecha_actual,
-                    "c_dias": dias_reales
-                }
-                control.append(nueva_renta)
-                self.guarda_control(control)
+        num_transaccion = len(control) + 1
+        fecha_actual = datetime.now().strftime("%d/%m/%Y")
+        control.append({
+            "transaccion_id": num_transaccion,
+            "c_id": auto["id"],
+            "c_marca": auto["marca"],
+            "c_modelo": auto["modelo"],
+            "km_recorridos": km_nuevos,
+            "c_venta_total": presupuesto,
+            "c_fecha_renta": fecha_actual,
+            "c_dias": dias_reales,
+            "c_dias_pactados": dias_pactados,
+            "c_dias_cobrados": dias_cobrados,
+        })
+        self.guarda_control(control)
 
-                return True, num_transaccion, costo_total
-
-        return False, 0, 0
+        return True, f"Devolución confirmada. Transacción {num_transaccion}; total ${presupuesto:.2f}."
 
     def calcular_precio(self, id_auto, dias):
+        self.cargar_inventario()
+        if int(dias) <= 0:
+            return None
         auto = next((a for a in self.inventario if int(a["id"]) == int(id_auto) and a["disponible"]), None)
         if auto:
             return auto["precio_dia"] * dias

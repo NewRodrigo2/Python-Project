@@ -4,11 +4,14 @@
         "marca": "Ford",
         "modelo": "Ranger",
         "precio_dia": 100.0,
-        "disponible": false,
-        "dias": 2,
-        "km": 0,
-        "venta": 200.0,
-        "FechaInicial": "dd/mm/aa"
+        "disponible": true,
+        "dias": 20,
+        "km": 300.0,
+        "venta": 2300.0,
+        "FechaInicial": "dd/mm/aa",
+        "dias_reales": 20,
+        "dias_pactados": 2,
+        "dias_cobrados": 20
     },
     {
         "id": 2,

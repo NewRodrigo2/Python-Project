@@ -157,8 +157,7 @@ class FrameManager:
         self.km_rec = ctk.CTkEntry(self.frame_renta, width=70)
         self.lbl_presupuesto_regreso = ctk.CTkLabel(
             self.frame_renta,
-            text="PRESUPUESTO ESTIMADO: pendiente de calcular"
-        )
+            text="PRESUPUESTO ESTIMADO: pendiente de calcular")
 
 
         lbl_total.grid(row=0, column=3, padx=10, pady=10, sticky="ew")
@@ -276,9 +275,8 @@ class FrameManager:
             lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
             
 #--- mostrar presupuesto  / falta boton acepta renta
-    def calcular_precio(self):
-            # Toma los datos directamente de los Entry de la interfaz
-            total, mensaje = self.logic.calcular_precio_renta(self.ent_id.get(), self.ent_1.get())
+    def calcular_precio(self,id_auto_str, dias_str):
+            total, mensaje = self.logic.calcular_precio_renta(id_auto_str, dias_str)
             
             if total is not None:
                 lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
@@ -303,13 +301,6 @@ class FrameManager:
         else:
             lbl_error = ctk.CTkLabel(self.frame_renta, text=mensaje)
             lbl_error.grid(row=5, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
-
-#--- falta crear lo botones para que muestre los autos        
-    def mostrar_auto1(self):
-        self.logic.renta_auto()
-
-        lbl_info = ctk.CTkLabel(self.frame_renta, text=f"EN ESTE FRAME COLOCAR LOS AUTOS PARA RENTA Y LOS WIDGET ")
-        lbl_info.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
     def cerrar_frame_renta(self):
         if self.frame_renta:

@@ -43,9 +43,12 @@
         "modelo": "Versa",
         "precio_dia": 50,
         "disponible": true,
-        "dias": 0,
-        "km": 0,
-        "venta": 0
+        "dias": 4,
+        "km": 100.0,
+        "venta": 300.0,
+        "dias_pactados": 3,
+        "dias_reales": 4,
+        "dias_cobrados": 4
     },
     {
         "id": 5,

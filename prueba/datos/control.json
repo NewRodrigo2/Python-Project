@@ -5,5 +5,29 @@
         "c_venta_total": 0,
         "c_fecha_renta": "01/01/2026",
         "c_dias": 0
+    },
+    {
+        "transaccion_id": 2,
+        "c_id": 1,
+        "c_marca": "Ford",
+        "c_modelo": "Ranger",
+        "km_recorridos": 300.0,
+        "c_venta_total": 2300.0,
+        "c_fecha_renta": "11/10/2026",
+        "c_dias": 20,
+        "c_dias_pactados": 2,
+        "c_dias_cobrados": 20
+    },
+    {
+        "transaccion_id": 3,
+        "c_id": 2,
+        "c_marca": "Toyota",
+        "c_modelo": "Yaris",
+        "km_recorridos": 300.0,
+        "c_venta_total": 1300.0,
+        "c_fecha_renta": "12/10/2026",
+        "c_dias": 10,
+        "c_dias_pactados": 5,
+        "c_dias_cobrados": 10
     }
 ]

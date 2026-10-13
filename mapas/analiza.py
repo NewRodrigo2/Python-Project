@@ -9,7 +9,7 @@ class MethodAnalyzer(ast.NodeVisitor):
         self.returns = []
 
     def visit_Call(self, node):
-        # Captura llamadas a funciones o métodos
+# Captura llamadas a funciones o métodos
         if isinstance(node.func, ast.Attribute):
             self.calls.append(ast.unparse(node.func))
         elif isinstance(node.func, ast.Name):
@@ -82,6 +82,8 @@ def analizar_proyecto(carpeta):
     return mapa
 
 if __name__ == "__main__":
+
+#  F:\Python\Python Project\prueba
     proyecto = analizar_proyecto("c:/Users/Rodrigo/Documents/GitHub/Python-Project/prueba")
     carpeta_mapas = os.path.join("c:/Users/Rodrigo/Documents/GitHub/Python-Project", "mapas")
     os.makedirs(carpeta_mapas, exist_ok=True)

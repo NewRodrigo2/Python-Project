@@ -32,23 +32,22 @@
         "marca": "Toyota",
         "modelo": "Yaris",
         "precio_dia": 45,
-        "disponible": true,
-        "dias": 0,
+        "disponible": false,
+        "dias": 2,
         "km": 0,
-        "venta": 0
+        "venta": 90,
+        "dias_pactados": 2
     },
     {
         "id": 4,
         "marca": "Nissan",
         "modelo": "Versa",
         "precio_dia": 50,
-        "disponible": true,
-        "dias": 4,
-        "km": 100.0,
-        "venta": 300.0,
-        "dias_pactados": 3,
-        "dias_reales": 4,
-        "dias_cobrados": 4
+        "disponible": false,
+        "dias": 2,
+        "km": 0,
+        "venta": 100,
+        "dias_pactados": 2
     },
     {
         "id": 5,

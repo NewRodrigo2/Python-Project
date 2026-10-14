@@ -1,15 +1,11 @@
 ''' 
-datos necesarios para Copilot:este es mi script menu_gral.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
-rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
-ruta de archivos en documentar.txt
-Objetivo de la revision: 
-Pregunta para Copilot: ninguna
-
 '''
 
 import customtkinter as ctk
 from logic import RoleManager, InventoryManager
 import menu_admin as m_admin
+from renta_autos import renta
+
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
@@ -22,35 +18,42 @@ class LoginApp(ctk.CTk):
         self.geometry("1000x900")
         self.resizable(False, False)
 
-# Controladores
+#--- Controladores
         self.inventory = inventory
         self.logic = LogicController(rol_usuario, ventana_login, self, self.inventory)
         self.frames = FrameManager(self, self.logic, self.inventory)
         self.inventario = InventoryManager()
 
-# Inicializar interfaz
+#--- Inicializar interfaz
         self.frames.crear_menu_principal()
         self.logic.aplicar_permisos(self.frames)
 
 class FrameManager:
-    """Encargado de crear y manejar los distintos frames."""
     def __init__(self, root, logic, inventory):
         self.root = root
         self.logic = logic
+        self.inventory = inventory
+
+        # Frames inicializados en None
         self.encabezado_frame = None
         self.frame_login = None
         self.frame_renta = None
-        self.inventory = inventory
 
-    def limpiar_encabezado(self):
-        if self.encabezado_frame:
-            for widget in self.encabezado_frame.winfo_children():
-                widget.destroy()
+        # ⚠️ Nota: self.renta NO se instancia aquí, porque aún no existe encabezado_frame.
+        self.renta = None
 
     def crear_menu_principal(self):
-        self.limpiar_encabezado()
+
+    # Eliminar el encabezado anterior, si existe.
+        if self.encabezado_frame is not None:
+            self.encabezado_frame.destroy()
+
         self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
         self.encabezado_frame.grid(row=0, column=0, padx=20, pady=10, sticky="ew")
+
+        # Ahora sí, instanciar la clase renta con encabezado válido
+        self.renta = renta(self.root, self.logic, self.encabezado_frame)
+        self.renta.limpiar_encabezado() 
 
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
             text="MI CARRITO EN RENTA",
@@ -66,13 +69,11 @@ class FrameManager:
 
         # Botones principales
         self.btn_rentar = ctk.CTkButton(self.encabezado_frame, text="Renta de autos",
-            command=self.interfaz_renta
-        )
+            command=self.renta.interfaz_renta)
         self.btn_rentar.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
 
         self.btn_ver = ctk.CTkButton(self.encabezado_frame, text="Administración",
-            command=self.logic.abrir_admin
-        )
+            command=self.logic.abrir_admin)
         self.btn_ver.grid(row=2, column=1, padx=10, pady=20, sticky="ew")
 
         self.btn_eliminar = ctk.CTkButton(self.encabezado_frame, text="Taller / mantenimiento")
@@ -82,17 +83,15 @@ class FrameManager:
         self.btn_informe.grid(row=2, column=3, padx=10, pady=20, sticky="ew")
 
         self.btn_salir = ctk.CTkButton(self.encabezado_frame, text="Salir del sistema",
-            command=self.logic.cerrar_sesion
-        )
+            command=self.logic.cerrar_sesion)
         self.btn_salir.grid(row=2, column=4, padx=10, pady=20, sticky="ew")
 
-#--- Configuración de columnas para que se expandan
-        for i in range(5):  # número de columnas
-            self.encabezado_frame.grid_columnconfigure(i, weight=1)
 
-#--- Configuración de filas/columnas en la ventana principal
-        self.root.grid_rowconfigure(1, weight=1)        # frame principal sí se expande
-        self.root.grid_columnconfigure(0, weight=1)
+'''
+    def limpiar_encabezado(self):
+        if self.encabezado_frame:
+            for widget in self.encabezado_frame.winfo_children():
+                widget.destroy()
 
     def interfaz_renta(self):
         self.limpiar_encabezado()
@@ -168,7 +167,7 @@ class FrameManager:
         lbl_2.grid(row=3,column=2, padx=10, pady=10, sticky="ew")
         self.km_rec.grid(row=3,column=3, padx=10, pady=10, sticky="e")        
 
-#--- Botón para calcular precio
+        #--- Botón para calcular precio
         btn_calcular1 = ctk.CTkButton(
             self.frame_renta, 
             text="Calcular presupuesto", 
@@ -231,10 +230,10 @@ class FrameManager:
         self.btn_confirmar_regreso.configure(state="disabled")
 
     def mostrar_auto(self):
-#--- Limpiar contenido previo en frame_renta
+        #--- Limpiar contenido previo en frame_renta
         self._limpiar_contenido_renta()
 
-#--- Obtener autos disponibles desde InventoryManager
+        #--- Obtener autos disponibles desde InventoryManager
         autos = self.logic.inventario.obtener_autos_disponibles()
         tot_autos = len(autos)
 
@@ -253,7 +252,7 @@ class FrameManager:
         self.ent_1 = ctk.CTkEntry(self.frame_renta, width=70)
         self.ent_1.grid(row=2,column=3, padx=10, pady=10, sticky="e")
 
-#--- Botón para calcular precio
+        #--- Botón para calcular precio
         btn_calcular = ctk.CTkButton(
             self.frame_renta, 
             text="Calcular precio", 
@@ -274,7 +273,7 @@ class FrameManager:
             lbl_vacio = ctk.CTkLabel(self.frame_renta, text="No hay autos disponibles ❌")
             lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
             
-#--- mostrar presupuesto  / falta boton acepta renta
+        #--- mostrar presupuesto  / falta boton acepta renta
     def calcular_precio(self,id_auto_str, dias_str):
             total, mensaje = self.logic.calcular_precio_renta(id_auto_str, dias_str)
             
@@ -306,6 +305,7 @@ class FrameManager:
         if self.frame_renta:
             self.frame_renta.destroy()
             self.crear_menu_principal()    
+'''
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""

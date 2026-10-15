@@ -28,6 +28,7 @@ Proyecto personal de autoaprendizaje de programación. Cambia con frecuencia y s
 1. Leer esta memoria y las notas recientes antes de responder sobre el proyecto.
 2. Para hechos actuales, comprobar `MAPA_PROYECTO.md` y leer los `.py` relevantes; no confiar en mapas antiguos si difieren del código.
 3. Preferencia del usuario: explicar primero el error y la propuesta de solución sin generar código; crear código solo cuando lo solicite, y ejemplos extra solo si los pide. Responder en español y con brevedad.
+4. siempre el usuario ejecuta la ruta desde main.py, nunca ejecuta script indiviuales, considera esto para las propuestas de mejora. 
 
 ## Límites de esta memoria
 

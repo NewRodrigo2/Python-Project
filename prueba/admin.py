@@ -100,7 +100,14 @@ class admin:
 
     def alta_rh(self):
         self.mostrar_frame_rh()
-        # colocar todos los entry para agregar al personal.json
+
+        btn_salir = ctk.CTkButton(
+            self.frame_rh,
+            text="SALIR",
+            font=ctk.CTkFont(size=15)
+            # command=self.salir  # Sin command, el botón no realiza ninguna acción.
+        )
+        btn_salir.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
         
     def baja_rh(self):
         self.mostrar_frame_rh()

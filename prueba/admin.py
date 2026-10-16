@@ -10,14 +10,13 @@ class admin:
         # los controles ni el encabezado del menú general.
         self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
 
-        # CAMBIO: el panel reparte el ancho entre las cinco columnas del encabezado.
-
-        for columna in range(5):
+        # CAMBIO: el panel reparte el ancho entre las cuatro columnas del encabezado.
+        for columna in range(4):
             self.root.grid_columnconfigure(columna, weight=1)
             self.encabezado_frame.grid_columnconfigure(columna, weight=1)
         # CAMBIO: la sección de contenido puede crecer verticalmente.
         self.root.grid_rowconfigure(4, weight=1)
-        self.encabezado_frame.grid(row=0, column=0, columnspan=5, padx=20, pady=10, sticky="ew")
+        self.encabezado_frame.grid(row=0, column=0, columnspan=4, padx=20, pady=10, sticky="ew")
 
         self.frame_botones = ctk.CTkFrame(self.root)
 
@@ -34,6 +33,9 @@ class admin:
     def menu_admin(self):    
         # CAMBIO: limpiar únicamente el encabezado administrativo propio.
         for widget in self.encabezado_frame.winfo_children():
+            widget.destroy()
+        # CAMBIO: evita duplicar botones si menu_admin() se vuelve a ejecutar.
+        for widget in self.frame_botones.winfo_children():
             widget.destroy()
         # encabezados
         lbl_rh = ctk.CTkLabel(self.encabezado_frame, 
@@ -94,7 +96,7 @@ class admin:
 
         self.btn_nomina.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
         self.btn_bajas_autos.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
-        btn_salir.grid(row=3, column=4, padx=5, pady=5, sticky="ew")
+        btn_salir.grid(row=3, column=2, padx=10, pady=10, sticky="ew")
 
     def alta_rh(self):
         self.mostrar_frame_rh()

@@ -13,17 +13,23 @@ class LoginApp(ctk.CTk):
     def __init__(self, rol_usuario, ventana_login, inventory):
         super().__init__()
         self.title("Menu General - Mi Carrito en Renta")
-        self.geometry("1000x900")
+        self.geometry("800x700")
         self.resizable(False, False)
-        self.panel_admin = None
 
-#--- Controladores
+        #--- Controladores
         self.inventory = inventory
+
+        # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
+        self.grid_columnconfigure(0, weight=2)
+        self.grid_rowconfigure(0, weight=2)
         self.logic = LogicController(rol_usuario, ventana_login, self, self.inventory)
         self.frames = FrameManager(self, self.logic, self.inventory)
-        self.inventario = InventoryManager()
 
-#--- Inicializar interfaz
+        # CAMBIO: conecta el controlador con el gestor de frames; abrir_admin()
+        # usa esta referencia para mostrar el panel administrativo.
+        self.logic.frames = self.frames
+
+        #--- Inicializar interfaz
         self.frames.crear_menu_principal()
         self.logic.aplicar_permisos(self.frames)
 
@@ -33,10 +39,18 @@ class FrameManager:
         self.logic = logic
         self.inventory = inventory
 
+        # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
+        self.root.grid_columnconfigure(0, weight=2)
+        self.root.grid_rowconfigure(0, weight=2)
+
         # Frames inicializados en None
         self.encabezado_frame = None
         self.frame_login = None
         self.frame_renta = None
+
+        # CAMBIO: FrameManager conserva y reutiliza el panel de Administración.
+        self.panel_admin = None
+        self.admin = None
 
         # ⚠️ Nota: self.renta NO se instancia aquí, porque aún no existe encabezado_frame.
         self.renta = None
@@ -48,7 +62,7 @@ class FrameManager:
             self.encabezado_frame.destroy()
 
         self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
-        self.encabezado_frame.grid(row=0, column=0, padx=20, pady=10, sticky="ew")
+        self.encabezado_frame.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
 
         # Ahora sí, instanciar la clase renta con encabezado válido
         self.renta = renta(self.root, self.logic, self.encabezado_frame)
@@ -57,76 +71,53 @@ class FrameManager:
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
             text="MI CARRITO EN RENTA",
             font=ctk.CTkFont(size=15, weight="bold"))
-        lbl_bienvenido.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        lbl_bienvenido.grid(row=0, column=0, padx=5, columnspan=5, pady=5, sticky="ew")
 
         rol_texto = f" - Rol Activo {self.logic.rol}" if self.logic.rol else " - Sin Rol"
         self.lbl_menu = ctk.CTkLabel(self.encabezado_frame,
             text=f"  MENU GENERAL  {rol_texto}",
-            font=ctk.CTkFont(size=14, weight="bold")
-        )
-        self.lbl_menu.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+            font=ctk.CTkFont(size=14, weight="bold"))
+        self.lbl_menu.grid(row=1, column=0, padx=5, columnspan=5, pady=5, sticky="ew")
 
         # Botones principales
         self.btn_rentar = ctk.CTkButton(self.encabezado_frame, text="Renta de autos",
             command=self.renta.interfaz_renta)
-        self.btn_rentar.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
+        self.btn_rentar.grid(row=2, column=0,  padx=5, pady=5, sticky="ew")
 
         self.btn_ver = ctk.CTkButton(self.encabezado_frame, text="Administración",
             command=self.logic.abrir_admin)
-        self.btn_ver.grid(row=2, column=1, padx=10, pady=20, sticky="ew")
+        self.btn_ver.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
-        self.btn_eliminar = ctk.CTkButton(self.encabezado_frame, text="Taller / mantenimiento")
-        self.btn_eliminar.grid(row=2, column=2, padx=10, pady=20, sticky="ew")
+        self.btn_eliminar = ctk.CTkButton(self.encabezado_frame, text="Taller/Mantenimiento")
+        self.btn_eliminar.grid(row=2, column=2, padx=5, pady=5, sticky="ew")
 
         self.btn_informe = ctk.CTkButton(self.encabezado_frame, text="Utilerías")
-        self.btn_informe.grid(row=2, column=3, padx=10, pady=20, sticky="ew")
+        self.btn_informe.grid(row=2, column=3, padx=5, pady=5, sticky="ew")
 
         self.btn_salir = ctk.CTkButton(self.encabezado_frame, text="Salir del sistema",
             command=self.logic.cerrar_sesion)
-        self.btn_salir.grid(row=2, column=4, padx=10, pady=20, sticky="ew")
+        self.btn_salir.grid(row=2, column=4, padx=5, pady=5, sticky="ew")
 
     def mostrar_admin(self):
-        # Ocultar el menú general
+        # CAMBIO: ocultar el menú general conserva todos sus controles para volver.
         self.encabezado_frame.grid_remove()
 
-        # Crear el panel administrativo una sola vez
+        # CAMBIO: el contenedor, AdminPanel y sus controles se crean una sola vez.
         if self.panel_admin is None:
             self.panel_admin = ctk.CTkFrame(self.root)
+            # CAMBIO: el panel administrativo expande su contenido al ocupar la ventana.
+            self.panel_admin.grid_columnconfigure(0, weight=1)
             self.admin = AdminPanel(
                 root=self.panel_admin,
-                logic=self.logic,
-                encabezado_frame=self.encabezado_frame
+                logic=self.logic
             )
+            self.admin.menu_admin()
 
         self.panel_admin.grid(
             row=0, column=0,
-            padx=20, pady=10,
+            padx=20, pady=5,
             sticky="nsew"
         )
-
-        self.admin.menu_admin()
-
-    def mostrar_admin(self):
-        # Ocultar el menú general
-        self.encabezado_frame.grid_remove()
-
-        # Crear el panel administrativo una sola vez
-        if self.panel_admin is None:
-            self.panel_admin = ctk.CTkFrame(self.root)
-            self.admin = AdminPanel(
-                root=self.panel_admin,
-                logic=self.logic,
-                encabezado_frame=self.encabezado_frame
-            )
-
-        self.panel_admin.grid(
-            row=0, column=0,
-            padx=20, pady=10,
-            sticky="nsew"
-        )
-
-        self.admin.menu_admin()
-
     def regresar_menu_principal(self):
         if self.panel_admin is not None:
             self.panel_admin.grid_remove()
@@ -141,6 +132,8 @@ class LogicController:
         self.rol = rol_usuario
         self.ventana_login = ventana_login
         self.ventana_principal = ventana_principal
+        # La referencia a FrameManager se asigna desde LoginApp después de crear
+        # ambos objetos; aquí todavía no existe self.frames ni self.logic.
 
     def aplicar_permisos(self, frames: FrameManager):
         botones = {
@@ -249,6 +242,12 @@ class LogicController:
 
 if __name__ == "__main__":
     # Prueba local simulando rol de mostrador
-    app = LoginApp(rol_usuario="mostrador")
+    # CAMBIO: se proporcionan los tres argumentos requeridos por LoginApp.
+    # No hay una ventana de login previa en esta prueba directa, por eso se pasa None.
+    app = LoginApp(
+        rol_usuario="mostrador",
+        ventana_login=None,
+        inventory=InventoryManager()
+    )
     app.mainloop()
 

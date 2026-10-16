@@ -1,11 +1,29 @@
+import customtkinter as ctk
+
 
 class admin:
-    def __init__(self, root, logic, encabezado_frame):
+    def __init__(self, root, logic):
         self.root = root
         self.logic = logic
-        self.encabezado_frame = encabezado_frame
+
+        # CAMBIO: el encabezado administrativo es propio del panel y no modifica
+        # los controles ni el encabezado del menú general.
+        self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
+
+        # CAMBIO: el panel reparte el ancho entre las cinco columnas del encabezado.
+
+        for columna in range(5):
+            self.root.grid_columnconfigure(columna, weight=1)
+            self.encabezado_frame.grid_columnconfigure(columna, weight=1)
+        # CAMBIO: la sección de contenido puede crecer verticalmente.
+        self.root.grid_rowconfigure(4, weight=1)
+        self.encabezado_frame.grid(row=0, column=0, columnspan=5, padx=20, pady=10, sticky="ew")
 
         self.frame_botones = ctk.CTkFrame(self.root)
+
+        # CAMBIO: reparte el ancho del área de botones entre sus cuatro columnas.
+        for columna in range(4):
+            self.frame_botones.grid_columnconfigure(columna, weight=1)
 
         self.frame_rh = ctk.CTkFrame(self.root)
         self.frame_autos = ctk.CTkFrame(self.root)
@@ -14,55 +32,55 @@ class admin:
         
 
     def menu_admin(self):    
-
-        self.limpiar_encabezado()
-
-
+        # CAMBIO: limpiar únicamente el encabezado administrativo propio.
+        for widget in self.encabezado_frame.winfo_children():
+            widget.destroy()
         # encabezados
         lbl_rh = ctk.CTkLabel(self.encabezado_frame, 
-            text="RECURSOS HUMANOS",font=ctk.CTkFont(size=15, weight="bold"))
+            text="RECURSOS HUMANOS",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_autos = ctk.CTkLabel(self.encabezado_frame, 
-             text="AUTOS",font=ctk.CTkFont(size=15, weight="bold"))
+             text="AUTOS",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_financieros = ctk.CTkLabel(self.encabezado_frame, 
-             text="FINANCIEROS",font=ctk.CTkFont(size=15, weight="bold"))
+             text="FINANCIEROS",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_admon = ctk.CTkLabel(self.encabezado_frame, 
-             text="ADMINISTRACION",font=ctk.CTkFont(size=15, weight="bold"))
-        btn_salir = ctk.CTkButton(self.encabezado_frame,
-            text="SALIR", command=self.salir)                         
+             text="ADMINISTRACION",font=ctk.CTkFont(size=12, weight="bold"))
+                         
 
         lbl_rh.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
         lbl_autos.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
         lbl_financieros.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
         lbl_admon.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
-        btn_salir.grid(row=0, column=4, padx=5, pady=5, sticky="ew")
+
 
         self.frame_botones.grid(row=1, column=0, columnspan=4, padx=20, pady=10, sticky="nsew")
 
         # primera linea de botones
         self.btn_alta_rh = ctk.CTkButton(self.frame_botones,
-            text="ALTAS DE PERSONAL", command=self.alta_rh)
+            text="ALTAS DE PERSONAL", command=self.alta_rh,font=ctk.CTkFont(size=10))
         self.btn_rep_autos = ctk.CTkButton(self.frame_botones,
-            text="REPORTE DE AUTOS", command=self.rep_autos)
+            text="REPORTE DE AUTOS", command=self.rep_autos,font=ctk.CTkFont(size=10))
         self.btn_gastos = ctk.CTkButton(self.frame_botones,
-            text="GASTOS", command=self.gastos)
+            text="GASTOS", command=self.gastos,font=ctk.CTkFont(size=10))
         self.btn_rep_autos_ejecutivo = ctk.CTkButton(self.frame_botones,
-            text="REPORTE EJECUTIVO", command=self.rep_auto_eje)
+            text="REPORTE EJECUTIVO", command=self.rep_auto_eje,font=ctk.CTkFont(size=10))
 
         # segunda linea de botones
         self.btn_baja_rh = ctk.CTkButton(self.frame_botones,
-            text="BAJA DE PERSONAL", command=self.baja_rh)
+            text="BAJA DE PERSONAL", command=self.baja_rh,font=ctk.CTkFont(size=10))
         self.btn_alta_autos = ctk.CTkButton(self.frame_botones,
-            text="ALTA DE AUTOS", command=self.alta_autos)
+            text="ALTA DE AUTOS", command=self.alta_autos,font=ctk.CTkFont(size=10))
         self.btn_balance = ctk.CTkButton(self.frame_botones, 
-            text="BALANCE", command=self.balance)
+            text="BALANCE", command=self.balance,font=ctk.CTkFont(size=10))
         self.btn_rep_gastos_ejecutivo = ctk.CTkButton(self.frame_botones, 
-            text="REPORTE DE GASTOS", command=self.rep_gastos_eje)
+            text="REPORTE DE GASTOS", command=self.rep_gastos_eje,font=ctk.CTkFont(size=10))
 
         # tercer linea de botones
         self.btn_nomina = ctk.CTkButton(self.frame_botones,
-            text="NOMINA", command=self.nomina)
+            text="NOMINA", command=self.nomina,font=ctk.CTkFont(size=10))
         self.btn_bajas_autos = ctk.CTkButton(self.frame_botones,
             text=" BAJAS DE AUTOS", command=self.baja_auto)
+        btn_salir = ctk.CTkButton(self.frame_botones,
+            text="SALIR", command=self.salir,font=ctk.CTkFont(size=15))        
 
         self.btn_alta_rh.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
         self.btn_rep_autos.grid(row=1, column=1, padx=10, pady=10, sticky="ew")
@@ -76,6 +94,7 @@ class admin:
 
         self.btn_nomina.grid(row=3, column=0, padx=10, pady=10, sticky="ew")
         self.btn_bajas_autos.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
+        btn_salir.grid(row=3, column=4, padx=5, pady=5, sticky="ew")
 
     def alta_rh(self):
         self.mostrar_frame_rh()
@@ -164,4 +183,5 @@ class admin:
                             padx=20, pady=10, sticky="nsew")
 
     def salir(self):
-        None     
+        # CAMBIO: restaura el menú general conservado en FrameManager.
+        self.logic.frames.regresar_menu_principal()

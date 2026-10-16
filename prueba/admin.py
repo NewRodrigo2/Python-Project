@@ -101,13 +101,68 @@ class admin:
     def alta_rh(self):
         self.mostrar_frame_rh()
 
+        lbl_id = ctk.CTkLabel(self.encabezado_frame, 
+            text="Id empleado",font=ctk.CTkFont(size=12, weight="bold"))       
+        lbl_nom = ctk.CTkLabel(self.encabezado_frame, 
+            text="Nombre",font=ctk.CTkFont(size=12, weight="bold"))
+        lbl_area = ctk.CTkLabel(self.encabezado_frame, 
+            text="Area",font=ctk.CTkFont(size=12, weight="bold"))        
+        lbl_hr_cont = ctk.CTkLabel(self.encabezado_frame, 
+            text="Hr Contratadas",font=ctk.CTkFont(size=12, weight="bold"))
+        lbl_hr_trab = ctk.CTkLabel(self.encabezado_frame, 
+            text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
+        lbl_sueldo = ctk.CTkLabel(self.encabezado_frame, 
+            text="Sueldo",font=ctk.CTkFont(size=12, weight="bold"))
+        lbl_usen = ctk.CTkLabel(self.encabezado_frame, 
+            text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))        
+        lbl_pw = ctk.CTkLabel(self.encabezado_frame, 
+            text="Password",font=ctk.CTkFont(size=12, weight="bold"))
+        
+        lbl_id.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        lbl_nom.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        lbl_area.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+        lbl_hr_cont.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+        lbl_hr_trab.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+        lbl_sueldo.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+        lbl_usen.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+        lbl_pw.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
+
+        Entry_id = ctk.CTkEntry(self.encabezado_frame, 
+            text="Id empleado",font=ctk.CTkFont(size=12, weight="bold"))       
+        Entry_nom = ctk.CTkEntry(self.encabezado_frame, 
+            text="Nombre",font=ctk.CTkFont(size=12, weight="bold"))
+        Entry_area = ctk.CTkEntry(self.encabezado_frame, 
+            text="Area",font=ctk.CTkFont(size=12, weight="bold"))        
+        Entry_hr_cont = ctk.CTkEntry(self.encabezado_frame, 
+            text="Hr Contratadas",font=ctk.CTkFont(size=12, weight="bold"))
+        Entry_hr_trab = ctk.CTkEntry(self.encabezado_frame, 
+            text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
+        Entry_sueldo = ctk.CTkEntry(self.encabezado_frame, 
+            text="Sueldo",font=ctk.CTkFont(size=12, weight="bold"))
+        Entry_usen = ctk.CTkEntry(self.encabezado_frame, 
+            text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))        
+        Entry_pw = ctk.CTkEntry(self.encabezado_frame, 
+            text="Password",font=ctk.CTkFont(size=12, weight="bold"))  
+
+        Entry_id.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_nom.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_area.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_hr_cont.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_hr_trab.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_sueldo.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_usen.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+        Entry_pw.grid(row=0, column=0, padx=5, pady=5, sticky="ew")              
+        
+
+        
+
         btn_salir = ctk.CTkButton(
             self.frame_rh,
             text="SALIR",
             font=ctk.CTkFont(size=15)
             # command=self.salir  # Sin command, el botón no realiza ninguna acción.
         )
-        btn_salir.grid(row=0, column=2, padx=10, pady=10, sticky="ew")
+        btn_salir.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
         
     def baja_rh(self):
         self.mostrar_frame_rh()

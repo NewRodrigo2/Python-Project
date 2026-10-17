@@ -13,7 +13,7 @@ class LoginApp(ctk.CTk):
     def __init__(self, rol_usuario, ventana_login, inventory):
         super().__init__()
         self.title("Menu General - Mi Carrito en Renta")
-        self.geometry("800x700")
+        self.geometry("900x700")
         self.resizable(False, False)
 
         #--- Controladores

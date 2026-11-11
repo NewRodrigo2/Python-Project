@@ -1,263 +1,253 @@
-''' menu_gral.py
-datos necesarios para Copilot: este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
-rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
-'''
+
 import customtkinter as ctk
-from logic import RoleManager,InventoryManager
-import menu_admin as m_admin # Descomenta en tu entorno
+from logic import RoleManager, InventoryManager
+from renta_autos import renta
+from admin import admin as AdminPanel
 
 
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
 class LoginApp(ctk.CTk):
-    def __init__(self, rol_usuario, ventana_login):
+    """Ventana principal del menú general."""
+    def __init__(self, rol_usuario, ventana_login, inventory):
         super().__init__()
-        self.role_manager = RoleManager()
-        self.ventana_login = ventana_login
-        self.rol = rol_usuario
-        self.inventario = InventoryManager()
-        self.crear_interfaz_login()       
-
-# aquí usas roles_disponibles para construir menús dinámicos
-        roles_disponibles = self.role_manager.obtener_roles()
-
         self.title("Menu General - Mi Carrito en Renta")
-        self.geometry("1000x900")
+        self.geometry("900x700")
         self.resizable(False, False)
-        
-# Contenedor principal para los títulos mutables
-        self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.encabezado_frame.grid(row=0, column=0, padx=20, sticky="nsew")
-        
-# Inicializar los frames como None
+
+        #--- Controladores
+        self.inventory = inventory
+
+        # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
+        self.grid_columnconfigure(0, weight=2)
+        self.grid_rowconfigure(0, weight=2)
+        self.logic = LogicController(rol_usuario, ventana_login, self, self.inventory)
+        self.frames = FrameManager(self, self.logic, self.inventory)
+
+        # CAMBIO: conecta el controlador con el gestor de frames; abrir_admin()
+        # usa esta referencia para mostrar el panel administrativo.
+        self.logic.frames = self.frames
+
+        #--- Inicializar interfaz
+        self.frames.crear_menu_principal()
+        self.logic.aplicar_permisos(self.frames)
+
+class FrameManager:
+    def __init__(self, root, logic, inventory):
+        self.root = root
+        self.logic = logic
+        self.inventory = inventory
+
+        # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
+        self.root.grid_columnconfigure(0, weight=2)
+        self.root.grid_rowconfigure(0, weight=2)
+
+        # Frames inicializados en None
+        self.encabezado_frame = None
         self.frame_login = None
         self.frame_renta = None
-        
-# Cargar interfaz inicial
-        self.crear_interfaz_login()
-        self.update_idletasks()      
-        self.aplicar_permisos()
 
-    def limpiar_encabezado(self):
-        """Elimina los widgets del encabezado para redibujarlos."""
-        for widget in self.encabezado_frame.winfo_children():
-            widget.destroy()
+        # CAMBIO: FrameManager conserva y reutiliza el panel de Administración.
+        self.panel_admin = None
+        self.admin = None
 
-    def crear_interfaz_login(self):
-        # self.limpiar_encabezado()
-        
-#--- FRAME ENCABEZADO ---
-        self.encabezado_frame = ctk.CTkFrame(self, fg_color="transparent")
-        self.encabezado_frame.grid(row=0, column=0, padx=20, pady=10, sticky="ew")
+        # ⚠️ Nota: self.renta NO se instancia aquí, porque aún no existe encabezado_frame.
+        self.renta = None
 
-#--- Títulos en el contenedor de encabezado
-        lbl_bienvenido = ctk.CTkLabel(
-            self.encabezado_frame, 
-            text="MI CARRITO EN RENTA", 
+    def crear_menu_principal(self):
+
+    # Eliminar el encabezado anterior, si existe.
+        if self.encabezado_frame is not None:
+            self.encabezado_frame.destroy()
+
+        self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
+        self.encabezado_frame.grid(row=0, column=0, padx=5, pady=5, sticky="new")
+
+        # Ahora sí, instanciar la clase renta con encabezado válido
+        self.renta = renta(self.root, self.logic, self.encabezado_frame)
+        self.renta.limpiar_encabezado() 
+
+        lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
+            text="MI CARRITO EN RENTA",
             font=ctk.CTkFont(size=15, weight="bold"))
-        lbl_bienvenido.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
-        
-        rol_texto = f" - Rol Activo {self.rol}" if self.rol else " - Sin Rol"
-        self.lbl_menu = ctk.CTkLabel(
-            self.encabezado_frame, 
-            text=f"MENU GENERAL DEL SISTEMA {rol_texto}", 
+        lbl_bienvenido.grid(row=0, column=0, padx=5, columnspan=5, pady=5, sticky="ew")
+
+        rol_texto = f" - Rol Activo {self.logic.rol}" if self.logic.rol else " - Sin Rol"
+        self.lbl_menu = ctk.CTkLabel(self.encabezado_frame,
+            text=f"  MENU GENERAL  {rol_texto}",
             font=ctk.CTkFont(size=14, weight="bold"))
-        self.lbl_menu.grid(row=1, column=3, padx=5, pady=5, sticky="ew")
+        self.lbl_menu.grid(row=1, column=0, padx=5, columnspan=5, pady=5, sticky="ew")
 
-        # self.btn_rentar = ctk.CTkButton(
-        #     self.encabezado_frame, text=" Renta de autos", width=300, height=40, 
-        #     font=ctk.CTkFont(size=14, weight="bold"), command=self.interfaz_renta)
-        # self.btn_rentar.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+        # Botones principales
+        self.btn_rentar = ctk.CTkButton(self.encabezado_frame, text="Renta de autos",
+            command=self.renta.interfaz_renta)
+        self.btn_rentar.grid(row=2, column=0,  padx=5, pady=5, sticky="ew")
 
+        self.btn_ver = ctk.CTkButton(self.encabezado_frame, text="Administración",
+            command=self.logic.abrir_admin)
+        self.btn_ver.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
 
-#--- FRAME PRINCIPAL (BOTONES) ---
-        self.frame_login = ctk.CTkFrame(self)
-        self.frame_login.grid(row=1, column=0, padx=30, pady=10, sticky="nsew")
+        self.btn_eliminar = ctk.CTkButton(self.encabezado_frame, text="Taller/Mantenimiento")
+        self.btn_eliminar.grid(row=2, column=2, padx=5, pady=5, sticky="ew")
 
-#--- BOTONES EN UNA SOLA FILA ---
-        self.btn_rentar = ctk.CTkButton(
-            self.encabezado_frame, text=" Renta de autos", width=300, height=40, 
-            font=("Arial", 15, "bold"), command=self.interfaz_renta)
-        self.btn_rentar.grid(row=2, column=0, padx=10, pady=20, sticky="ew")
+        self.btn_informe = ctk.CTkButton(self.encabezado_frame, text="Utilerías")
+        self.btn_informe.grid(row=2, column=3, padx=5, pady=5, sticky="ew")
 
-        self.btn_ver = ctk.CTkButton(
-            self.encabezado_frame, text=" Administracion", width=300, height=40, 
-            font=ctk.CTkFont(size=14, weight="bold"), command=self.abrir_admin)
-        self.btn_ver.grid(row=2, column=1, padx=10, pady=20, sticky="ew")
+        self.btn_salir = ctk.CTkButton(self.encabezado_frame, text="Salir del sistema",
+            command=self.logic.cerrar_sesion)
+        self.btn_salir.grid(row=2, column=4, padx=5, pady=5, sticky="ew")
 
-        self.btn_eliminar = ctk.CTkButton(
-            self.encabezado_frame, text=" Taller / mantenimiento", width=300, height=40, 
-            font=ctk.CTkFont(size=14, weight="bold"))
-        self.btn_eliminar.grid(row=2, column=2, padx=10, pady=20, sticky="ew")
+    def mostrar_admin(self):
+        # CAMBIO: ocultar el menú general conserva todos sus controles para volver.
+        self.encabezado_frame.grid_remove()
 
-        self.btn_informe = ctk.CTkButton(
-            self.encabezado_frame, text=" Utilerias ", width=300, height=40, 
-            font=ctk.CTkFont(size=14, weight="bold"))
-        self.btn_informe.grid(row=2, column=3, padx=10, pady=20, sticky="ew")
+        # CAMBIO: el contenedor, AdminPanel y sus controles se crean una sola vez.
+        if self.panel_admin is None:
+            self.panel_admin = ctk.CTkFrame(self.root)
+            # CAMBIO: el panel administrativo expande su contenido al ocupar la ventana.
+            self.panel_admin.grid_columnconfigure(0, weight=1)
+            self.admin = AdminPanel(
+                root=self.panel_admin,
+                logic=self.logic
+            )
+            self.admin.menu_admin()
 
-        self.btn_salir = ctk.CTkButton(
-            self.encabezado_frame, text=" Salir del sistema", width=300, height=40, 
-            font=ctk.CTkFont(size=14, weight="bold"), command=self.cerrar_sesion)
-        self.btn_salir.grid(row=2, column=4, padx=10, pady=20, sticky="ew")
+        self.panel_admin.grid(
+            row=0, column=0,
+            padx=20, pady=5,
+            sticky="nsew"
+        )
+    def regresar_menu_principal(self):
+        if self.panel_admin is not None:
+            self.panel_admin.grid_remove()
 
-#--- Configuración de columnas para que se expandan ---
-        for i in range(5):  # número de columnas
-            self.encabezado_frame.grid_columnconfigure(i, weight=1)
+        self.encabezado_frame.grid()                
 
-#--- Configuración de filas/columnas en la ventana principal ---
-        self.grid_rowconfigure(1, weight=0)  # encabezado no se expande
-        self.grid_rowconfigure(1, weight=1)  # frame_login sí se expande
-        self.grid_columnconfigure(0, weight=1)
-        
-    def aplicar_permisos(self):
-#--- Deshabilitamos todos los botones primero
-        botones_menu = {
-            "renta": self.btn_rentar,
-            "admin": self.btn_ver,
-            "taller": self.btn_eliminar,
-            "utilerias": self.btn_informe
+class LogicController:
+    """Encargado de la lógica de permisos y navegación."""
+    def __init__(self, rol_usuario, ventana_login, ventana_principal, inventory):
+        self.role_manager = RoleManager()
+        self.inventario = inventory
+        self.rol = rol_usuario
+        self.ventana_login = ventana_login
+        self.ventana_principal = ventana_principal
+        # La referencia a FrameManager se asigna desde LoginApp después de crear
+        # ambos objetos; aquí todavía no existe self.frames ni self.logic.
+
+    def aplicar_permisos(self, frames: FrameManager):
+        botones = {
+            "renta": frames.btn_rentar,
+            "admin": frames.btn_ver,
+            "taller": frames.btn_eliminar,
+            "utilerias": frames.btn_informe
         }
-        for btn in botones_menu.values():
+        for btn in botones.values():
             btn.configure(state="disabled")
 
-        if not self.rol:
-            print("Advertencia: No se recibió ningún rol en el Menú General.")
-            return
-
-#--- Usamos RoleManager para obtener permisos, llamamos a logic/class/metodo pasamos parametro 
-        permisos = self.role_manager.aplicar_permisos(self.rol)  
-
-        # Activamos solo los botones permitidos
+        permisos = self.role_manager.aplicar_permisos(self.rol)
         for permiso in permisos:
-            if permiso in botones_menu:
-                botones_menu[permiso].configure(state="normal")
+            if permiso in botones:
+                botones[permiso].configure(state="normal")
 
-# ...........................  correir: debe abrir menu_admin.py
     def abrir_admin(self):
-        """Oculta el menú general y abre la administración de forma segura."""
-        def ejecutar_apertura():
-            # Ocultamos esta ventana de forma segura después del click
-            self.withdraw() 
-            
-            # Pasamos 'self' para que la administración sepa cómo regresar al menú general
-            # NOTA: Asegúrate de que DashboardApp en 'menu_admin.py' herede de ctk.CTkToplevel o ctk.CTk
-            nueva_admin = m_admin.DashboardApp(ventana_menu_gral=self)
-            
-            # CONFIGURACIÓN DE SEGURIDAD PARA LA "X" DE LA VENTANA
-            # Si cierran el Dashboard desde la X, llamamos a una función que restaure el menú general
-            nueva_admin.protocol("WM_DELETE_WINDOW", lambda: self.regresar_desde_admin(nueva_admin))
-            
-            nueva_admin.mainloop()
-
-#--- Esperamos 100 milisegundos para que termine la animación del click del botón
-        self.after(100, ejecutar_apertura)
+        self.frames.mostrar_admin()
 
     def regresar_desde_admin(self, ventana_admin):
-        """Destruye de forma segura la ventana de admin y restaura el menú general."""
-        def restaurar():
-            ventana_admin.destroy()  # Destruye la ventana de administración
-            self.deiconify()         # Hace aparecer de nuevo el menú general
-            self.aplicar_permisos()  # Re-aplica los permisos por seguridad
-            
-        self.after(100, restaurar)
+        ventana_admin.destroy()
+        self.ventana_principal.deiconify()
+        self.aplicar_permisos(self.ventana_principal.frames)
 
-    def interfaz_renta(self):
-        # 1. Ocultar el frame anterior para dar espacio al nuevo
-        if self.frame_login:
-           self.frame_login.pack_forget()
-        
-        self.limpiar_encabezado()   
-        
-#--- Creación y empaquetado correcto del segundo frame
-        self.frame_renta = ctk.CTkFrame(self)
-        self.frame_renta.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
-        
-#--- AGREGAR CONTENIDO AL SEGUNDO FRAME ---
-
-        lbl_info_renta = ctk.CTkLabel(
-            self.encabezado_frame, text="GESTION DE RENTAS", font=("Arial", 34))
-        lbl_info_renta.pack(pady=20)
-        
-        lbl_titulo_renta = ctk.CTkButton(
-            self.frame_renta, text="RENTA DE AUTOS", width=300, height=40, 
-            font=ctk.CTkFont(size=18, weight="bold"),
-            command=self.renta_auto)
-        lbl_titulo_renta.pack(pady=(20, 10))
-        
-        lbl_entrega = ctk.CTkButton(
-            self.frame_renta, text="ENTREGA DE AUTOS",width=300, height=40, font=ctk.CTkFont(size=18, weight="bold"))
-        lbl_entrega.pack(pady=(20, 10))
-
-#--- Botón para regresar al menú anterior
-        btn_regresar = ctk.CTkButton(
-            self.frame_renta, text="REGRESA A MENU PRINCIPAL", width=300, height=40,font=ctk.CTkFont(size=18, weight="bold"),
-            command=self.regresar_menu_principal)
-        btn_regresar.pack(pady=(20,10))
-
-    def renta_auto(self):
-#--- Limpiar frame anterior si existe
-        if hasattr(self, "frame_renta") and self.frame_renta is not None:
-            self.frame_renta.destroy()
-
-#--- Crear nuevo frame
-        frame_renta = ctk.CTkFrame(self)
-        frame_renta.pack(fill="both", expand=True)
-
-#--- Encabezado
-        lbl_titulo = ctk.CTkLabel(frame_renta, 
-            text="Autos disponibles para renta", 
-            font=("Arial", 20))
-        lbl_titulo.pack(pady=10)
-
-# Obtener listado desde InventoryManager
-        autos_disponibles = self.inventario.obtener_autos_disponibles()
-
-# Mostrar listado en labels
-        if autos_disponibles:
-            for auto in autos_disponibles:
-                texto = f"{auto['id']} - {auto['marca']} {auto['modelo']} {auto['precio_dia']}"
-                lbl_auto = ctk.CTkLabel(frame_renta, text=texto)
-                lbl_auto.pack(anchor="w", padx=20)
-        else:
-            lbl_vacio = ctk.CTkLabel(frame_renta, text="No hay autos disponibles ❌")
-            lbl_vacio.pack(pady=20)
-
-# widegt
-        self.limpiar_encabezado()
-
-        self.l1 = ctk.CTkLabel(frame_renta, 
-            text="Cual auto desea rentar")
-        self.l1.pack(pady=20)
-
-        self.e1 = ctk.CTkEntry(frame_renta, width=320, placeholder_text="Ingrese ID de auto")
-        self.e1.pack(pady=20)
-
-        self.e2 = ctk.CTkEntry(frame_renta, width=320, placeholder_text="Km esperados")
-        self.e2.pack(pady=5, padx=30)
-
-        self.b1 = ctk.CTkButton(frame_renta, text="rentar")
-        self.b1.pack(pady=20)
-
-        self.btn_b2 = ctk.CTkButton(frame_renta, text="Regresar",
-            command=self.regresar_menu_principal)
-        self.btn_b2.pack(pady=20)
-
-    def regresar_menu_principal(self):
-        """Destruye el frame de renta y vuelve a dibujar el menú principal."""
-        if self.frame_renta:
-            self.frame_renta.destroy()
-        self.crear_interfaz_login()
-        self.aplicar_permisos()
 
     def cerrar_sesion(self):
-        if self.ventana_login:
-            self.destroy()
-            self.ventana_login.deiconify()
-        else:
-            self.destroy()
+        ventana = self.ventana_principal
+        ventana_login = self.ventana_login
+
+        # Evitar que el cierre se solicite varias veces.
+        if getattr(self, "_cerrando_sesion", False):
+            return
+
+        self._cerrando_sesion = True
+
+        def finalizar_cierre():
+            try:
+                if ventana_login is not None:
+                    try:
+                        if ventana_login.winfo_exists():
+                            ventana_login.deiconify()
+                    except Exception as e:
+                        print(f"Error al mostrar el login: {e}")
+
+                ventana.destroy()
+
+            except Exception as e:
+                print(f"Error al cerrar la sesión: {e}")
+
+        try:
+            # Ejecutar el cierre en el siguiente ciclo de eventos.
+            ventana.after_idle(finalizar_cierre)
+        except Exception as e:
+            print(f"No se pudo programar el cierre: {e}")
+            self._cerrando_sesion = False
+
+
+    def calcular_precio_renta(self, id_auto_str, dias_str):
+        try:
+            id_auto = int(id_auto_str)
+            dias = int(dias_str)
+            if dias <= 0:
+                return None, "Los días de renta deben ser mayores que cero."
+            total = self.inventario.calcular_precio(id_auto, dias)
+            if total is None:
+                return None, "El ID no corresponde a un auto disponible."
+            return total, "OK"
+        except (TypeError, ValueError):
+            return None, "⚠️ Ingresa un número válido de días y un ID correcto."
+
+    def calcular_presupuesto_regreso(self, km_str, dias_str, id_str):
+        try:
+            id_auto = int(id_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str)
+        except (TypeError, ValueError):
+            return None, "⚠️ Ingresa valores numéricos válidos en los campos."
+
+        # El controlador valida la entrada; InventoryManager aplica las reglas del inventario.
+        return self.inventario.calcular_presupuesto_regreso(
+            id_auto, dias_reales, km_nuevos
+        )
+
+    def confirmar_regreso_auto(self, id_auto_str, dias_str, km_str):
+        """Valida los campos y delega el guardado de la devolución al inventario."""
+        try:
+            id_auto = int(id_auto_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str)
+        except (TypeError, ValueError):
+            return False, "Ingresa un ID, días y kilómetros válidos."
+
+        return self.inventario.procesar_regreso(
+            id_auto, dias_reales, km_nuevos
+        )
+
+    def confirmar_renta_auto(self, id_auto_str, dias_str):
+        """Valida los campos y devuelve el resultado real de procesar la renta."""
+        try:
+            id_auto = int(id_auto_str)
+            dias = int(dias_str)
+        except (TypeError, ValueError):
+            return False, "Ingresa un ID y días válidos."
+
+        return self.inventario.procesar_renta(id_auto, dias)
 
 if __name__ == "__main__":
     # Prueba local simulando rol de mostrador
-    app = LoginApp(rol_usuario="mostrador")
+    # CAMBIO: se proporcionan los tres argumentos requeridos por LoginApp.
+    # No hay una ventana de login previa en esta prueba directa, por eso se pasa None.
+    app = LoginApp(
+        rol_usuario="mostrador",
+        ventana_login=None,
+        inventory=InventoryManager()
+    )
     app.mainloop()
+

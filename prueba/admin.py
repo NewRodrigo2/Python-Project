@@ -136,13 +136,13 @@ class admin:
         lbl_area = ctk.CTkLabel(self.frame_rh, 
             text="Area",font=ctk.CTkFont(size=12, weight="bold"))        
         lbl_hr_cont = ctk.CTkLabel(self.frame_rh, 
-            text="Hr Contratadas",font=ctk.CTkFont(size=12, weight="bold"))
-        lbl_hr_trab = ctk.CTkLabel(self.frame_rh, 
-            text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
+            text="Hrs Contratadas",font=ctk.CTkFont(size=12, weight="bold"))
+        # lbl_hr_trab = ctk.CTkLabel(self.frame_rh, 
+        #     text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_sueldo = ctk.CTkLabel(self.frame_rh, 
             text="Sueldo",font=ctk.CTkFont(size=12, weight="bold"))
-        lbl_usen = ctk.CTkLabel(self.frame_rh, 
-            text="Ausencias",font=ctk.CTkFont(size=12, weight="bold"))        
+        # lbl_usen = ctk.CTkLabel(self.frame_rh, 
+        #     text="Ausencias",font=ctk.CTkFont(size=12, weight="bold"))        
         lbl_pw = ctk.CTkLabel(self.frame_rh, 
             text="Password",font=ctk.CTkFont(size=12, weight="bold"))
         
@@ -150,9 +150,9 @@ class admin:
         lbl_nom.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
         lbl_area.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
         lbl_hr_cont.grid(row=1, column=3, padx=5, pady=5, sticky="ew")
-        lbl_hr_trab.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+        # lbl_hr_trab.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
         lbl_sueldo.grid(row=2, column=3, padx=5, pady=5, sticky="ew")
-        lbl_usen.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+        # lbl_usen.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
         lbl_pw.grid(row=3, column=3, padx=5, pady=5, sticky="ew")
 
         self.Entry_id = ctk.CTkEntry(self.frame_rh, 

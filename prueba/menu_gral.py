@@ -62,7 +62,7 @@ class FrameManager:
             self.encabezado_frame.destroy()
 
         self.encabezado_frame = ctk.CTkFrame(self.root, fg_color="transparent")
-        self.encabezado_frame.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
+        self.encabezado_frame.grid(row=0, column=0, padx=5, pady=5, sticky="new")
 
         # Ahora sí, instanciar la clase renta con encabezado válido
         self.renta = renta(self.root, self.logic, self.encabezado_frame)

@@ -1,10 +1,4 @@
-'''logic.py
-datos necesarios para Copilot: este es mi script logic.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
-rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
-
-Indicacion para Copilot: dejaremos pendiente instanciar la ruta en class MaintenanceManager: hasta que se cree el archivo correspondiente
-Pregunta para Copilot: en el  def cargar_inventario(self): se utiliza os.path.exists(self.archivo_dato), es correcto?
-'''
+''' logic.py '''
 import json
 import os
 from pathlib import Path

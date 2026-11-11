@@ -4,6 +4,7 @@ class admin:
     def __init__(self, root, logic):
         self.root = root
         self.logic = logic
+        self.form_alta_rh_creado = False
 
         # CAMBIO: el encabezado administrativo es propio del panel y no modifica
         # los controles ni el encabezado del menú general.
@@ -14,14 +15,12 @@ class admin:
             self.root.grid_columnconfigure(columna, weight=1)
             self.encabezado_frame.grid_columnconfigure(columna, weight=1)
 
-        # CAMBIO: la sección de contenido puede crecer verticalmente.       
-        for fila in range(10):  
+        for fila in range(14):  
             self.root.grid_rowconfigure(fila, weight=1)
   
         self.encabezado_frame.grid(row=0, column=0, columnspan=4, padx=20, pady=10, sticky="ew")
         self.frame_botones = ctk.CTkFrame(self.root)
 
-        # CAMBIO: reparte el ancho del área de botones entre sus cuatro columnas.
         for columna in range(4):
             self.frame_botones.grid_columnconfigure(columna, weight=1)
 
@@ -29,13 +28,28 @@ class admin:
         for col in range(6): # filas 0 a 5
             self.frame_rh.grid_columnconfigure(col, weight=1)
 
+        self.frame_rh_nomina = ctk.CTkFrame(self.root)
+        for col in range(6): # filas 0 a 5
+            self.frame_rh.grid_columnconfigure(col, weight=1)            
+
         self.frame_autos = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_autos.grid_columnconfigure(col, weight=1)
 
+# frame de financieros 
+# reporte de autos 
+#
         self.frame_financieros = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_financieros.grid_columnconfigure(col, weight=1)
+# alta de autos 
+        self.frame_financieros1 = ctk.CTkFrame(self.root)
+        for col in range(4):
+            self.frame_financieros1.grid_columnconfigure(col, weight=1)
+# baja de autos
+        self.frame_financieros2 = ctk.CTkFrame(self.root)
+        for col in range(4):
+            self.frame_financieros2.grid_columnconfigure(col, weight=1)
 
         self.frame_admon = ctk.CTkFrame(self.root)
         for col in range(4):
@@ -111,6 +125,10 @@ class admin:
     def alta_rh(self):
         self.mostrar_frame_rh()
 
+        # Al volver a abrir la sección, reutilizamos el formulario existente.
+        if self.form_alta_rh_creado:
+            return
+
         lbl_id = ctk.CTkLabel(self.frame_rh, 
             text="Id empleado",font=ctk.CTkFont(size=12, weight="bold"))       
         lbl_nom = ctk.CTkLabel(self.frame_rh, 
@@ -174,37 +192,37 @@ class admin:
         btn_salir = ctk.CTkButton(
             self.frame_rh,
             text="SALIR",
-            font=ctk.CTkFont(size=15)
-            # command=self.salir  # Sin command, el botón no realiza ninguna acción.
-        )
+            font=ctk.CTkFont(size=15),
+            command=self.ocultar_secciones)
 
         btn_guardar.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
         btn_salir.grid(row=5, column=6, padx=10, pady=10, sticky="ew")
+        self.form_alta_rh_creado = True
         
     def baja_rh(self):
         self.mostrar_frame_rh()
         # colocar todos los entry para borrar del personal.json
         
     def nomina(self):
-        self.mostrar_frame_rh()
+        self.mostrar_frame_rh_nomina()
 
-        lbl_mes_nomina = ctk.CTkLabel(self.frame_rh, 
+        lbl_mes_nomina = ctk.CTkLabel(self.frame_rh_nomina, 
             text="Genera Nomina del mes",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_mes_nomina.grid(row=0, column=0, columnspan=2, padx=5, pady=5, sticky="ew")
 
-        self.Entry_mes_nomina = ctk.CTkEntry(self.frame_rh, 
+        self.Entry_mes_nomina = ctk.CTkEntry(self.frame_rh_nomina, 
             font=ctk.CTkFont(size=12, weight="bold"))
         self.Entry_mes_nomina.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
 
         btn_generar = ctk.CTkButton(
-                self.frame_rh,
+                self.frame_rh_nomina,
                 text="GENERAR",
                 font=ctk.CTkFont(size=15)
                 # command=self.salir  # Sin command, el botón no realiza ninguna acción.
             )
 
         btn_salir = ctk.CTkButton(
-            self.frame_rh,
+            self.frame_rh_nomina,
             text="SALIR",
             font=ctk.CTkFont(size=15)
             # command=self.salir  # Sin command, el botón no realiza ninguna acción.
@@ -212,21 +230,23 @@ class admin:
 
         btn_generar.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
         btn_salir.grid(row=5, column=6, padx=10, pady=10, sticky="ew")        
-
-        
+     
     def rep_autos(self):
         self.mostrar_frame_autos()
         # colocar todos los entry para solicitar de que mes se quiere el reporte y 
         # generar archivo informe.txt
+        # usar frame_financieneros
         
     def alta_autos(self):
         self.mostrar_frame_autos()
         # colocar todos los entry para agregar un auto nuevo a inventario.json
+        # usar frame_financieneros1
         
     def baja_auto(self):
         self.mostrar_frame_autos()
         # colocar el entry id para dar de baja el auto 
         # mostrar los datos del auto
+        # usar frame_financieneros2
         
     def gastos(self):
         self.mostrar_frame_financieros()
@@ -250,12 +270,14 @@ class admin:
         # generar archivo balance.txt
         # ejecutar metodo con las operaciones matematicas necesarias
             
-   
     def ocultar_secciones(self):
         secciones = [
             self.frame_rh,
+            self.frame_rh_nomina,
             self.frame_autos,
             self.frame_financieros,
+            self.frame_financieros1,
+            self.frame_financieros2,
             self.frame_admon
         ]
 
@@ -266,7 +288,12 @@ class admin:
     def mostrar_frame_rh(self):
         self.ocultar_secciones()
         self.frame_rh.grid(row=3, column=0, columnspan=4,
-                        padx=20, pady=10, sticky="nsew")
+                        padx=20, pady=10, sticky="nsew")    
+
+    def mostrar_frame_rh_nomina(self):
+        self.ocultar_secciones()
+        self.frame_rh_nomina.grid(row=3, column=0, columnspan=4,
+                        padx=20, pady=10, sticky="nsew")    
 
     def mostrar_frame_autos(self):
         self.ocultar_secciones()
@@ -276,6 +303,16 @@ class admin:
     def mostrar_frame_financieros(self):
         self.ocultar_secciones()
         self.frame_financieros.grid(row=3, column=0, columnspan=4,
+                                    padx=20, pady=10, sticky="nsew")
+
+    def mostrar_frame_financieros1(self):
+        self.ocultar_secciones()
+        self.frame_financieros1.grid(row=3, column=0, columnspan=4,
+                                    padx=20, pady=10, sticky="nsew")
+
+    def mostrar_frame_financieros2(self):
+        self.ocultar_secciones()
+        self.frame_financieros2.grid(row=3, column=0, columnspan=4,
                                     padx=20, pady=10, sticky="nsew")
 
     def mostrar_frame_admon(self):

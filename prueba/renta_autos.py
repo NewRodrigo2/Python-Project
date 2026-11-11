@@ -69,8 +69,7 @@ class renta:
         self.dias_rent = ctk.CTkEntry(self.frame_renta, width=70)
         lbl_2 = ctk.CTkLabel(self.frame_renta, text=f"KILOMETROS RECORRIDOS")
         self.km_rec = ctk.CTkEntry(self.frame_renta, width=70)
-        self.lbl_presupuesto_regreso = ctk.CTkLabel(
-            self.frame_renta,
+        self.lbl_presupuesto_regreso = ctk.CTkLabel(self.frame_renta,
             text="PRESUPUESTO ESTIMADO: pendiente de calcular")
 
 
@@ -119,8 +118,7 @@ class renta:
 
     def confirmar_regreso(self):
         """Confirma la devolución con los valores actuales de los campos."""
-        valores_actuales = (
-            self.ent_id.get(), self.dias_rent.get(), self.km_rec.get()
+        valores_actuales = (self.ent_id.get(), self.dias_rent.get(), self.km_rec.get()
         )
         if valores_actuales != self._presupuesto_regreso_entrada:
             self.lbl_presupuesto_regreso.configure(

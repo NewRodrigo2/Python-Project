@@ -65,5 +65,17 @@
         "c_dias": 10,
         "c_dias_pactados": 2,
         "c_dias_cobrados": 10
+    },
+    {
+        "transaccion_id": 7,
+        "c_id": 1,
+        "c_marca": "Ford",
+        "c_modelo": "Ranger",
+        "km_recorridos": 567.0,
+        "c_venta_total": 5067.0,
+        "c_fecha_renta": "11/11/2026",
+        "c_dias": 45,
+        "c_dias_pactados": 4,
+        "c_dias_cobrados": 45
     }
 ]

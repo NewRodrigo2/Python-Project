@@ -1,9 +1,10 @@
 
 import customtkinter as ctk
 class renta:
-    def __init__(self, root, logic, encabezado_frame):
+    def __init__(self, root, rental_manager, inventory, encabezado_frame):
         self.root = root
-        self.logic = logic
+        self.rental_manager = rental_manager
+        self.inventory = inventory
         self.encabezado_frame = encabezado_frame
         self.frame_renta = None
         self._presupuesto_regreso_entrada = None
@@ -14,10 +15,10 @@ class renta:
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
             text="GESTION DE RENTAS",
             font=ctk.CTkFont(size=15, weight="bold"))
-        lbl_bienvenido.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        lbl_bienvenido.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
 
         self.frame_renta = ctk.CTkFrame(self.root)
-        self.frame_renta.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
+        self.frame_renta.grid(row=0, column=0, padx=20, pady=10, sticky="nsew")
 
         self.btn_entrega = ctk.CTkButton(self.frame_renta, 
             text="ENTREGA DE AUTOS",
@@ -48,7 +49,7 @@ class renta:
     def regresa_auto(self):
         self._limpiar_contenido_renta()
         self._presupuesto_regreso_entrada = None
-        autos = self.logic.inventario.obtener_autos_rentados()
+        autos = self.inventory.obtener_autos_rentados()
         tot_autos = len(autos)
 
         if autos:
@@ -100,7 +101,7 @@ class renta:
 
     def calcular_presupuesto_regreso(self, km_str, dias_str, id_str):
         """Solicita el cálculo al controlador y solo actualiza la etiqueta."""
-        presupuesto, mensaje = self.logic.calcular_presupuesto_regreso(
+        presupuesto, mensaje = self.rental_manager.calcular_presupuesto_regreso(
             km_str, dias_str, id_str
         )
         if presupuesto is None:
@@ -127,7 +128,7 @@ class renta:
             self.btn_confirmar_regreso.configure(state="disabled")
             return
 
-        exito, mensaje = self.logic.confirmar_regreso_auto(
+        exito, mensaje = self.rental_manager.confirmar_regreso_auto(
             *valores_actuales
         )
         if not exito:
@@ -145,7 +146,7 @@ class renta:
         self._limpiar_contenido_renta()
 
         #--- Obtener autos disponibles desde InventoryManager
-        autos = self.logic.inventario.obtener_autos_disponibles()
+        autos = self.inventory.obtener_autos_disponibles()
         tot_autos = len(autos)
 
         lbl_total = ctk.CTkLabel(self.frame_renta, text=f"Total de autos disponibles: {tot_autos}")
@@ -185,8 +186,9 @@ class renta:
             lbl_vacio.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
             
         #--- mostrar presupuesto  / falta boton acepta renta
+
     def calcular_precio(self,id_auto_str, dias_str):
-            total, mensaje = self.logic.calcular_precio_renta(id_auto_str, dias_str)
+            total, mensaje = self.rental_manager.calcular_precio_renta(id_auto_str, dias_str)
             
             if total is not None:
                 lbl_total = ctk.CTkLabel(self.frame_renta, text=f"💰 Precio total: ${total}")
@@ -204,7 +206,7 @@ class renta:
 
     def confirmar_renta(self, id_auto, dias):
         """Confirma la renta y muestra el resultado que devuelve el controlador."""
-        exito, mensaje = self.logic.confirmar_renta_auto(id_auto, dias)
+        exito, mensaje = self.rental_manager.confirmar_renta_auto(id_auto, dias)
         if exito:
             lbl_ok = ctk.CTkLabel(self.frame_renta, text=mensaje)
             lbl_ok.grid(row=8, column=2, columnspan=2, padx=10, pady=10, sticky="ew")
@@ -227,14 +229,15 @@ class renta:
 
 if __name__ == "__main__":
     import customtkinter as ctk
-    from logic import Logic  # ejemplo de tu controlador
+    from logic import InventoryManager, RentalManager
 
     root = ctk.CTk()
-    logic = Logic()
+    inventory = InventoryManager()
+    rental_manager = RentalManager(inventory)
     encabezado = ctk.CTkFrame(root)
     encabezado.pack()
 
-    renta_app = renta(root, logic, encabezado)
+    renta_app = renta(root, rental_manager, inventory, encabezado)
     renta_app.interfaz_renta()
 
     root.mainloop()

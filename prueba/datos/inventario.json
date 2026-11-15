@@ -39,25 +39,21 @@
         "marca": "Nissan",
         "modelo": "Versa",
         "precio_dia": 50,
-        "disponible": true,
-        "dias": 10,
-        "km": 300.0,
-        "venta": 800.0,
-        "dias_pactados": 2,
-        "dias_reales": 10,
-        "dias_cobrados": 10
+        "disponible": false,
+        "dias": 4,
+        "km": 0,
+        "venta": 200,
+        "dias_pactados": 4
     },
     {
         "id": 5,
         "marca": "Chevrolet",
         "modelo": "Aveo",
         "precio_dia": 40,
-        "disponible": true,
-        "dias": 10,
-        "km": 300.0,
-        "venta": 700.0,
-        "dias_reales": 10,
-        "dias_pactados": 4,
-        "dias_cobrados": 10
+        "disponible": false,
+        "dias": 5,
+        "km": 0,
+        "venta": 200,
+        "dias_pactados": 5
     }
 ]

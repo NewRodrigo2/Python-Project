@@ -24,7 +24,7 @@ from logic import AuthManager, RoleManager, InventoryManager, RentalManager, HRM
 # instancias de las clases de logic de forma global comentadas por que se instanciaron en la clase  Ventana_Login()
 #auth = AuthManager()             # usa personal.json
 #inventario = InventoryManager()  # usa inventario.json
-#rentas = RentalManager()         # usa control.json
+# RentalManager recibe la instancia compartida de InventoryManager.
 #rrhh = HRManager()               # usa personal.json
 # mantenimiento = MaintenanceManager()  # usa mantenimiento.json
 #...............................................................................
@@ -47,7 +47,7 @@ class VentanaLogin(ctk.CTk):
         self.auth = AuthManager()
         self.role = RoleManager()
         self.inventario = InventoryManager()
-        self.rental = RentalManager()
+        self.rental = RentalManager(self.inventario)
         self.hr = HRManager()
         self.mtto = MaintenanceManager()
 
@@ -136,7 +136,8 @@ class VentanaLogin(ctk.CTk):
             nueva_ventana = mg(
                 rol_usuario=rol_seleccionado, 
                 ventana_login=self,
-                inventory=self.inventario
+                inventory=self.inventario,
+                rental_manager=self.rental
                 )
 
             nueva_ventana.mainloop()

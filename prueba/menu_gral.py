@@ -1,6 +1,6 @@
 
 import customtkinter as ctk
-from logic import RoleManager, InventoryManager
+from logic import RoleManager, InventoryManager, RentalManager
 from renta_autos import renta
 from admin import admin as AdminPanel
 
@@ -10,7 +10,7 @@ ctk.set_default_color_theme("blue")
 
 class LoginApp(ctk.CTk):
     """Ventana principal del menú general."""
-    def __init__(self, rol_usuario, ventana_login, inventory):
+    def __init__(self, rol_usuario, ventana_login, inventory, rental_manager):
         super().__init__()
         self.title("Menu General - Mi Carrito en Renta")
         self.geometry("900x700")
@@ -18,12 +18,15 @@ class LoginApp(ctk.CTk):
 
         #--- Controladores
         self.inventory = inventory
+        self.rental_manager = rental_manager
 
         # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
         self.grid_columnconfigure(0, weight=2)
         self.grid_rowconfigure(0, weight=2)
-        self.logic = LogicController(rol_usuario, ventana_login, self, self.inventory)
-        self.frames = FrameManager(self, self.logic, self.inventory)
+        self.logic = LogicController(rol_usuario, ventana_login, self)
+        self.frames = FrameManager(
+            self, self.logic, self.inventory, self.rental_manager
+        )
 
         # CAMBIO: conecta el controlador con el gestor de frames; abrir_admin()
         # usa esta referencia para mostrar el panel administrativo.
@@ -34,10 +37,11 @@ class LoginApp(ctk.CTk):
         self.logic.aplicar_permisos(self.frames)
 
 class FrameManager:
-    def __init__(self, root, logic, inventory):
+    def __init__(self, root, logic, inventory, rental_manager):
         self.root = root
         self.logic = logic
         self.inventory = inventory
+        self.rental_manager = rental_manager
 
         # CAMBIO: permite que el área principal crezca con el tamaño de la ventana.
         self.root.grid_columnconfigure(0, weight=2)
@@ -65,8 +69,10 @@ class FrameManager:
         self.encabezado_frame.grid(row=0, column=0, padx=5, pady=5, sticky="new")
 
         # Ahora sí, instanciar la clase renta con encabezado válido
-        self.renta = renta(self.root, self.logic, self.encabezado_frame)
+        self.renta = renta(
+            self.root, self.rental_manager, self.inventory, self.encabezado_frame)
         self.renta.limpiar_encabezado() 
+
 
         lbl_bienvenido = ctk.CTkLabel(self.encabezado_frame,
             text="MI CARRITO EN RENTA",
@@ -118,6 +124,7 @@ class FrameManager:
             padx=20, pady=5,
             sticky="nsew"
         )
+
     def regresar_menu_principal(self):
         if self.panel_admin is not None:
             self.panel_admin.grid_remove()
@@ -126,9 +133,8 @@ class FrameManager:
 
 class LogicController:
     """Encargado de la lógica de permisos y navegación."""
-    def __init__(self, rol_usuario, ventana_login, ventana_principal, inventory):
+    def __init__(self, rol_usuario, ventana_login, ventana_principal):
         self.role_manager = RoleManager()
-        self.inventario = inventory
         self.rol = rol_usuario
         self.ventana_login = ventana_login
         self.ventana_principal = ventana_principal
@@ -157,7 +163,6 @@ class LogicController:
         ventana_admin.destroy()
         self.ventana_principal.deiconify()
         self.aplicar_permisos(self.ventana_principal.frames)
-
 
     def cerrar_sesion(self):
         ventana = self.ventana_principal
@@ -190,64 +195,16 @@ class LogicController:
             print(f"No se pudo programar el cierre: {e}")
             self._cerrando_sesion = False
 
-
-    def calcular_precio_renta(self, id_auto_str, dias_str):
-        try:
-            id_auto = int(id_auto_str)
-            dias = int(dias_str)
-            if dias <= 0:
-                return None, "Los días de renta deben ser mayores que cero."
-            total = self.inventario.calcular_precio(id_auto, dias)
-            if total is None:
-                return None, "El ID no corresponde a un auto disponible."
-            return total, "OK"
-        except (TypeError, ValueError):
-            return None, "⚠️ Ingresa un número válido de días y un ID correcto."
-
-    def calcular_presupuesto_regreso(self, km_str, dias_str, id_str):
-        try:
-            id_auto = int(id_str)
-            dias_reales = int(dias_str)
-            km_nuevos = float(km_str)
-        except (TypeError, ValueError):
-            return None, "⚠️ Ingresa valores numéricos válidos en los campos."
-
-        # El controlador valida la entrada; InventoryManager aplica las reglas del inventario.
-        return self.inventario.calcular_presupuesto_regreso(
-            id_auto, dias_reales, km_nuevos
-        )
-
-    def confirmar_regreso_auto(self, id_auto_str, dias_str, km_str):
-        """Valida los campos y delega el guardado de la devolución al inventario."""
-        try:
-            id_auto = int(id_auto_str)
-            dias_reales = int(dias_str)
-            km_nuevos = float(km_str)
-        except (TypeError, ValueError):
-            return False, "Ingresa un ID, días y kilómetros válidos."
-
-        return self.inventario.procesar_regreso(
-            id_auto, dias_reales, km_nuevos
-        )
-
-    def confirmar_renta_auto(self, id_auto_str, dias_str):
-        """Valida los campos y devuelve el resultado real de procesar la renta."""
-        try:
-            id_auto = int(id_auto_str)
-            dias = int(dias_str)
-        except (TypeError, ValueError):
-            return False, "Ingresa un ID y días válidos."
-
-        return self.inventario.procesar_renta(id_auto, dias)
-
 if __name__ == "__main__":
     # Prueba local simulando rol de mostrador
     # CAMBIO: se proporcionan los tres argumentos requeridos por LoginApp.
     # No hay una ventana de login previa en esta prueba directa, por eso se pasa None.
+    inventory = InventoryManager()
     app = LoginApp(
         rol_usuario="mostrador",
         ventana_login=None,
-        inventory=InventoryManager()
+        inventory=inventory,
+        rental_manager=RentalManager(inventory)
     )
     app.mainloop()
 

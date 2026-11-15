@@ -1,4 +1,4 @@
-# ejemplo: mapa extendido con resumen funcional de métodos
+#  analiza.py, 
 import os, ast
 from datetime import datetime
 

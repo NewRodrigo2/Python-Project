@@ -102,15 +102,6 @@ class HRManager:
     def __init__(self, archivo_personal=PERSONAL):
         self.archivo_personal = archivo_personal
 
-
-    def agregar_personal(self, nombre, rol, area, hrs_cont, sueldo, password):
-        """Agrega nuevo personal al archivo JSON."""
-        pass
-
-    def calcular_nomina(self):
-        """Calcula la nómina del personal registrado."""
-        pass
-
 # -------------------------------
 # Clase para Inventario
 # -------------------------------
@@ -309,16 +300,55 @@ class InventoryManager:
 #---    Clase para Rentas
 #--- ----------------------------
 class RentalManager:
-    def __init__(self, archivo_control=ARCHIVO_CONTROL):
-        self.archivo_control = archivo_control
+    """Coordina las operaciones de renta y devolución sobre el inventario."""
+    def __init__(self, inventario):
+        self.inventario = inventario
 
-    def registrar_renta(self, datos_renta):
-        """Registra una nueva renta."""
-        pass
+    def calcular_precio_renta(self, id_auto_str, dias_str):
+        try:
+            id_auto = int(id_auto_str)
+            dias = int(dias_str)
+            if dias <= 0:
+                return None, "Los días de renta deben ser mayores que cero."
+            total = self.inventario.calcular_precio(id_auto, dias)
+            if total is None:
+                return None, "El ID no corresponde a un auto disponible."
+            return total, "OK"
+        except (TypeError, ValueError):
+            return None, "⚠️ Ingresa un número válido de días y un ID correcto."
 
-    def registrar_entrega(self, renta_id):
-        """Registra la entrega de un auto rentado."""
-        pass
+    def calcular_presupuesto_regreso(self, km_str, dias_str, id_str):
+        try:
+            id_auto = int(id_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str)
+        except (TypeError, ValueError):
+            return None, "⚠️ Ingresa valores numéricos válidos en los campos."
+
+        return self.inventario.calcular_presupuesto_regreso(
+            id_auto, dias_reales, km_nuevos
+        )
+
+    def confirmar_regreso_auto(self, id_auto_str, dias_str, km_str):
+        try:
+            id_auto = int(id_auto_str)
+            dias_reales = int(dias_str)
+            km_nuevos = float(km_str)
+        except (TypeError, ValueError):
+            return False, "Ingresa un ID, días y kilómetros válidos."
+
+        return self.inventario.procesar_regreso(
+            id_auto, dias_reales, km_nuevos
+        )
+
+    def confirmar_renta_auto(self, id_auto_str, dias_str):
+        try:
+            id_auto = int(id_auto_str)
+            dias = int(dias_str)
+        except (TypeError, ValueError):
+            return False, "Ingresa un ID y días válidos."
+
+        return self.inventario.procesar_renta(id_auto, dias)
 
 
 # -------------------------------
@@ -328,18 +358,7 @@ class MaintenanceManager:
     def __init__(self, archivo_mantenimiento = ARCHIVO_MTTO):
         self.archivo_mantenimiento = archivo_mantenimiento
 
-    def registrar_mantenimiento(self, datos_mantenimiento):
-        """Registra un mantenimiento realizado."""
-        pass
-
 
 # -------------------------------
 # Clase para Utilerías
 # -------------------------------
-class UtilitiesManager:
-    def __init__(self):
-        pass
-
-    def generar_reporte_general(self):
-        """Genera un reporte general del sistema."""
-        pass

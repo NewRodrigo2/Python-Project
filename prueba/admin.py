@@ -5,6 +5,7 @@ class admin:
         self.root = root
         self.logic = logic
         self.form_alta_rh_creado = False
+        self.form_rep_autos_creado = False
 
         # CAMBIO: el encabezado administrativo es propio del panel y no modifica
         # los controles ni el encabezado del menú general.
@@ -232,10 +233,45 @@ class admin:
         btn_salir.grid(row=5, column=6, padx=10, pady=10, sticky="ew")        
      
     def rep_autos(self):
-        self.mostrar_frame_autos()
-        # colocar todos los entry para solicitar de que mes se quiere el reporte y 
-        # generar archivo informe.txt
-        # usar frame_financieneros
+            self.mostrar_frame_autos()
+
+            if self.form_rep_autos_creado:
+                return
+
+            lbl_autos_rentados = ctk.CTkLabel(self.frame_autos,
+                text="AUTOS RENTADOS", 
+                font=ctk.CTkFont(size=15, weight="bold"))
+
+            lbl_autos_disponible = ctk.CTkLabel(self.frame_autos,
+                text="AUTOS DISPONIBLES", 
+                font=ctk.CTkFont(size=15, weight="bold"))
+
+            # 🚀 AQUÍ UTILIZAS TUS MÉTODOS DE LOGIC:
+            autos_disponibles = self.logic.obtener_autos_disponibles()
+            autos_rentados = self.logic.obtener_autos_rentados()
+
+            # Ejemplo rápido para mostrar la cantidad o listarlos en etiquetas:
+            texto_disp = f"Disponibles: {len(autos_disponibles)}"
+            texto_rent = f"Rentados: {len(autos_rentados)}"
+
+            lbl_info_disp = ctk.CTkLabel(self.frame_autos, text=texto_disp, font=ctk.CTkFont(size=12))
+            lbl_info_rent = ctk.CTkLabel(self.frame_autos, text=texto_rent, font=ctk.CTkFont(size=12))
+
+            btn_salir = ctk.CTkButton(self.frame_autos,
+                text="SALIR",
+                font=ctk.CTkFont(size=15),
+                command=self.ocultar_secciones)
+            
+            # Posicionamiento en el grid
+            lbl_autos_rentados.grid(row=0, column=0, padx=5, pady=5, sticky="ew")
+            lbl_info_rent.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
+
+            lbl_autos_disponible.grid(row=0, column=2, padx=5, pady=5, sticky="ew")
+            lbl_info_disp.grid(row=1, column=2, padx=5, pady=5, sticky="ew")
+
+            btn_salir.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
+
+            self.form_rep_autos_creado = True
         
     def alta_autos(self):
         self.mostrar_frame_autos()

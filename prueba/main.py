@@ -1,12 +1,5 @@
 ''' 
-datos necesarios para Copilot:este es mi script main.py, es el mas actualizado, se realizo un git pull al inicio de la joranada, 
-rama activa class_pyton, todos los script , clases , metodos que se importan estan actualizados
-ruta de archivos en documentar.txt
-
-Objetivo de la revision: 
-al realizar Instancias de rutas a los archivos de datos. debe se ser de acuerda a la unidad de trabajo
-Pregunta para Copilot: ninguna
-
+este es mi script main.py
 '''
 import json 
 import customtkinter as ctk
@@ -20,14 +13,7 @@ from pathlib import Path
 from menu_gral import LoginApp as mg       # O el menú general correspondiente
 from logic import AuthManager, RoleManager, InventoryManager, RentalManager, HRManager, MaintenanceManager
 
-# ...................... instanciando las clases de logic  ..........
-# instancias de las clases de logic de forma global comentadas por que se instanciaron en la clase  Ventana_Login()
-#auth = AuthManager()             # usa personal.json
-#inventario = InventoryManager()  # usa inventario.json
-# RentalManager recibe la instancia compartida de InventoryManager.
-#rrhh = HRManager()               # usa personal.json
-# mantenimiento = MaintenanceManager()  # usa mantenimiento.json
-#...............................................................................
+
 PURPLE = "\033[95m"
 V_B = "\033[92m"
 RESET = "\033[0m"
@@ -48,19 +34,16 @@ class VentanaLogin(ctk.CTk):
         self.role = RoleManager()
         self.inventario = InventoryManager()
         self.rental = RentalManager(self.inventario)
-        self.hr = HRManager()
-        self.mtto = MaintenanceManager()
+        # self.hr = HRManager()
+        # self.mtto = MaintenanceManager()
 
         self.crear_interfaz_login()
 
     def crear_interfaz_login(self):
-# Etiqueta de bienvenida
         self.lbl_bienvenido = ctk.CTkLabel(
-            self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold")
-        )
+            self, text="INICIAR SESIÓN", font=ctk.CTkFont(size=24, weight="bold"))
         self.lbl_bienvenido.pack(pady=(40, 20))
 
-# Frame principal del login
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
 
@@ -80,36 +63,29 @@ class VentanaLogin(ctk.CTk):
         self.cmb_rol.set(roles_disponibles[0])  # primer rol como default
         self.cmb_rol.pack(pady=5, padx=30)
 
-# Etiqueta usuario
         self.lbl_usuario = ctk.CTkLabel(
             self.frame_login, text="Nombre de Usuario o ID:", font=ctk.CTkFont(size=14, weight="bold"))
         self.lbl_usuario.pack(pady=(20, 5), padx=30, anchor="w")
 
-# Campo usuario
         self.txt_usuario = ctk.CTkEntry(
             self.frame_login, width=320, placeholder_text="Ej. Jose o ID")
         self.txt_usuario.pack(pady=5, padx=30)
 
-# Etiqueta contraseña
-        self.lbl_password = ctk.CTkLabel(
-            self.frame_login, text="Contraseña:", font=ctk.CTkFont(size=14, weight="bold")
-        )
+        self.lbl_password = ctk.CTkLabel(self.frame_login, 
+            text="Contraseña:", 
+            font=ctk.CTkFont(size=14, weight="bold"))
         self.lbl_password.pack(pady=(20, 5), padx=30, anchor="w")
 
-# Campo contraseña
         self.txt_password = ctk.CTkEntry(
             self.frame_login, width=320, placeholder_text="••••••••", show="•"
         )
         self.txt_password.pack(pady=5, padx=30)
 
-# Botón ingresar
         self.btn_ingresar = ctk.CTkButton(
             self.frame_login, text="Ingresar al Sistema", width=200, height=40,
-            font=ctk.CTkFont(size=15, weight="bold"), command=self.procesar_login
-        )
+            font=ctk.CTkFont(size=15, weight="bold"), command=self.procesar_login)
         self.btn_ingresar.pack(pady=(40, 20))
 
-# Botón salir
         self.btn_salir = ctk.CTkButton(
             self.frame_login, text="Cerrar el Sistema", width=200, height=40,
             font=ctk.CTkFont(size=15, weight="bold"), command=self.salir_definitivo
@@ -118,8 +94,7 @@ class VentanaLogin(ctk.CTk):
 
 # Etiqueta de mensajes
         self.etiqueta_mensaje = ctk.CTkLabel(
-            self, text="Esperando acción...", font=("Arial", 14), text_color="gray"
-        )
+            self, text="Esperando acción...", font=("Arial", 14), text_color="gray")
         self.etiqueta_mensaje.pack(pady=20)
 
     def procesar_login(self):
@@ -137,8 +112,7 @@ class VentanaLogin(ctk.CTk):
                 rol_usuario=rol_seleccionado, 
                 ventana_login=self,
                 inventory=self.inventario,
-                rental_manager=self.rental
-                )
+                rental_manager=self.rental)
 
             nueva_ventana.mainloop()
         else:

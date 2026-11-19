@@ -25,8 +25,7 @@ class LoginApp(ctk.CTk):
         self.grid_rowconfigure(0, weight=2)
         self.logic = LogicController(rol_usuario, ventana_login, self)
         self.frames = FrameManager(
-            self, self.logic, self.inventory, self.rental_manager
-        )
+            self, self.logic, self.inventory, self.rental_manager)
 
         # CAMBIO: conecta el controlador con el gestor de frames; abrir_admin()
         # usa esta referencia para mostrar el panel administrativo.

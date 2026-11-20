@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+''' admin.py
+1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (234)
+
+'''
+>>>>>>> 6706a3341a0f2e103ed89dce1ce476c8b055b16d
 
 import customtkinter as ctk
 
@@ -38,21 +45,21 @@ class admin:
         for col in range(4):
             self.frame_autos.grid_columnconfigure(col, weight=1)
 
-# frame de financieros 
-# reporte de autos 
-#
+    # frame de financieros 
+    # reporte de autos 
+
         self.frame_financieros = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_financieros.grid_columnconfigure(col, weight=1)
-# alta de autos 
+    # alta de autos 
         self.frame_financieros1 = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_financieros1.grid_columnconfigure(col, weight=1)
-# baja de autos
+    # baja de autos
         self.frame_financieros2 = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_financieros2.grid_columnconfigure(col, weight=1)
-
+    # administracion
         self.frame_admon = ctk.CTkFrame(self.root)
         for col in range(4):
             self.frame_admon.grid_columnconfigure(col, weight=1)
@@ -139,12 +146,12 @@ class admin:
             text="Area",font=ctk.CTkFont(size=12, weight="bold"))        
         lbl_hr_cont = ctk.CTkLabel(self.frame_rh, 
             text="Hrs Contratadas",font=ctk.CTkFont(size=12, weight="bold"))
-        # lbl_hr_trab = ctk.CTkLabel(self.frame_rh, 
-        #     text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
+    # lbl_hr_trab = ctk.CTkLabel(self.frame_rh, 
+    #     text="Hr Trabajadas",font=ctk.CTkFont(size=12, weight="bold"))
         lbl_sueldo = ctk.CTkLabel(self.frame_rh, 
             text="Sueldo",font=ctk.CTkFont(size=12, weight="bold"))
-        # lbl_usen = ctk.CTkLabel(self.frame_rh, 
-        #     text="Ausencias",font=ctk.CTkFont(size=12, weight="bold"))        
+    # lbl_usen = ctk.CTkLabel(self.frame_rh, 
+    #     text="Ausencias",font=ctk.CTkFont(size=12, weight="bold"))        
         lbl_pw = ctk.CTkLabel(self.frame_rh, 
             text="Password",font=ctk.CTkFont(size=12, weight="bold"))
         
@@ -152,9 +159,9 @@ class admin:
         lbl_nom.grid(row=0, column=3, padx=5, pady=5, sticky="ew")
         lbl_area.grid(row=1, column=0, padx=5, pady=5, sticky="ew")
         lbl_hr_cont.grid(row=1, column=3, padx=5, pady=5, sticky="ew")
-        # lbl_hr_trab.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
+    # lbl_hr_trab.grid(row=2, column=0, padx=5, pady=5, sticky="ew")
         lbl_sueldo.grid(row=2, column=3, padx=5, pady=5, sticky="ew")
-        # lbl_usen.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
+    # lbl_usen.grid(row=3, column=0, padx=5, pady=5, sticky="ew")
         lbl_pw.grid(row=3, column=3, padx=5, pady=5, sticky="ew")
 
         self.Entry_id = ctk.CTkEntry(self.frame_rh, 
@@ -182,13 +189,12 @@ class admin:
         self.Entry_sueldo.grid(row=2, column=4, padx=5, pady=5, sticky="ew")
         self.Entry_usen.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
         self.Entry_pw.grid(row=3, column=4, padx=5, pady=5, sticky="ew")
-                            
-        
+                                   
         btn_guardar = ctk.CTkButton(
             self.frame_rh,
             text="GUARDAR",
             font=ctk.CTkFont(size=15)
-            # command=self.salir  # Sin command, el botón no realiza ninguna acción.
+            # command=    el botón no realiza ninguna acción.
         )
 
         btn_salir = ctk.CTkButton(
@@ -199,11 +205,13 @@ class admin:
 
         btn_guardar.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
         btn_salir.grid(row=5, column=6, padx=10, pady=10, sticky="ew")
-        self.form_alta_rh_creado = True
+
+    # bandera para el control del frame   
+        self.form_alta_rh_creado = True      
         
     def baja_rh(self):
         self.mostrar_frame_rh()
-        # colocar todos los entry para borrar del personal.json
+        # colocar todos los widget y entry para borrar del personal.json
         
     def nomina(self):
         self.mostrar_frame_rh_nomina()
@@ -227,8 +235,7 @@ class admin:
             self.frame_rh_nomina,
             text="SALIR",
             font=ctk.CTkFont(size=15)
-            # command=self.salir  # Sin command, el botón no realiza ninguna acción.
-        )
+            command = self.ocultar_secciones)
 
         btn_generar.grid(row=5, column=3, padx=10, pady=10, sticky="ew")
         btn_salir.grid(row=5, column=6, padx=10, pady=10, sticky="ew")        

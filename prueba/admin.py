@@ -1,10 +1,8 @@
-<<<<<<< HEAD
-=======
+
 ''' admin.py
-1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (234)
+1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (236)
 
 '''
->>>>>>> 6706a3341a0f2e103ed89dce1ce476c8b055b16d
 
 import customtkinter as ctk
 
@@ -234,7 +232,7 @@ class admin:
         btn_salir = ctk.CTkButton(
             self.frame_rh_nomina,
             text="SALIR",
-            font=ctk.CTkFont(size=15)
+            font=ctk.CTkFont(size=15),
             command = self.ocultar_secciones)
 
         btn_generar.grid(row=5, column=3, padx=10, pady=10, sticky="ew")

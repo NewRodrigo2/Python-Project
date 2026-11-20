@@ -51,14 +51,13 @@ class VentanaLogin(ctk.CTk):
         self.frame_login = ctk.CTkFrame(self)
         self.frame_login.pack(pady=10, padx=30, fill="both", expand=True)
 
-# Etiqueta de rol
+    # Etiqueta de rol
         self.lbl_rol = ctk.CTkLabel(
-            self.frame_login, text="Seleccione su Tipo de Personal:", font=ctk.CTkFont(size=14, weight="bold")
-        )
+            self.frame_login, text="Seleccione su Tipo de Personal:", font=ctk.CTkFont(size=14, weight="bold"))
         self.lbl_rol.pack(pady=(25, 5), padx=30, anchor="w")
 
-# Roles desde RoleManager
-# ComboBox de roles
+    # Roles desde RoleManager
+    # ComboBox de roles
 
         roles_disponibles = self.role.obtener_roles()
         self.cmb_rol = ctk.CTkComboBox(

@@ -1,9 +1,5 @@
 ''' 
-<<<<<<< HEAD
-este es mi script main.py
-=======
-main.py, revisar documentar.txt, 
->>>>>>> 6706a3341a0f2e103ed89dce1ce476c8b055b16d
+Oficina, 20/11/2026 
 '''
 import json 
 import customtkinter as ctk

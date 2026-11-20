@@ -1,6 +1,8 @@
-EN LA OFICINA
+EN LA OFICINA 19/11/2026
 
-..... OJO  ....  >  CREAR UN MAPA Y PASARLO A COPILOT
+1.- actualizar este archivo para un control de commit
+2.- 
+
 cd "Python Project"
 
 Set-ExecutionPolicy Bypass -Scope Process -Force

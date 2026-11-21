@@ -137,6 +137,7 @@ class LogicController:
         self.rol = rol_usuario
         self.ventana_login = ventana_login
         self.ventana_principal = ventana_principal
+        
         # La referencia a FrameManager se asigna desde LoginApp después de crear
         # ambos objetos; aquí todavía no existe self.frames ni self.logic.
 
@@ -193,6 +194,12 @@ class LogicController:
         except Exception as e:
             print(f"No se pudo programar el cierre: {e}")
             self._cerrando_sesion = False
+
+    def obtener_autos_disponibles(self):
+            return self.inventory_manager.obtener_autos_disponibles()
+
+    def obtener_autos_rentados(self):
+        return self.inventory_manager.obtener_autos_rentados()
 
 if __name__ == "__main__":
     # Prueba local simulando rol de mostrador

@@ -128,7 +128,7 @@ class InventoryManager:
             }
         ]
 
-#--- Cargar datos al instanciar
+    #--- Cargar datos al instanciar
         self.cargar_inventario()
         self.verificar_control()
 
@@ -170,12 +170,10 @@ class InventoryManager:
         with open(ARCHIVO_CONTROL, "w", encoding="utf-8") as archivo:
             json.dump(datos, archivo, indent=4, ensure_ascii=False)
 
-#--- Asegura que el inventario esté cargado
     def obtener_autos_disponibles(self):
         self.cargar_inventario()
         return [auto for auto in self.inventario if auto.get("disponible", False)]
 
-#--- Devuelve la lista de autos que están actualmente rentados (disponible = False)."""
     def obtener_autos_rentados(self):
         self.cargar_inventario()
         return [auto for auto in self.inventario if not auto.get("disponible", True)]

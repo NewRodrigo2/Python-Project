@@ -1,6 +1,7 @@
 
 ''' admin.py
 1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (236)
+    GENERA ERROR POR QUE EL OBJETO NO EXISTE EN "LogicController"
 
 '''
 

@@ -1,4 +1,4 @@
-# Memoria dinámica optimizada
+# Memoria dinámica optimizada Logic.py
 
 
 ## AuthManager (línea 26)

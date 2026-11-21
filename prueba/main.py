@@ -14,11 +14,6 @@ from menu_gral import LoginApp as mg       # O el menú general correspondiente
 from logic import AuthManager, RoleManager, InventoryManager, RentalManager, HRManager, MaintenanceManager
 
 
-PURPLE = "\033[95m"
-V_B = "\033[92m"
-RESET = "\033[0m"
-# ...........................................................................
-
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 

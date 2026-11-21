@@ -1,6 +1,16 @@
 
 EN LA OFICINA 20/11/2026
 
+PRIORIDAD, RESOLVER EL ERROR EN EL REPORTE DE LOS AUTOS EN ADMIN.pY
+
+Aquí tienes una instrucción clara en texto para realizar esta tarea paso a paso:
+
+1. **Inyectar la instancia en `LoginApp`:** Recibe `inventory` (instancia de `InventoryManager`) en `LoginApp.__init__` y asígnalo a `LogicController` (`self.logic.inventory_manager = self.inventory`, o pásalo como `inventory_manager=self.inventory` al instanciar `LogicController`) para mantener una única fuente de datos en memoria.
+2. **Aceptar y exponer métodos en `LogicController`:** Añade el parámetro opcional `inventory_manager=None` en `LogicController.__init__`, guárdalo en `self.inventory_manager` y define los métodos `obtener_autos_disponibles()` y `obtener_autos_rentados()` que deleguen a `self.inventory_manager` (validando si es `None` para evitar errores).
+3. **Consultar desde `admin.py`:** En `admin.rep_autos()`, llama a `self.logic.obtener_autos_disponibles()` y `self.logic.obtener_autos_rentados()` y muestra su cantidad o listado en las etiquetas correspondientes dentro de `self.frame_autos`.
+4. **Refrescar datos al reabrir:** Si `self.form_rep_autos_creado` ya es `True`, guarda referencias a las etiquetas de conteo o listado para actualizar su texto cada vez que se vuelva a ejecutar `rep_autos()`.
+
+
 PENDIENTES:  
 
     x.- tres intentos y mensaje "Pongase en contacto con Recursos Humanos" 

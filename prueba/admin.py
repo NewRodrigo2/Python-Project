@@ -1,16 +1,16 @@
 
-''' admin.py
-1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (236)
-    GENERA ERROR POR QUE EL OBJETO NO EXISTE EN "LogicController"
+''' admin.py / casa / 21/11/2026
+    1.- se habilito el command=self.ocultar_secciones de btn_salir/nomina (236)
 
 '''
 
 import customtkinter as ctk
 
 class admin:
-    def __init__(self, root, logic):
+    def __init__(self, root, logic, inventory):
         self.root = root
         self.logic = logic
+        self.inventory = inventory
         self.form_alta_rh_creado = False
         self.form_rep_autos_creado = False
 
@@ -253,9 +253,9 @@ class admin:
                 text="AUTOS DISPONIBLES", 
                 font=ctk.CTkFont(size=15, weight="bold"))
 
-            # 🚀 AQUÍ UTILIZAS TUS MÉTODOS DE LOGIC:
-            autos_disponibles = self.logic.obtener_autos_disponibles()
-            autos_rentados = self.logic.obtener_autos_rentados()
+            # Consultamos el inventario compartido recibido por el panel.
+            autos_disponibles = self.inventory.obtener_autos_disponibles()
+            autos_rentados = self.inventory.obtener_autos_rentados()
 
             # Ejemplo rápido para mostrar la cantidad o listarlos en etiquetas:
             texto_disp = f"Disponibles: {len(autos_disponibles)}"

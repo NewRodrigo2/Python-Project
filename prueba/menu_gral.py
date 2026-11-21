@@ -114,7 +114,8 @@ class FrameManager:
             self.panel_admin.grid_columnconfigure(0, weight=1)
             self.admin = AdminPanel(
                 root=self.panel_admin,
-                logic=self.logic
+                logic=self.logic,
+                inventory=self.inventory
             )
             self.admin.menu_admin()
 
